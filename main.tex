@@ -1,41 +1,6 @@
 \documentclass[12pt]{article}
 \input{macros}
 \addbibresource{refs.bib}
-
-% ---- Added for the reading notes: strikethrough (\sout) ----
-\usepackage[normalem]{ulem}
-
-% ---- Added for the reading notes: quote boxes (tcolorbox is loaded by macros.tex) ----
-% Lemma / fact boxes (blue)
-\NewTColorBox{lemmaBox}{m}{%
-  enhanced, breakable,
-  colback=blue!5, colframe=blue!55!black,
-  fonttitle=\bfseries, coltitle=white,
-  title={#1},
-  boxrule=0.5pt, arc=1.5mm,
-  left=6pt, right=6pt, top=5pt, bottom=5pt,
-  attach boxed title to top left={yshift=-2mm, xshift=3mm},
-  boxed title style={colback=blue!55!black, colframe=blue!55!black, arc=1mm, boxrule=0pt}
-}
-% Conclusion boxes (green)
-\NewTColorBox{resultBox}{m}{%
-  enhanced, breakable,
-  colback=green!5, colframe=green!45!black,
-  fonttitle=\bfseries, coltitle=white,
-  title={#1},
-  boxrule=0.5pt, arc=1.5mm,
-  left=6pt, right=6pt, top=5pt, bottom=5pt,
-  attach boxed title to top left={yshift=-2mm, xshift=3mm},
-  boxed title style={colback=green!45!black, colframe=green!45!black, arc=1mm, boxrule=0pt}
-}
-% Remark boxes (orange)
-\NewTColorBox{remarkBox}{}{%
-  enhanced, breakable,
-  colback=orange!5, colframe=orange!60!black,
-  boxrule=0.5pt, arc=1.5mm,
-  left=6pt, right=6pt, top=5pt, bottom=5pt
-}
-
 \title{A Polynomial-Time Algorithm for $1/2$ Well-Supported Nash Equilibria in Bimatrix Games --- Reading Notes}
 \author{Names of members in your group}
 \begin{document}

@@ -29,7 +29,7 @@ It is easy to see that every $\varepsilon$-WSNE is an $\varepsilon$-NE (multiply
 
 The algorithms below will repeatedly use the LMM lemma and its corollaries for finding approximate equilibria in general bimatrix games:
 
-\begin{lemmaBox}{Lipton--Markakis--Mehta Small-Support Lemma [LMM03]}
+\begin{lemma}[Lipton--Markakis--Mehta Small-Support Lemma [LMM03]]
   Let $(\mathbf{x}, \mathbf{y})$ be a NE of an $n \times n$ bimatrix game $(R, C)$. For any $\varepsilon > 0$ and $k \ge \dfrac{12 \ln n}{\varepsilon^2}$, there exists a $k$-uniform strategy profile $(\mathbf{x}^*, \mathbf{y}^*)$ such that $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-NE and
   \begin{align*}
     |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| &\le \varepsilon \\
@@ -61,12 +61,12 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
 
   Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $(0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality:
 
-  \begin{lemmaBox}{Hoeffding's Inequality}
+  \begin{lemma}[Hoeffding's Inequality]
     For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
     \[
       \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
     \]
-  \end{lemmaBox}
+  \end{lemma}
 
   we get:
   \begin{align*}
@@ -99,21 +99,21 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
     &\le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
   \end{align*}
   Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1$, hence $\mathbb{P}(\text{GOOD}) > 0$, which means there exists at least one sampling satisfying the above properties.
-\end{lemmaBox}
+\end{lemma}
 
 \section{Main Results}
 
-\begin{resultBox}{Main Conclusion}
+\begin{theorem}[Main Conclusion]
   For any constant $\delta > 0$, there is a polynomial-time algorithm that finds a $(1/2 + \delta)$-WSNE in any $n \times n$ normalized bimatrix game $(R, C)$.
-\end{resultBox}
+\end{theorem}
 
 Note that the exponent of the ``polynomial time'' depends on $\delta$; when $\delta$ is a constant, the running time is polynomial in $n$.
 
 For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
 
-\begin{resultBox}{Query Version}
+\begin{theorem}[Query Version]
   For any constants $\varepsilon, \delta > 0$, with $O\left( \frac{n \log n}{\varepsilon^4} \right)$ payoff queries, one can find, in polynomial time and with success probability $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$, a $(1/2 + 3\varepsilon + \delta)$-WSNE.
-\end{resultBox}
+\end{theorem}
 
 In general, to compute a $(1/2 + \delta')$-WSNE, one can take $\varepsilon = \delta = \frac{\delta'}{4}$. Similarly, the polynomial time here also depends on $\varepsilon$ and $\delta$.
 
@@ -207,7 +207,7 @@ Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we onl
 
 Here we can use a corollary of the LMM lemma:
 
-\begin{lemmaBox}{Uniform Sampling Lemma (Corollary of LMM [LMM03])}
+\begin{lemma}[Uniform Sampling Lemma (Corollary of LMM [LMM03])]
   For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
   \[
     \forall i \in \operatorname{supp}(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
@@ -220,13 +220,13 @@ Here we can use a corollary of the LMM lemma:
     \forall i \in \operatorname{supp}(\mathbf{w}),\ \mathcal{R}(e_i, \mathbf{z}) \ge \max_k \mathcal{R}(e_k, \mathbf{z}) - \left(1 - \left(\frac12 - \delta\right)\right) = \max_k \mathcal{R}(e_k, \mathbf{z}) - \left(\frac12 + \delta\right)
   \]
   and similarly for the column player. Therefore, $(\mathbf{w}, \mathbf{z})$ is a $(1/2+\delta)$-WSNE.
-\end{lemmaBox}
+\end{lemma}
 
 Here $\kappa(\delta) = \left\lceil \dfrac{2 \ln (1/\delta)}{\delta^2} \right\rceil$ is a constant. A $k$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ satisfies that every component of $\mathbf{w}, \mathbf{z}$ is a non-negative integer multiple of $\dfrac{1}{k}$, so it naturally follows that $\max(|\operatorname{supp}(\mathbf{w})|, |\operatorname{supp}(\mathbf{z})|) \le \kappa(\delta)$, i.e., both supports have size at most $\kappa(\delta)$. Hence the total number of $\kappa(\delta)$-uniform strategies is $O(n^{\kappa(\delta)})$. Since the lemma guarantees existence, it suffices to enumerate all strategies and check whether each one is a $(1/2+\delta)$-WSNE. When $\delta$ is a constant, the running time of the algorithm is polynomial in $n$.
 
-\begin{remarkBox}
+\begin{remark}
   The difference from the LMM lemma here is that $\kappa(\delta)$ depends only on $\delta$, not on the problem size $n$. This is (probably) because in this case we only need to constrain the sampled support, whereas the LMM lemma needs to constrain all $n$ pure strategies.
-\end{remarkBox}
+\end{remark}
 
 \section{Algorithm 2: Query-Efficient \texorpdfstring{$(1/2+3\varepsilon+\delta)$}{1/2+3ε+δ}-WSNE}
 
@@ -273,7 +273,7 @@ Note that, to guarantee the correctness of the algorithm, the sampling cannot be
 
 The paper gives two lemmas:
 
-\begin{lemmaBox}{Lemma 1 (Implied from the LMM lemma [LMM03])}
+\begin{lemma}[Lemma 1 (Implied from the LMM lemma [LMM03])]
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| &\le \varepsilon \\
@@ -281,7 +281,7 @@ The paper gives two lemmas:
     |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})| &\le \varepsilon && \text{for all } i \in [n] \\
     |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)| &\le \varepsilon && \text{for all } j \in [n]
   \end{align*}
-\end{lemmaBox}
+\end{lemma}
 
 ``Sampled from $(\mathbf{x}, \mathbf{y})$'' means that the sampling only considers the support of $(\mathbf{x}, \mathbf{y})$, ignoring all pure strategies with probability $0$.
 
@@ -293,7 +293,7 @@ For the $\max$ term, the error probability is given by the union bound; for the 
 
 With $k = c\ln n / \varepsilon^2$, the probability that the sampling fails the condition of Lemma 1 is a constant; increasing the constant $c$ in the number of samples makes this error probability decay exponentially.
 
-\begin{lemmaBox}{Lemma 2}
+\begin{lemma}[Lemma 2]
   Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile \textbf{satisfying the condition of Lemma 1}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 
   \textbf{Proof:} Since Lemma 1 holds, for $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$ we have $|\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})| \le \varepsilon$, hence
@@ -310,7 +310,7 @@ With $k = c\ln n / \varepsilon^2$, the probability that the sampling fails the c
     \iff &\mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon \le \mathcal{R}(e_{k^*}, \mathbf{y}) - 2 \varepsilon \le \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - 2 \varepsilon
   \end{align*}
   Together with the first inequality obtained above, the claim follows.
-\end{lemmaBox}
+\end{lemma}
 
 It is worth noting that the statement of Lemma 2 in the paper does not mention the Lemma 1 restriction on the uniform strategy, and the correctness analysis of the subsequent algorithm also does not account for the probability of a failed Lemma 1 sampling. The only interpretation is that the authors implicitly assume that the constant in the sample size $k$ is large enough, so that the failure probability of the Lemma 1 sampling is negligible.
 
@@ -347,7 +347,7 @@ We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 
 
 Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
 
-(Bonus: in the original paper, the justification for the row player mistakenly cites Lemma 1 instead of Lemma 2; a small typo, \sout{although Lemma 2 is also built upon Lemma 1}.)
+(Bonus: in the original paper, the justification for the row player mistakenly cites Lemma 1 instead of Lemma 2; a small typo, although Lemma 2 is also built upon Lemma 1.)
 
 \paragraph{Case 2(c): ``both high''}
 In this case, neither of the previous two conditions holds.
@@ -388,9 +388,9 @@ The proof is again by contradiction:
 
   First, we state a claim:
 
-  \begin{lemmaBox}{Assertion 1}
+  \begin{claim}[Assertion 1]
     For the restricted game $(-C_{\mathbf{x}_s}, C_{\mathbf{x}_s})$, let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Then $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1 / 2 - 3\varepsilon$.
-  \end{lemmaBox}
+  \end{claim}
 
   This is quite intuitive: suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 - 3 \varepsilon \le 1/2$; then $\tilde{\mathbf{x}}$ is a feasible solution to the condition of Case 2(b) (since $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}_s^*)$), which contradicts the premise of entering Case 2(c).
 
