@@ -1,9 +1,9 @@
 \section{Preliminaries}
 
-For a bimatrix game, after normalizing the payoff matrices, we can define $\varepsilon$-NE and $\varepsilon$-WSNE:
+For a bimatrix game whose payoffs are normalized to $[0,1]$, we use the standard definitions of $\varepsilon$-NE and $\varepsilon$-WSNE \cite[Section~2]{12WSNE}:
 
 \begin{itemize}
-  \item \textbf{$\varepsilon$-NE ($\varepsilon$-Nash Equilibrium)} \cite{nashtheorem51}: Formally, a mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-NE if and only if:
+  \item \textbf{$\varepsilon$-NE ($\varepsilon$-Nash Equilibrium)}: Formally, a mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-NE if and only if:
         \begin{align*}
           \mathcal{R}(\mathbf{x}, \mathbf{y}) & \ge \max_{i \in [n]} \mathcal{R}(e_i, \mathbf{y}) - \varepsilon \\
           \mathcal{C}(\mathbf{x}, \mathbf{y}) & \ge \max_{j \in [n]} \mathcal{C}(\mathbf{x}, e_j) - \varepsilon
@@ -53,7 +53,7 @@ Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$
 \end{align*}
 Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
 
-Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $(0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality:
+Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
 
 \begin{lemma}[Hoeffding's Inequality]
   For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
@@ -97,7 +97,7 @@ Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1
 \section{Main Results}
 
 \begin{theorem}[Main Conclusion]
-  For any constant $\delta > 0$, there is a polynomial-time algorithm that finds a $(1/2 + \delta)$-WSNE in any $n \times n$ normalized bimatrix game $(R, C)$.
+  For any constant $\delta > 0$, there is a polynomial-time algorithm that finds a $(1/2 + \delta)$-WSNE in any $n \times n$ normalized bimatrix game $(R, C)$ \cite[Theorem~1]{12WSNE}.
 \end{theorem}
 
 Note that the exponent of the ``polynomial time'' depends on $\delta$; when $\delta$ is a constant, the running time is polynomial in $n$.
@@ -111,6 +111,8 @@ For games in which the payoff matrix is not given but only a payoff-query oracle
 In general, to compute a $(1/2 + \delta')$-WSNE, one can take $\varepsilon = \delta = \frac{\delta'}{4}$. Similarly, the polynomial time here also depends on $\varepsilon$ and $\delta$.
 
 \section{Algorithm 1: Polynomial-Time \texorpdfstring{$(1/2 + \delta)$}{1/2 + δ}-WSNE Computation}
+
+This section follows Algorithm~1 and its proof in \cite[Section~3]{12WSNE}.
 
 \subsection{Preprocessing}
 
@@ -192,7 +194,7 @@ Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we onl
 
 Here we can use a corollary of the LMM lemma:
 
-\begin{lemma}[Uniform Sampling Lemma (Corollary of LMM \cite{lmm03})]
+\begin{lemma}[{Constant-Support Well-Supporting Lemma \cite[Theorem~2]{cfj14}}]
   For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
   \[
     \forall i \in \operatorname{supp}(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
@@ -214,6 +216,8 @@ Here $\kappa(\delta) = \left\lceil \dfrac{2 \ln (1/\delta)}{\delta^2} \right\rce
 \end{remark}
 
 \section{Algorithm 2: Query-Efficient \texorpdfstring{$(1/2+3\varepsilon+\delta)$}{1/2+3ε+δ}-WSNE}
+
+This section follows the payoff-query variant in \cite[Section~4]{12WSNE}, with the probability-accounting correction noted above.
 
 \subsection{Motivation}
 In practice, the cost of providing the entire payoff matrix may be unacceptable; only the payoff of a pure strategy profile $(e_i, e_j)$ can be queried. In this setting, the goal of the algorithm is to output an approximate WSNE with as few queries as possible.
@@ -248,7 +252,7 @@ Similarly, we have:
 \[
   \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) - \varepsilon \le \mathcal{C}(e_i, \hat{\mathbf{y}}) \;\; \text{for all } i \in [n]
 \]
-Thus we obtain four inequalities for the approximate-NE setting. In the following, we call these four inequalities Observation 1 (in the original paper, this is called Observation 2).
+Thus we obtain four inequalities for the approximate-NE setting. In the following, we call these four inequalities Observation 1 (they are Observation~2 in the original paper \cite[Observation~2]{12WSNE}).
 
 \subsubsection*{2. Shrinking the support via the LMM lemma}
 
