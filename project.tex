@@ -35,71 +35,71 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
     |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon \\
     |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon
   \end{align*}
-
-  In \cite{lmm03}, a probabilistic method was used to prove that there exists a sampling satisfying the above properties:
-
-  Sample $k$ pure strategies from $\mathbf{x}$ independently and with replacement to form a multiset $A$ (note that the sampling is according to the distribution $\mathbf{x}$), and similarly sample $k$ pure strategies from $\mathbf{y}$ to form a multiset $B$. Assign probability $1/k$ to each pure strategy in $A$ and $B$ to obtain the mixed strategies $\mathbf{x}^*, \mathbf{y}^*$. Clearly, if a pure strategy appears $t$ times in $A$, its probability is $t / k$.
-
-  Define the following events:
-  \begin{align*}
-    \phi_1      & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
-    \phi_2      & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
-    \pi_{1, i}  & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
-    \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
-    \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
-  \end{align*}
-  The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, i}}$.
-
-  Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
-  \begin{align*}
-    \phi_{1, a} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
-    \phi_{1, b} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
-    \phi_{2, a} & = \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
-    \phi_{2, b} & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
-  \end{align*}
-  Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
-
-  Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $(0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality:
-
-  \begin{lemma}[Hoeffding's Inequality]
-    For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
-    \[
-      \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
-    \]
-  \end{lemma}
-
-  we get:
-  \begin{align*}
-    \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8) \\
-    \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8)
-  \end{align*}
-  i.e., $\mathbb{P}(\overline{\phi_{1, a}}) \le 2\exp(-k\varepsilon^2 / 8)$; similarly $\mathbb{P}(\overline{\phi_{1, b}}) \le 2\exp(-k\varepsilon^2 / 8)$, and the same holds for $\phi_2$. Therefore,
-  \begin{align*}
-    \mathbb{P}(\overline{\phi_1}) & \le 4\exp(-k\varepsilon^2 / 8) \\
-    \mathbb{P}(\overline{\phi_2}) & \le 4\exp(-k\varepsilon^2 / 8)
-  \end{align*}
-
-  Consider the $\pi$ events. Define the following events:
-  \begin{align*}
-    \psi_{1, i} & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
-    \psi_{2, j} & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
-  \end{align*}
-  Earlier we set $\phi_1, \phi_2$ to tighter bounds, which can now be combined with the new events. For example, on $\phi_1 \cap \psi_{1, i}$:
-  \begin{align*}
-    \mathcal{R}(e_i, \mathbf{y}^*) & < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
-                                   & \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
-  \end{align*}
-  This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $k$ pure strategies in the multiset $B$, viewing their payoffs against $e_i$ as random variables with expectation $\mathcal{R}(e_i, \mathbf{y})$ and range $(0, 1]$, Hoeffding's inequality gives:
-  \[
-    \mathbb{P}(\mathcal{R}(e_i, \mathbf{y}^*) - \mathcal{R}(e_i, \mathbf{y}) \ge \varepsilon / 2) \le \exp(-k\varepsilon^2 / 2)
-  \]
-  and similarly for $\psi_{2, j}$. Combining all the above parts, we have
-  \begin{align*}
-    \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, i}}) \\
-                                       & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
-  \end{align*}
-  Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1$, hence $\mathbb{P}(\text{GOOD}) > 0$, which means there exists at least one sampling satisfying the above properties.
 \end{lemma}
+
+In \cite{lmm03}, a probabilistic method was used to prove that there exists a sampling satisfying the above properties:
+
+Sample $k$ pure strategies from $\mathbf{x}$ independently and with replacement to form a multiset $A$ (note that the sampling is according to the distribution $\mathbf{x}$), and similarly sample $k$ pure strategies from $\mathbf{y}$ to form a multiset $B$. Assign probability $1/k$ to each pure strategy in $A$ and $B$ to obtain the mixed strategies $\mathbf{x}^*, \mathbf{y}^*$. Clearly, if a pure strategy appears $t$ times in $A$, its probability is $t / k$.
+
+Define the following events:
+\begin{align*}
+  \phi_1      & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+  \phi_2      & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+  \pi_{1, i}  & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
+  \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
+  \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
+\end{align*}
+The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, i}}$.
+
+Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
+\begin{align*}
+  \phi_{1, a} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+  \phi_{1, b} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
+  \phi_{2, a} & = \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+  \phi_{2, b} & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
+\end{align*}
+Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
+
+Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $(0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality:
+
+\begin{lemma}[Hoeffding's Inequality]
+  For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
+  \[
+    \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
+  \]
+\end{lemma}
+
+We get:
+\begin{align*}
+  \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8) \\
+  \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8)
+\end{align*}
+i.e., $\mathbb{P}(\overline{\phi_{1, a}}) \le 2\exp(-k\varepsilon^2 / 8)$; similarly $\mathbb{P}(\overline{\phi_{1, b}}) \le 2\exp(-k\varepsilon^2 / 8)$, and the same holds for $\phi_2$. Therefore,
+\begin{align*}
+  \mathbb{P}(\overline{\phi_1}) & \le 4\exp(-k\varepsilon^2 / 8) \\
+  \mathbb{P}(\overline{\phi_2}) & \le 4\exp(-k\varepsilon^2 / 8)
+\end{align*}
+
+Consider the $\pi$ events. Define the following events:
+\begin{align*}
+  \psi_{1, i} & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
+  \psi_{2, j} & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
+\end{align*}
+Earlier we set $\phi_1, \phi_2$ to tighter bounds, which can now be combined with the new events. For example, on $\phi_1 \cap \psi_{1, i}$:
+\begin{align*}
+  \mathcal{R}(e_i, \mathbf{y}^*) & < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
+                                 & \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
+\end{align*}
+This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $k$ pure strategies in the multiset $B$, viewing their payoffs against $e_i$ as random variables with expectation $\mathcal{R}(e_i, \mathbf{y})$ and range $(0, 1]$, Hoeffding's inequality gives:
+\[
+  \mathbb{P}(\mathcal{R}(e_i, \mathbf{y}^*) - \mathcal{R}(e_i, \mathbf{y}) \ge \varepsilon / 2) \le \exp(-k\varepsilon^2 / 2)
+\]
+and similarly for $\psi_{2, j}$. Combining all the above parts, we have
+\begin{align*}
+  \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, i}}) \\
+                                     & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
+\end{align*}
+Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1$, hence $\mathbb{P}(\text{GOOD}) > 0$, which means there exists at least one sampling satisfying the above properties.
 
 \section{Main Results}
 
@@ -207,7 +207,7 @@ Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we onl
 
 Here we can use a corollary of the LMM lemma:
 
-\begin{lemma}[Uniform Sampling Lemma (Corollary of LMM [LMM03])]
+\begin{lemma}[Uniform Sampling Lemma (Corollary of LMM \cite{lmm03})]
   For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
   \[
     \forall i \in \operatorname{supp}(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
@@ -273,7 +273,7 @@ Note that, to guarantee the correctness of the algorithm, the sampling cannot be
 
 The paper gives two lemmas:
 
-\begin{lemma}[Lemma 1 (Implied from the LMM lemma [LMM03])]
+\begin{lemma}[Lemma 1 (Implied from the LMM lemma \cite{lmm03})]
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
