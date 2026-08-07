@@ -141,16 +141,7 @@ In this case, we simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$. We show below
 Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
 
 \paragraph{Case 1(b): ``one high, one low''}
-In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and there \textbf{exists} a strategy $\mathbf{x}'$ such that:
-\begin{itemize}
-  \item $\operatorname{supp}(\mathbf{x}') \subseteq \operatorname{supp}(\mathbf{x}^*)$;
-  \item $\mathcal{C}(\mathbf{x}', e_j) \le 1/2 \quad \text{for all } j \in [n]$.
-\end{itemize}
-
-We then output $(\mathbf{x}', \mathbf{y}^*)$.
-
-\textbf{How to check existence?}
-Solve the linear feasibility system:
+In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and the following linear feasibility system has a solution $\mathbf{x}'$:
 \[
   \begin{cases}
     \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot C_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
@@ -159,6 +150,7 @@ Solve the linear feasibility system:
   \end{cases}
 \]
 This linear program can be solved, or declared infeasible, in polynomial time.
+If it is feasible, we output $(\mathbf{x}', \mathbf{y}^*)$.
 
 We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
 
@@ -187,7 +179,7 @@ The proof is by contradiction:
         \[
           \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
         \]
-        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$, so there exists $\tilde{\mathbf{x}}$ with $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$ and $\mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]$, which satisfies the condition of Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
+        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
 
         Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
         \[
@@ -276,33 +268,23 @@ The paper gives two lemmas:
   \end{align*}
 \end{lemma}
 
-``Sampled from $(\mathbf{x}, \mathbf{y})$'' means that the sampling only considers the support of $(\mathbf{x}, \mathbf{y})$, ignoring all pure strategies with probability $0$.
-
-Following the proof of the LMM lemma, for the last two conditions the failure probability is $O(n \exp(-2k\varepsilon^2))$; for the first two conditions, consider the decomposition:
+Here ``sampled from $(\mathbf{x}, \mathbf{y})$'' means that pure strategies are drawn according to $(\mathbf{x}, \mathbf{y})$, so strategies outside their supports are never selected. The proof uses the sampling and concentration argument from the LMM lemma above. The key estimate for the first two conditions is the decomposition
 \[
   |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| \le |\mathcal{R}(\mathbf{x}_s, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| + \max_{i} |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})|
 \]
-For the $\max$ term, the error probability is given by the union bound; for the first term, Hoeffding's inequality applies, giving failure probability $O(n \exp(-k\varepsilon^2))$.
-
-With $k = c\ln n / \varepsilon^2$, the probability that the sampling fails the condition of Lemma 1 is a constant; increasing the constant $c$ in the number of samples makes this error probability decay exponentially.
+and its column-player analogue. Hoeffding's inequality and a union bound over the $2n+2$ conditions then give $k=O(\ln n/\varepsilon^2)$; choosing a larger hidden constant makes the failure probability arbitrarily small.
 
 \begin{lemma}[Lemma 2]
   Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile \textbf{satisfying the condition of Lemma 1}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 
-  \textbf{Proof:} Since Lemma 1 holds, for $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$ we have $|\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})| \le \varepsilon$, hence
-  \[
-    \mathcal{R}(e_i, \mathbf{y}_s) \ge \mathcal{R}(e_i, \mathbf{y}) - \varepsilon \ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - 2 \varepsilon
-  \]
-  because $(\mathbf{x}, \mathbf{y})$ is an $\varepsilon$-WSNE. What we need to prove is
-  \[
-    \mathcal{R}(e_i, \mathbf{y}_s) \ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}_s) - 3 \varepsilon
-  \]
-  Let $k^*$ be the index attaining the maximum on the right-hand side; it suffices to prove $\mathcal{R}(e_i, \mathbf{y}_s) \ge \mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon$. Reusing Lemma 1:
+  \textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
   \begin{align*}
-         & \mathcal{R}(e_{k^*}, \mathbf{y}_s) \le \mathcal{R}(e_{k^*}, \mathbf{y}) + \varepsilon                                                                                     \\
-    \iff & \mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon \le \mathcal{R}(e_{k^*}, \mathbf{y}) - 2 \varepsilon \le \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - 2 \varepsilon
+    \mathcal{R}(e_i, \mathbf{y}_s)
+    &\ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon \\
+    &\ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon \\
+    &\ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
   \end{align*}
-  Together with the first inequality obtained above, the claim follows.
+  The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
 \end{lemma}
 
 It is worth noting that the statement of Lemma 2 in the paper does not mention the Lemma 1 restriction on the uniform strategy, and the correctness analysis of the subsequent algorithm also does not account for the probability of a failed Lemma 1 sampling. The only interpretation is that the authors implicitly assume that the constant in the sample size $k$ is large enough, so that the failure probability of the Lemma 1 sampling is negligible.
@@ -352,46 +334,20 @@ Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can
 The proof is again by contradiction:
 
 \begin{itemize}
-  \item If the row player's payoff $\le 1/2 - 3\varepsilon$:
-
-        Following the previous proof, we try to show that the strategy can be switched to $\mathbf{x}_s^*$, i.e., $\mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) > \frac12 - 3\varepsilon$.
-
-        Consider the zero-sum game $(R, -R)$, where $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-WSNE of it. By the fourth inequality of Lemma 1:
-        \[
-          |\mathcal{C}(\mathbf{x}_s^*, e_j) - \mathcal{C}(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-        \]
-        Substituting the column player's payoff $-R$:
-        \[
-          |(-\mathcal{R})(\mathbf{x}_s^*, e_j) - (-\mathcal{R})(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-        \]
-        \[
-          |\mathcal{R}(\mathbf{x}^*, e_j) - \mathcal{R}(\mathbf{x}_s^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-        \]
-        Hence for every mixed strategy $\mathbf{y}$, $|\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}_s^*, \mathbf{y})| \le \varepsilon$. Also, by Observation 1:
-        \[
-          \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon \le \mathcal{R}(\mathbf{x}^*, e_j) \;\; \text{for all } j \in [n]
-        \]
-        Therefore, for every mixed strategy $\mathbf{y}$,
+  \item Suppose the row player's payoff is at most $1/2-3\varepsilon$. Applied to the column payoff $-R$ in the zero-sum game, Lemma 1 gives
+        $|\mathcal{R}(\mathbf{x}^*,\mathbf{y})-\mathcal{R}(\mathbf{x}_s^*,\mathbf{y})|\le\varepsilon$ for every mixed strategy $\mathbf{y}$. Observation 1 also gives
+        $\mathcal{R}(\mathbf{x}^*,\mathbf{y})\ge\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)-\varepsilon$.
+        Consequently,
         \[
           \mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \varepsilon \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - 2\varepsilon > \frac{1}{2} - 2\varepsilon
         \]
-        So the row player can deviate to $\mathbf{x}_s^*$ to satisfy the condition, a contradiction;
+        and the row player can profitably deviate to $\mathbf{x}_s^*$, a contradiction.
 
-  \item If the column player's payoff $\le 1/2 - 3\varepsilon$:
-
-        First, we state a claim:
-
-        \begin{claim}[Assertion 1]
-          For the restricted game $(-C_{\mathbf{x}_s}, C_{\mathbf{x}_s})$, let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Then $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1 / 2 - 3\varepsilon$.
-        \end{claim}
-
-        This is quite intuitive: suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 - 3 \varepsilon \le 1/2$; then $\tilde{\mathbf{x}}$ is a feasible solution to the condition of Case 2(b) (since $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}_s^*)$), which contradicts the premise of entering Case 2(c).
-
-        Since $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ is a NE, $\tilde{\mathbf{y}}$ is the column player's maximin strategy, meaning that for every row strategy $\mathbf{x}$:
+  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-C_{\mathbf{x}_s^*},C_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$,
         \[
-          \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2} - 3\varepsilon
+          \mathcal{C}(\mathbf{x},\tilde{\mathbf{y}})>\frac12>\frac12-3\varepsilon.
         \]
-        Therefore, the column player can deviate to $\tilde{\mathbf{y}}$ to improve his payoff, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
+        This is a profitable deviation, again a contradiction.
 \end{itemize}
 
 Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\epsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
