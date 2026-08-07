@@ -11,29 +11,29 @@ For a bimatrix game, after normalizing the payoff matrices, we can define $\vare
 
 \begin{itemize}
   \item \textbf{$\varepsilon$-NE ($\varepsilon$-Nash Equilibrium)} \cite{nashtheorem51}: Formally, a mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-NE if and only if:
-  \begin{align*}
-    \mathcal{R}(\mathbf{x}, \mathbf{y}) &\ge \max_{i \in [n]} \mathcal{R}(e_i, \mathbf{y}) - \varepsilon \\
-    \mathcal{C}(\mathbf{x}, \mathbf{y}) &\ge \max_{j \in [n]} \mathcal{C}(\mathbf{x}, e_j) - \varepsilon
-  \end{align*}
-  That is, the maximum gain of any player from a unilateral deviation is at most $\varepsilon$.
+        \begin{align*}
+          \mathcal{R}(\mathbf{x}, \mathbf{y}) & \ge \max_{i \in [n]} \mathcal{R}(e_i, \mathbf{y}) - \varepsilon \\
+          \mathcal{C}(\mathbf{x}, \mathbf{y}) & \ge \max_{j \in [n]} \mathcal{C}(\mathbf{x}, e_j) - \varepsilon
+        \end{align*}
+        That is, the maximum gain of any player from a unilateral deviation is at most $\varepsilon$.
 
   \item \textbf{$\varepsilon$-WSNE ($\varepsilon$-Well-Supported Nash Equilibrium)}: Formally, a mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-WSNE if and only if:
-  \begin{align*}
-    \mathcal{R}(e_i, \mathbf{y}) &\ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon && \text{for all } i \in \operatorname{supp}(\mathbf{x}) \\
-    \mathcal{C}(\mathbf{x}, e_j) &\ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon && \text{for all } j \in \operatorname{supp}(\mathbf{y})
-  \end{align*}
-  That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
+        \begin{align*}
+          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \text{for all } i \in \operatorname{supp}(\mathbf{x}) \\
+          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \text{for all } j \in \operatorname{supp}(\mathbf{y})
+        \end{align*}
+        That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
 \end{itemize}
 
 It is easy to see that every $\varepsilon$-WSNE is an $\varepsilon$-NE (multiplying the inequalities for all pure strategies in the support by their probabilities and summing them up yields the two inequalities of an $\varepsilon$-NE). Intuitively, $\varepsilon$-WSNE avoids the situation where a player assigns small probabilities to some ``bad strategies'' to gain payoff, since these bad strategies may become the bottleneck in practice.
 
 The algorithms below will repeatedly use the LMM lemma and its corollaries for finding approximate equilibria in general bimatrix games:
 
-\begin{lemma}[Lipton--Markakis--Mehta Small-Support Lemma [LMM03]]
+\begin{lemma}[Lipton--Markakis--Mehta Small-Support Lemma \cite{lmm03}]
   Let $(\mathbf{x}, \mathbf{y})$ be a NE of an $n \times n$ bimatrix game $(R, C)$. For any $\varepsilon > 0$ and $k \ge \dfrac{12 \ln n}{\varepsilon^2}$, there exists a $k$-uniform strategy profile $(\mathbf{x}^*, \mathbf{y}^*)$ such that $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-NE and
   \begin{align*}
-    |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| &\le \varepsilon \\
-    |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| &\le \varepsilon
+    |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon \\
+    |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon
   \end{align*}
 
   In \cite{lmm03}, a probabilistic method was used to prove that there exists a sampling satisfying the above properties:
@@ -42,20 +42,20 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
 
   Define the following events:
   \begin{align*}
-    \phi_1 &= \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \} \\
-    \phi_2 &= \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \} \\
-    \pi_{1, i} &= \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
-    \pi_{2, j} &= \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
-    \text{GOOD} &= \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
+    \phi_1      & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+    \phi_2      & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+    \pi_{1, i}  & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
+    \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
+    \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
   \end{align*}
   The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, i}}$.
 
   Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
   \begin{align*}
-    \phi_{1, a} &= \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \} \\
-    \phi_{1, b} &= \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
-    \phi_{2, a} &= \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \} \\
-    \phi_{2, b} &= \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
+    \phi_{1, a} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+    \phi_{1, b} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
+    \phi_{2, a} & = \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+    \phi_{2, b} & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
   \end{align*}
   Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
 
@@ -70,24 +70,24 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
 
   we get:
   \begin{align*}
-    \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) &\le \exp(-k\varepsilon^2 / 8) \\
-    \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) &\le \exp(-k\varepsilon^2 / 8)
+    \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8) \\
+    \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8)
   \end{align*}
   i.e., $\mathbb{P}(\overline{\phi_{1, a}}) \le 2\exp(-k\varepsilon^2 / 8)$; similarly $\mathbb{P}(\overline{\phi_{1, b}}) \le 2\exp(-k\varepsilon^2 / 8)$, and the same holds for $\phi_2$. Therefore,
   \begin{align*}
-    \mathbb{P}(\overline{\phi_1}) &\le 4\exp(-k\varepsilon^2 / 8) \\
-    \mathbb{P}(\overline{\phi_2}) &\le 4\exp(-k\varepsilon^2 / 8)
+    \mathbb{P}(\overline{\phi_1}) & \le 4\exp(-k\varepsilon^2 / 8) \\
+    \mathbb{P}(\overline{\phi_2}) & \le 4\exp(-k\varepsilon^2 / 8)
   \end{align*}
 
   Consider the $\pi$ events. Define the following events:
   \begin{align*}
-    \psi_{1, i} &= \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
-    \psi_{2, j} &= \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
+    \psi_{1, i} & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
+    \psi_{2, j} & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
   \end{align*}
   Earlier we set $\phi_1, \phi_2$ to tighter bounds, which can now be combined with the new events. For example, on $\phi_1 \cap \psi_{1, i}$:
   \begin{align*}
-    \mathcal{R}(e_i, \mathbf{y}^*) &< \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
-    &\le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
+    \mathcal{R}(e_i, \mathbf{y}^*) & < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
+                                   & \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
   \end{align*}
   This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $k$ pure strategies in the multiset $B$, viewing their payoffs against $e_i$ as random variables with expectation $\mathcal{R}(e_i, \mathbf{y})$ and range $(0, 1]$, Hoeffding's inequality gives:
   \[
@@ -95,8 +95,8 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
   \]
   and similarly for $\psi_{2, j}$. Combining all the above parts, we have
   \begin{align*}
-    \mathbb{P}(\overline{\text{GOOD}}) &\le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, i}}) \\
-    &\le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
+    \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, i}}) \\
+                                       & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
   \end{align*}
   Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1$, hence $\mathbb{P}(\text{GOOD}) > 0$, which means there exists at least one sampling satisfying the above properties.
 \end{lemma}
@@ -124,11 +124,11 @@ In general, to compute a $(1/2 + \delta')$-WSNE, one can take $\varepsilon = \de
 \begin{enumerate}
   \item Compute a Nash equilibrium $(\mathbf{x}^*, \mathbf{y}^*)$ of the zero-sum game $(R, -R)$; this can be solved in polynomial time via linear programming.
 
-  By the properties of zero-sum games, $\mathbf{x}^*$ is the row player's \textbf{maximin strategy}:
-  \[
-    \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) = \max_{\mathbf{x} \in \Delta^n} \min_{\mathbf{y} \in \Delta^n} \mathcal{R}(\mathbf{x}, \mathbf{y})
-  \]
-  Hence for every column strategy $\mathbf{y}$, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y})$. \textbf{This property will be used several more times later.}
+        By the properties of zero-sum games, $\mathbf{x}^*$ is the row player's \textbf{maximin strategy}:
+        \[
+          \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) = \max_{\mathbf{x} \in \Delta^n} \min_{\mathbf{y} \in \Delta^n} \mathcal{R}(\mathbf{x}, \mathbf{y})
+        \]
+        Hence for every column strategy $\mathbf{y}$, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y})$. \textbf{This property will be used several more times later.}
 
   \item Compute a Nash equilibrium $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ of the zero-sum game $(-C, C)$. Similarly, for every row strategy $\mathbf{x}$, $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{C}(\mathbf{x}, \hat{\mathbf{y}})$.
 \end{enumerate}
@@ -160,8 +160,8 @@ We then output $(\mathbf{x}', \mathbf{y}^*)$.
 Solve the linear feasibility system:
 \[
   \begin{cases}
-    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot C_{ij} \le \frac12, & \forall j \in [n] \\[4pt]
-    \mathbf{x}'(i) \ge 0, & \forall i \in \operatorname{supp}(\mathbf{x}^*) \\[4pt]
+    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot C_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
+    \mathbf{x}'(i) \ge 0,                                                                   & \forall i \in \operatorname{supp}(\mathbf{x}^*) \\[4pt]
     \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) = 1
   \end{cases}
 \]
@@ -190,17 +190,17 @@ The proof is by contradiction:
 
   \item If the column player's payoff $\le 1/2$:
 
-  Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
-  \[
-    \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
-  \]
-  Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$, so there exists $\tilde{\mathbf{x}}$ with $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$ and $\mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]$, which satisfies the condition of Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
+        Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
+        \[
+          \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
+        \]
+        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$, so there exists $\tilde{\mathbf{x}}$ with $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$ and $\mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]$, which satisfies the condition of Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
 
-  Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
-  \[
-    \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
-  \]
-  Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
+        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
+        \[
+          \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
+        \]
+        Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
 \end{itemize}
 
 Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we only need to compute such an $(\mathbf{x}, \mathbf{y})$. However, we cannot do this in polynomial time, because computing a NE of a general bimatrix game is PPAD-complete \cite{DGP09}.
@@ -251,13 +251,13 @@ Now $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ ar
 
 By the definition of $\varepsilon$-WSNE:
 \begin{align*}
-  \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) &\ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon && \text{for all } i \in [n] \\
-  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) &\ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon && \text{for all } j \in [n]
+  \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)         & \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon     &  & \text{for all } i \in [n] \\
+  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) & \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon &  & \text{for all } j \in [n]
 \end{align*}
 Also, consider the corresponding form of the second inequality in the first game:
 \begin{align*}
-  -\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) &\ge -\mathcal{R}(\mathbf{x}^*, e_j) - \varepsilon && \text{for all } j \in [n] \\
-  \iff \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon &\le \mathcal{R}(\mathbf{x}^*, e_j) && \text{for all } j \in [n]
+  -\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)                   & \ge -\mathcal{R}(\mathbf{x}^*, e_j) - \varepsilon &  & \text{for all } j \in [n] \\
+  \iff \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon & \le \mathcal{R}(\mathbf{x}^*, e_j)                &  & \text{for all } j \in [n]
 \end{align*}
 Similarly, we have:
 \[
@@ -276,10 +276,10 @@ The paper gives two lemmas:
 \begin{lemma}[Lemma 1 (Implied from the LMM lemma [LMM03])]
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
-    |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| &\le \varepsilon \\
-    |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| &\le \varepsilon \\
-    |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})| &\le \varepsilon && \text{for all } i \in [n] \\
-    |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)| &\le \varepsilon && \text{for all } j \in [n]
+    |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
+    |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
+    |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})|                 & \le \varepsilon &  & \text{for all } i \in [n] \\
+    |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)|                 & \le \varepsilon &  & \text{for all } j \in [n]
   \end{align*}
 \end{lemma}
 
@@ -306,8 +306,8 @@ With $k = c\ln n / \varepsilon^2$, the probability that the sampling fails the c
   \]
   Let $k^*$ be the index attaining the maximum on the right-hand side; it suffices to prove $\mathcal{R}(e_i, \mathbf{y}_s) \ge \mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon$. Reusing Lemma 1:
   \begin{align*}
-    &\mathcal{R}(e_{k^*}, \mathbf{y}_s) \le \mathcal{R}(e_{k^*}, \mathbf{y}) + \varepsilon \\
-    \iff &\mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon \le \mathcal{R}(e_{k^*}, \mathbf{y}) - 2 \varepsilon \le \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - 2 \varepsilon
+         & \mathcal{R}(e_{k^*}, \mathbf{y}_s) \le \mathcal{R}(e_{k^*}, \mathbf{y}) + \varepsilon                                                                                     \\
+    \iff & \mathcal{R}(e_{k^*}, \mathbf{y}_s) - 3 \varepsilon \le \mathcal{R}(e_{k^*}, \mathbf{y}) - 2 \varepsilon \le \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - 2 \varepsilon
   \end{align*}
   Together with the first inequality obtained above, the claim follows.
 \end{lemma}
@@ -361,44 +361,44 @@ The proof is again by contradiction:
 \begin{itemize}
   \item If the row player's payoff $\le 1/2 - 3\varepsilon$:
 
-  Following the previous proof, we try to show that the strategy can be switched to $\mathbf{x}_s^*$, i.e., $\mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) > \frac12 - 3\varepsilon$.
+        Following the previous proof, we try to show that the strategy can be switched to $\mathbf{x}_s^*$, i.e., $\mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) > \frac12 - 3\varepsilon$.
 
-  Consider the zero-sum game $(R, -R)$, where $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-WSNE of it. By the fourth inequality of Lemma 1:
-  \[
-    |\mathcal{C}(\mathbf{x}_s^*, e_j) - \mathcal{C}(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-  \]
-  Substituting the column player's payoff $-R$:
-  \[
-    |(-\mathcal{R})(\mathbf{x}_s^*, e_j) - (-\mathcal{R})(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-  \]
-  \[
-    |\mathcal{R}(\mathbf{x}^*, e_j) - \mathcal{R}(\mathbf{x}_s^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
-  \]
-  Hence for every mixed strategy $\mathbf{y}$, $|\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}_s^*, \mathbf{y})| \le \varepsilon$. Also, by Observation 1:
-  \[
-    \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon \le \mathcal{R}(\mathbf{x}^*, e_j) \;\; \text{for all } j \in [n]
-  \]
-  Therefore, for every mixed strategy $\mathbf{y}$,
-  \[
-    \mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \varepsilon \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - 2\varepsilon > \frac{1}{2} - 2\varepsilon
-  \]
-  So the row player can deviate to $\mathbf{x}_s^*$ to satisfy the condition, a contradiction;
+        Consider the zero-sum game $(R, -R)$, where $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-WSNE of it. By the fourth inequality of Lemma 1:
+        \[
+          |\mathcal{C}(\mathbf{x}_s^*, e_j) - \mathcal{C}(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
+        \]
+        Substituting the column player's payoff $-R$:
+        \[
+          |(-\mathcal{R})(\mathbf{x}_s^*, e_j) - (-\mathcal{R})(\mathbf{x}^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
+        \]
+        \[
+          |\mathcal{R}(\mathbf{x}^*, e_j) - \mathcal{R}(\mathbf{x}_s^*, e_j)| \le \varepsilon \;\; \text{for all } j \in [n]
+        \]
+        Hence for every mixed strategy $\mathbf{y}$, $|\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}_s^*, \mathbf{y})| \le \varepsilon$. Also, by Observation 1:
+        \[
+          \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon \le \mathcal{R}(\mathbf{x}^*, e_j) \;\; \text{for all } j \in [n]
+        \]
+        Therefore, for every mixed strategy $\mathbf{y}$,
+        \[
+          \mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \varepsilon \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - 2\varepsilon > \frac{1}{2} - 2\varepsilon
+        \]
+        So the row player can deviate to $\mathbf{x}_s^*$ to satisfy the condition, a contradiction;
 
   \item If the column player's payoff $\le 1/2 - 3\varepsilon$:
 
-  First, we state a claim:
+        First, we state a claim:
 
-  \begin{claim}[Assertion 1]
-    For the restricted game $(-C_{\mathbf{x}_s}, C_{\mathbf{x}_s})$, let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Then $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1 / 2 - 3\varepsilon$.
-  \end{claim}
+        \begin{claim}[Assertion 1]
+          For the restricted game $(-C_{\mathbf{x}_s}, C_{\mathbf{x}_s})$, let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Then $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1 / 2 - 3\varepsilon$.
+        \end{claim}
 
-  This is quite intuitive: suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 - 3 \varepsilon \le 1/2$; then $\tilde{\mathbf{x}}$ is a feasible solution to the condition of Case 2(b) (since $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}_s^*)$), which contradicts the premise of entering Case 2(c).
+        This is quite intuitive: suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 - 3 \varepsilon \le 1/2$; then $\tilde{\mathbf{x}}$ is a feasible solution to the condition of Case 2(b) (since $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}_s^*)$), which contradicts the premise of entering Case 2(c).
 
-  Since $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ is a NE, $\tilde{\mathbf{y}}$ is the column player's maximin strategy, meaning that for every row strategy $\mathbf{x}$:
-  \[
-    \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2} - 3\varepsilon
-  \]
-  Therefore, the column player can deviate to $\tilde{\mathbf{y}}$ to improve his payoff, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
+        Since $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ is a NE, $\tilde{\mathbf{y}}$ is the column player's maximin strategy, meaning that for every row strategy $\mathbf{x}$:
+        \[
+          \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2} - 3\varepsilon
+        \]
+        Therefore, the column player can deviate to $\tilde{\mathbf{y}}$ to improve his payoff, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
 \end{itemize}
 
 Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\epsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
