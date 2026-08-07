@@ -1,0 +1,61 @@
+% 这个文件不要修改-- do not modify this file please.
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % 建议加上，提升字体编码支持
+
+\usepackage[margin=1in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+
+% --- 数学环境 ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{thmtools}
+
+% --- 算法 ---
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% --- 引用与链接 (顺序很关键) ---
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor={red!50!black},  % 内部链接（图表、章节）：深红色
+    citecolor={blue!50!black}, % 参考文献：深蓝色
+    urlcolor={blue!80!black},  % 外部链接：偏亮的深蓝
+    breaklinks=true            % 允许超链接折行
+}
+\usepackage[capitalize,nameinlink]{cleveref}
+
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{blindtext}
+\usepackage{url}
+\usepackage{verbatim}
+
+\usepackage[style=alphabetic, backend=biber, maxcitenames=99, maxbibnames=99, minalphanames=3, labelalpha=true]{biblatex}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{open}[theorem]{Open problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\PPAD}{\ensuremath{\mathsf{PPAD}}\xspace}
+\newcommand{\TFNP}{\ensuremath{\mathsf{TFNP}}\xspace}
+\newcommand{\NP}{\ensuremath{\mathsf{NP}}\xspace}
+\newcommand{\cmt}[1]{} % 保持不变，确认你确实想让注释隐藏
