@@ -42,7 +42,7 @@ Define the following events:
   \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
   \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
 \end{align*}
-The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, i}}$.
+The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, j}}$.
 
 Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
 \begin{align*}
@@ -89,7 +89,7 @@ This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $
 \]
 and similarly for $\psi_{2, j}$. Combining all the above parts, we have
 \begin{align*}
-  \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, i}}) \\
+  \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, j}}) \\
                                      & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
 \end{align*}
 Plugging in the lower bound on $k$ gives $\mathbb{P}(\overline{\text{GOOD}}) < 1$, hence $\mathbb{P}(\text{GOOD}) > 0$, which means there exists at least one sampling satisfying the above properties.
@@ -232,9 +232,9 @@ If we keep using Algorithm 1, we face two problems:
 
 \subsubsection*{1. Approximate equilibria of zero-sum games}
 
-For $n \times n$ zero-sum bimatrix games, there is a randomized algorithm that, with $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries, outputs an $\varepsilon$-NE with success probability $1 - n^{-1/n}$ [Goldberg \& Roth 2013].
+For $n \times n$ zero-sum bimatrix games, there is a randomized algorithm that, with $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries, outputs an $\varepsilon$-NE with success probability $1 - n^{-1/8}$ \cite[Theorem~1]{goldbergRoth14}.
 
-Fearnley and Savani extended this result to the $\varepsilon$-WSNE case: with $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, one can output an $\varepsilon$-WSNE with success probability $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$.
+Fearnley and Savani extended this result to the $\varepsilon$-WSNE case: with $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, one can output an $\varepsilon$-WSNE with success probability at least $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$ \cite[Corollary~5.5]{fearnleySavani16}.
 
 Now $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ are no longer exact equilibria, and the relevant inequalities change accordingly.
 
@@ -256,13 +256,13 @@ Thus we obtain four inequalities for the approximate-NE setting. In the followin
 
 \subsubsection*{2. Shrinking the support via the LMM lemma}
 
-For the places in Algorithm 1 that need supports, taking $\mathbf{x}^*$ as an example, we sample a strategy $\mathbf{x}_s^*$ from $\mathbf{x}^*$ to replace it. Since the support of $\mathbf{x}_s^*$ has size $O(\log n / \epsilon^2)$, we can \textbf{query all} pairs $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$ and $j \in [n]$; the total number of such queries is $O(n \cdot \frac{\log n}{\epsilon^2})$.
+For the places in Algorithm 1 that need supports, taking $\mathbf{x}^*$ as an example, we sample a strategy $\mathbf{x}_s^*$ from $\mathbf{x}^*$ to replace it. Since the support of $\mathbf{x}_s^*$ has size $O(\log n / \varepsilon^2)$, we can \textbf{query all} pairs $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$ and $j \in [n]$; the total number of such queries is $O(n \cdot \frac{\log n}{\varepsilon^2})$.
 
 Note that, to guarantee the correctness of the algorithm, the sampling cannot be arbitrary; it must satisfy the condition of Lemma 1 below.
 
 The paper gives two lemmas:
 
-\begin{lemma}[Lemma 1 (Implied from the LMM lemma \cite{lmm03})]
+\begin{lemma}[{\cite[Lemma~1]{12WSNE} (implied by the proof of \cite[Theorem~1]{lmm03})}]
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
@@ -278,7 +278,7 @@ Here ``sampled from $(\mathbf{x}, \mathbf{y})$'' means that pure strategies are 
 \]
 and its column-player analogue. Hoeffding's inequality and a union bound over the $2n+2$ conditions then give $k=O(\ln n/\varepsilon^2)$; choosing a larger hidden constant makes the failure probability arbitrarily small.
 
-\begin{lemma}[Lemma 2]
+\begin{lemma}[{\cite[Lemma~2]{12WSNE}}]
   Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile \textbf{satisfying the condition of Lemma 1}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 
   \textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
@@ -296,7 +296,7 @@ It is worth noting that the statement of Lemma 2 in the paper does not mention t
 \subsection{Preprocessing}
 
 \begin{enumerate}
-  \item With $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, obtain two approximate NEs $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$;
+  \item With $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, obtain two $\varepsilon$-WSNEs $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$;
   \item Sample $\mathbf{x}_s^*, \mathbf{y}_s^*$ satisfying the condition of Lemma 1, query all $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$, and construct the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$.
 \end{enumerate}
 
@@ -354,7 +354,7 @@ The proof is again by contradiction:
         This is a profitable deviation, again a contradiction.
 \end{itemize}
 
-Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\epsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
+Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\varepsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
 
 \section{Conclusion}
 
