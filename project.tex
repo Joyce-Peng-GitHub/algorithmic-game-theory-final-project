@@ -1,8 +1,8 @@
 \section{Motivation and Significance}
 
-Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite[Sections~1 and~3]{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
+Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
 
-We selected this paper because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Its appearance in the lecture notes first drew our attention. Its relatively concise presentation made the central argument accessible, while the derivations left implicit offered an opportunity for careful reconstruction and verification.
+We selected this paper mainly because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Besides, its appearance in the lecture notes stimulated our interest. Another reason is that its relatively concise presentation made the central argument seemingly more accessible, probably due to some step-skipping, however.
 
 \section{Preliminaries}
 
@@ -173,8 +173,8 @@ The paper gives two lemmas:
   \label{lem:small-supp-approx}
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
-    |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
-    |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
+    |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
+    |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
     |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})|                 & \le \varepsilon &  & \forall i \in [n] \\
     |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)|                 & \le \varepsilon &  & \forall j \in [n]
   \end{align*}
