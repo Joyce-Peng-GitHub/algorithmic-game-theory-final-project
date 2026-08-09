@@ -7,7 +7,7 @@ The probability statement for Algorithm~2 requires additional accounting. Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Lemma \ref{lem:query-efficient-eps-wsne-in-zero_sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$.
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$.
 
 Moreover, The paper does not account for \textbf{sampling failures}. Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
 \[
@@ -30,7 +30,7 @@ which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates 
 
 The source also contains a few insignificant typos:
 \begin{itemize}
-  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found within $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Theorem~\ref{thm:query-efficient-version}, the algorithm can perform up to $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries.
+  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found within $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, the algorithm can perform up to $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries.
   \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-samling} \cite[Lemma~2]{12WSNE}.
   \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states $|\supp(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\supp(\mathbf{y}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
 \end{itemize}
