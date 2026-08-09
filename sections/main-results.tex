@@ -1,0 +1,20 @@
+\section{Main Results}
+
+\begin{theorem}[Main Conclusion]
+  \label{thm:finding-bimat-game-12_del-wsne-is-poly-time}
+  For any constant $\delta > 0$, there is a polynomial-time algorithm that finds a $(1/2 + \delta)$-WSNE in any $n \times n$ normalized bimatrix game $(R, C)$ \cite[Theorem~1]{12WSNE}.
+\end{theorem}
+
+Note that the exponent of the ``polynomial time'' depends on $\delta$; when $\delta$ is a constant, the running time is polynomial in $n$.
+
+For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
+
+\begin{theorem}[{Corrected Query Efficient Version \cite[Theorem~2]{12WSNE}}]
+  \label{thm:query-efficient-version}
+  For any constants $\varepsilon, \delta > 0$, with $O\left( \frac{n \log n}{\varepsilon^4} \right)$ payoff queries, one can find a $(1/2 + 3\varepsilon + \delta)$-WSNE in polynomial time. If the sampling failure is set to at most $1/n$, its success probability is at least $p_n^2(1-1/n)$.
+\end{theorem}
+
+The probability correction and its unchanged complexity consequences are derived in Section~\ref{sec:source-corrections}.
+
+In general, to compute a $(1/2 + \delta')$-WSNE, one can take $\varepsilon = \delta = \frac{\delta'}{4}$. Similarly, the polynomial time here also depends on $\varepsilon$ and $\delta$.
+

@@ -1,0 +1,23 @@
+\section{Approximate-Equilibrium Definitions}
+\label{app:equilibrium-definitions}
+
+In an $m \times n$ bimatrix game $(\mathcal{R}, \mathcal{C})$, we define
+\begin{itemize}
+  \item \textbf{$\varepsilon$-NE ($\varepsilon$-Nash Equilibrium)}: A mixed strategy profile $(\mathbf{x}, \mathbf{y})$ in a bimatrix game $(\mathcal{R}, \mathcal{C})$ is called an $\varepsilon$-NE if and only if:
+        \begin{align*}
+          \mathcal{R}(\mathbf{x}, \mathbf{y}) & \ge \max_{i \in [m]} \mathcal{R}(e_i, \mathbf{y}) - \varepsilon \\
+          \mathcal{C}(\mathbf{x}, \mathbf{y}) & \ge \max_{j \in [n]} \mathcal{C}(\mathbf{x}, e_j) - \varepsilon
+        \end{align*}
+        That is, the maximum gain of any player from a unilateral deviation is at most $\varepsilon$.
+
+  \item \textbf{$\varepsilon$-WSNE ($\varepsilon$-Well-Supported Nash Equilibrium)}: A mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-WSNE if and only if:
+        \begin{align*}
+          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [m]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \forall i \in \operatorname{supp}(\mathbf{x}) \\
+          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \forall j \in \operatorname{supp}(\mathbf{y})
+        \end{align*}
+        That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
+\end{itemize}
+
+It is easy to see that every $\varepsilon$-WSNE is an $\varepsilon$-NE (multiplying the inequalities for all pure strategies in the support by their probabilities and summing them up yields the two inequalities of an $\varepsilon$-NE). Intuitively, $\varepsilon$-WSNE avoids the situation where a player assigns small probabilities to some ``bad strategies'' to gain payoff, since these bad strategies may become the bottleneck in practice.
+
+

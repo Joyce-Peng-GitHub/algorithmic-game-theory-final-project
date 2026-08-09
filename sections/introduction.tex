@@ -1,0 +1,14 @@
+\section{Introduction}
+
+\subsection{Motivation and Significance}
+
+Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
+
+We selected this paper mainly because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Besides, its appearance in the lecture notes stimulated our interest. Another reason is that its relatively concise presentation made the central argument seemingly more accessible, probably due to some step-skipping, however.
+
+\subsection{Our Contribution}
+
+Our contribution is expository and corrective. For both Theorem~\ref{thm:finding-bimat-game-12_del-wsne-is-poly-time} and its query-efficient counterpart, Theorem~\ref{thm:query-efficient-version}, we reconstruct deductions that are partly omitted or compressed in the source. We display the algorithms in a more detailed manner, elaborating on each step. In particular, we make explicit how the zero-sum maximin guarantees, the linear feasibility systems, and the constant-support enumeration establish correctness in every branch. We also supply the detailed concentration and case-analysis arguments collected in Appendix~\ref{app:lmm-proof} and \ref{app:case-analysis-details}.
+
+We further audit the randomized implementation and identify \textbf{probability-accounting errors} in the source. The stated success probability covers only one invocation of the zero-sum routine, although Algorithm~2 invokes it twice and additionally samples a small-support profile. Besides, we take sampling failures into consideration. Incorporating a sampling failure budget $\eta$, we derive the corrected bound $p_n^2(1-\eta)$ and re-establish the sampling, query, and running-time bounds, with the paper's principal asymptotic conclusions unchanged but more rigorous. Section~\ref{sec:source-corrections} also records several minor errors.
+
