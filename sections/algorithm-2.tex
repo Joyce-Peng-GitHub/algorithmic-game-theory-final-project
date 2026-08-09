@@ -8,7 +8,7 @@ In practice, the cost of providing the entire payoff matrix may be unacceptable;
 If we keep using Algorithm 1, we face two problems:
 \begin{enumerate}
   \item The preprocessing requires exact Nash equilibria of zero-sum games, but without access to the full matrices $\mathcal{R}, \mathcal{C}$ we can only compute approximate equilibria;
-  \item Cases 1(b) and 1(c) require the full information of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, but the support of $\mathbf{x}^*$ may be large, making the number of queries unacceptable.
+  \item Cases 1(b) and 1(c) require the full information of the restricted game $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$, but the support of $\mathbf{x}^*$ may be large, making the number of queries unacceptable.
 \end{enumerate}
 
 \subsection{Modifications}
@@ -77,7 +77,7 @@ The proof is given in Appendix~\ref{app:sampled-wsne-proof}. The randomized impl
 
 \begin{enumerate}
   \item With $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, obtain two $\varepsilon$-WSNEs $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$;
-  \item Draw $\mathbf{x}_s^*, \mathbf{y}_s^*$ with the sample size from Section~\ref{sec:source-corrections}, query all $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$, and construct the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$.
+  \item Draw $\mathbf{x}_s^*, \mathbf{y}_s^*$ with the sample size from Section~\ref{sec:source-corrections}, query all $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$, and construct the restricted game $(\mathcal{R}_{\mathbf{x}_s^*}, \mathcal{C}_{\mathbf{x}_s^*})$.
 \end{enumerate}
 
 Then, following Algorithm 1, we case-analyze, again taking $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})$ as an example:
@@ -93,7 +93,7 @@ In this case, $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) > 1/2$, and there exists $
 \paragraph{Case 2(c): ``both high''}
 In this case, neither of the previous two conditions holds.
 
-Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$ satisfies:
+Consider the restricted game $(\mathcal{R}_{\mathbf{x}_s^*}, \mathcal{C}_{\mathbf{x}_s^*})$. One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(\mathcal{R}_{\mathbf{x}_s^*}, \mathcal{C}_{\mathbf{x}_s^*})$ satisfies:
 \[
   \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon
 \]
@@ -101,4 +101,3 @@ Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can
 Correctness proofs of the three cases are given in Appendix~\ref{app:case-two-low},~\ref{app:case-two-low-high}, and \ref{app:case-two-both-high}, respectively.
 
 Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\varepsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
-

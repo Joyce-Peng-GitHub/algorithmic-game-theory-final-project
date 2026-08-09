@@ -10,8 +10,8 @@
 We show below that it is a $1/2$-WSNE:
 
 \begin{itemize}
-  \item Row player: since $(\mathbf{x}^*, \mathbf{y}^*)$ is a NE of $(R, -R)$, for every pure strategy $i$, $\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$. Hence the row player's best-response payoff is $\le 1/2$, so every row strategy is a $1/2$-best response to $\mathbf{y}^*$;
-  \item Column player: since $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ is a NE of $(-C, C)$ and the case condition gives $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, for every pure strategy $j$, $\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, so every column strategy is a $1/2$-best response to $\hat{\mathbf{x}}$.
+  \item Row player: since $(\mathbf{x}^*, \mathbf{y}^*)$ is a NE of $(\mathcal{R}, -\mathcal{R})$, for every pure strategy $i$, $\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$. Hence the row player's best-response payoff is $\le 1/2$, so every row strategy is a $1/2$-best response to $\mathbf{y}^*$;
+  \item Column player: since $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ is a NE of $(-\mathcal{C}, \mathcal{C})$ and the case condition gives $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, for every pure strategy $j$, $\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, so every column strategy is a $1/2$-best response to $\hat{\mathbf{x}}$.
 \end{itemize}
 
 Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
@@ -36,7 +36,7 @@ The proof is by contradiction:
 
   \item If the column player's payoff $\le 1/2$:
 
-        Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
+        Consider the zero-sum game $(-\mathcal{C}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
         \[
           \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \forall j \in [n]
         \]
@@ -80,7 +80,7 @@ Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
 The proof is again by contradiction:
 
 \begin{itemize}
-  \item Suppose the row player's payoff is at most $1/2-3\varepsilon$. Applied to the column payoff $-R$ in the zero-sum game, Lemma 1 gives
+  \item Suppose the row player's payoff is at most $1/2-3\varepsilon$. Applied to the column payoff $-\mathcal{R}$ in the zero-sum game, Lemma 1 gives
         $|\mathcal{R}(\mathbf{x}^*,\mathbf{y})-\mathcal{R}(\mathbf{x}_s^*,\mathbf{y})|\le\varepsilon$ for every mixed strategy $\mathbf{y}$. Observation 1 also gives
         $\mathcal{R}(\mathbf{x}^*,\mathbf{y})\ge\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)-\varepsilon$.
         Consequently,
@@ -89,7 +89,7 @@ The proof is again by contradiction:
         \]
         and the row player can profitably deviate to $\mathbf{x}_s^*$, a contradiction.
 
-  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-C_{\mathbf{x}_s^*},C_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$,
+  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-\mathcal{C}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$,
         \[
           \mathcal{C}(\mathbf{x},\tilde{\mathbf{y}})>\frac12>\frac12-3\varepsilon.
         \]

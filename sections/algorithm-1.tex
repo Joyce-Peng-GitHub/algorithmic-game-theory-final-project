@@ -5,7 +5,7 @@ This section follows Algorithm~1 and its proof in \cite[Section~3]{12WSNE}.
 \subsection{Preprocessing}
 
 \begin{enumerate}
-  \item Compute a Nash equilibrium $(\mathbf{x}^*, \mathbf{y}^*)$ of the zero-sum game $(R, -R)$; this can be solved in polynomial time via linear programming.
+  \item Compute a Nash equilibrium $(\mathbf{x}^*, \mathbf{y}^*)$ of the zero-sum game $(\mathcal{R}, -\mathcal{R})$; this can be solved in polynomial time via linear programming.
 
         By the properties of zero-sum games, $\mathbf{x}^*$ is the row player's \textbf{maximin strategy}:
         \[
@@ -13,7 +13,7 @@ This section follows Algorithm~1 and its proof in \cite[Section~3]{12WSNE}.
         \]
         Hence for every column strategy $\mathbf{y}$, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y})$. \textbf{This property will be used several more times later.}
 
-  \item Compute a Nash equilibrium $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ of the zero-sum game $(-C, C)$. Similarly, for every row strategy $\mathbf{x}$, $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{C}(\mathbf{x}, \hat{\mathbf{y}})$.
+  \item Compute a Nash equilibrium $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ of the zero-sum game $(-\mathcal{C}, \mathcal{C})$. Similarly, for every row strategy $\mathbf{x}$, $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{C}(\mathbf{x}, \hat{\mathbf{y}})$.
 \end{enumerate}
 
 We then case-analyze the relationship between $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)$ and $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})$. By symmetry, we only analyze the case \textbf{$\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})$}:
@@ -27,7 +27,7 @@ In this case, we simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$. Its correctne
 In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and the following linear feasibility system has a solution $\mathbf{x}'$:
 \[
   \begin{cases}
-    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot C_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
+    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot \mathcal{C}_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
     \mathbf{x}'(i) \ge 0,                                                                   & \forall i \in \operatorname{supp}(\mathbf{x}^*) \\[4pt]
     \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) = 1
   \end{cases}
@@ -40,9 +40,9 @@ Its correctness proof is given in Appendix~\ref{app:case-one-low-high}.
 \paragraph{Case 1(c): ``both high''}
 In this case, neither of the previous two conditions holds; that is, we cannot bound a single player's best response by $\le 1/2$.
 
-Define the \textbf{restricted game} $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$: the row player may only use actions in $\operatorname{supp}(\mathbf{x}^*)$, while the column player may use all $n$ actions.
+Define the \textbf{restricted game} $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$: the row player may only use actions in $\operatorname{supp}(\mathbf{x}^*)$, while the column player may use all $n$ actions.
 
-One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$ satisfies:
+One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$ satisfies:
 \[
   \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12
 \]
@@ -53,7 +53,7 @@ Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we onl
 Here we use a different sampling theorem that preserves the equilibrium payoffs on the sampled supports:
 
 \begin{lemma}[{Constant-Support Well-Supporting Lemma \cite[Theorem~2]{cfj14}}]
-  For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
+  For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
   \[
     \forall i \in \operatorname{supp}(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
   \]
@@ -72,4 +72,3 @@ Here $\kappa(\delta) = \left\lceil \frac{2 \ln (1/\delta)}{\delta^2} \right\rcei
 \begin{remark}
   In Lemma~\ref{lem:llm_thm}, the sampling size $k = O\left(\frac{\log n}{\varepsilon^2}\right)$ depends on $n$, while here $\kappa(\delta)$ depends only on constant $\delta$. This is (probably) because in this case we only need to constrain the sampled support, whereas the LMM lemma needs to constrain all $n$ pure strategies.
 \end{remark}
-
