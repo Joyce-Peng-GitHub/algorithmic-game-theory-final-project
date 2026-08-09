@@ -12,8 +12,8 @@ In an $m \times n$ bimatrix game $(\mathcal{R}, \mathcal{C})$, we define
 
   \item \textbf{$\varepsilon$-WSNE ($\varepsilon$-Well-Supported Nash Equilibrium)}: A mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-WSNE if and only if:
         \begin{align*}
-          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [m]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \forall i \in \operatorname{supp}(\mathbf{x}) \\
-          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \forall j \in \operatorname{supp}(\mathbf{y})
+          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [m]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \forall i \in \supp(\mathbf{x}) \\
+          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \forall j \in \supp(\mathbf{y})
         \end{align*}
         That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
 \end{itemize}

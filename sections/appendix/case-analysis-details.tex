@@ -22,7 +22,7 @@ Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WS
 We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
 
 \begin{itemize}
-  \item Row player: since $\operatorname{supp}(\mathbf{x}') \subseteq \operatorname{supp}(\mathbf{x}^*)$ and every strategy in $\operatorname{supp}(\mathbf{x}^*)$ is a best response to $\mathbf{y}^*$, when the row player uses $\mathbf{x}'$, every pure strategy in the support is an exact best response, with payoff equal to $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$. That is, the row player's strategy is a $0$-best response.
+  \item Row player: since $\supp(\mathbf{x}') \subseteq \supp(\mathbf{x}^*)$ and every strategy in $\supp(\mathbf{x}^*)$ is a best response to $\mathbf{y}^*$, when the row player uses $\mathbf{x}'$, every pure strategy in the support is an exact best response, with payoff equal to $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$. That is, the row player's strategy is a $0$-best response.
   \item Column player: by construction, $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$ for all $j$, so the column player's best-response payoff is $\le 1/2$, and hence every column strategy is a $1/2$-best response to $\mathbf{x}'$.
 \end{itemize}
 
@@ -40,7 +40,7 @@ The proof is by contradiction:
         \[
           \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \forall j \in [n]
         \]
-        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
+        Moreover, $\supp(\tilde{\mathbf{x}}) \subseteq \supp(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
 
         Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
         \[
@@ -68,7 +68,7 @@ Hence $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $(1/2 + \varepsilon)$-WSNE, and in
 We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE:
 
 \begin{itemize}
-  \item Row player: by Lemma 2, $(\mathbf{x}_s^*, \mathbf{y}_s^*)$ is a $3\varepsilon$-WSNE, and $\mathbf{x}'$ is supported on $\operatorname{supp}(\mathbf{x}_s^*)$, which means that every pure strategy in the support of $\mathbf{x}'$ is a $3\varepsilon$-best response;
+  \item Row player: by Lemma 2, $(\mathbf{x}_s^*, \mathbf{y}_s^*)$ is a $3\varepsilon$-WSNE, and $\mathbf{x}'$ is supported on $\supp(\mathbf{x}_s^*)$, which means that every pure strategy in the support of $\mathbf{x}'$ is a $3\varepsilon$-best response;
   \item Column player: by construction, the column player's maximum payoff is at most $1/2$.
 \end{itemize}
 
@@ -99,7 +99,7 @@ The proof is again by contradiction:
 \subsection{The Sampled-Profile Guarantee}
 \label{app:sampled-wsne-proof}
 
-\textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
+\textbf{Proof:} For any $i \in \supp(\mathbf{x}_s) \subseteq \supp(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
 \begin{align*}
   \mathcal{R}(e_i, \mathbf{y}_s)
    & \ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon                  \\

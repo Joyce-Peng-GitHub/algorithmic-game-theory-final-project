@@ -24,7 +24,7 @@ Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$
 \end{align*}
 Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
 
-Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
+Since every pure strategy in $\supp(\mathbf{x}^*) \subseteq \supp(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
 
 \begin{lemma}[Hoeffding's Inequality]
   For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \frac{\sum_{i} X_i}{n}$,
@@ -64,4 +64,3 @@ and similarly for $\psi_{2, j}$. Combining all the above parts, we have
                                      & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
 \end{align*}
 With the displayed lower bound on $k$, the first term is at most $1/2$ and the second is strictly less than $1/2$. Hence $\mathbb{P}(\overline{\text{GOOD}}) < 1$, so $\mathbb{P}(\text{GOOD}) > 0$ and at least one sampling satisfies the desired properties.
-

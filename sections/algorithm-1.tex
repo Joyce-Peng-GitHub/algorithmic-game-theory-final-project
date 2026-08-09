@@ -27,9 +27,9 @@ In this case, we simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$. Its correctne
 In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and the following linear feasibility system has a solution $\mathbf{x}'$:
 \[
   \begin{cases}
-    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) \cdot \mathcal{C}_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
-    \mathbf{x}'(i) \ge 0,                                                                   & \forall i \in \operatorname{supp}(\mathbf{x}^*) \\[4pt]
-    \sum_{i \in \operatorname{supp}(\mathbf{x}^*)} \mathbf{x}'(i) = 1
+    \sum_{i \in \supp(\mathbf{x}^*)} \mathbf{x}'(i) \cdot \mathcal{C}_{ij} \le \frac12, & \forall j \in [n]                               \\[4pt]
+    \mathbf{x}'(i) \ge 0,                                                                   & \forall i \in \supp(\mathbf{x}^*) \\[4pt]
+    \sum_{i \in \supp(\mathbf{x}^*)} \mathbf{x}'(i) = 1
   \end{cases}
 \]
 This linear program can be solved, or declared infeasible, in polynomial time.
@@ -40,7 +40,7 @@ Its correctness proof is given in Appendix~\ref{app:case-one-low-high}.
 \paragraph{Case 1(c): ``both high''}
 In this case, neither of the previous two conditions holds; that is, we cannot bound a single player's best response by $\le 1/2$.
 
-Define the \textbf{restricted game} $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$: the row player may only use actions in $\operatorname{supp}(\mathbf{x}^*)$, while the column player may use all $n$ actions.
+Define the \textbf{restricted game} $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$: the row player may only use actions in $\supp(\mathbf{x}^*)$, while the column player may use all $n$ actions.
 
 One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$ satisfies:
 \[
@@ -55,19 +55,19 @@ Here we use a different sampling theorem that preserves the equilibrium payoffs 
 \begin{lemma}[{Constant-Support Well-Supporting Lemma \cite[Theorem~2]{cfj14}}]
   For any Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of the restricted game $(\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$, there exists a $\kappa(\delta)$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ such that:
   \[
-    \forall i \in \operatorname{supp}(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
+    \forall i \in \supp(\mathbf{w}),\; \mathcal{R}(e_i, \mathbf{z}) \ge \mathcal{R}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
   \]
   \[
-    \forall j \in \operatorname{supp}(\mathbf{z}),\; \mathcal{C}(\mathbf{w}, e_j) \ge \mathcal{C}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
+    \forall j \in \supp(\mathbf{z}),\; \mathcal{C}(\mathbf{w}, e_j) \ge \mathcal{C}(\mathbf{x}, \mathbf{y}) - \delta > \frac12 - \delta
   \]
   Since the maximum possible payoff is $1$ (the payoff matrices are normalized), the above conditions imply:
   \[
-    \forall i \in \operatorname{supp}(\mathbf{w}),\ \mathcal{R}(e_i, \mathbf{z}) \ge \left(\frac12 - \delta\right) - \left(1 - \max_k \mathcal{R}(e_k, \mathbf{z})\right) = \max_k \mathcal{R}(e_k, \mathbf{z}) - \left(\frac12 + \delta\right)
+    \forall i \in \supp(\mathbf{w}),\ \mathcal{R}(e_i, \mathbf{z}) \ge \left(\frac12 - \delta\right) - \left(1 - \max_k \mathcal{R}(e_k, \mathbf{z})\right) = \max_k \mathcal{R}(e_k, \mathbf{z}) - \left(\frac12 + \delta\right)
   \]
   and similarly for the column player. Therefore, $(\mathbf{w}, \mathbf{z})$ is a $(1/2+\delta)$-WSNE.
 \end{lemma}
 
-Here $\kappa(\delta) = \left\lceil \frac{2 \ln (1/\delta)}{\delta^2} \right\rceil$ is a constant for fixed $\delta \in (0,1)$. A $k$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ satisfies that every component of $\mathbf{w}, \mathbf{z}$ is a non-negative integer multiple of $\frac{1}{k}$, so it naturally follows that $\max(|\operatorname{supp}(\mathbf{w})|, |\operatorname{supp}(\mathbf{z})|) \le \kappa(\delta)$, i.e., both supports have size at most $\kappa(\delta)$. There are $O(n^{\kappa(\delta)})$ such strategies per player and hence $O(n^{2\kappa(\delta)})$ profiles. Since the lemma guarantees existence, it suffices to enumerate all profiles and check whether each one is a $(1/2+\delta)$-WSNE. When $\delta$ is a constant, the running time of the algorithm is polynomial in $n$.
+Here $\kappa(\delta) = \left\lceil \frac{2 \ln (1/\delta)}{\delta^2} \right\rceil$ is a constant for fixed $\delta \in (0,1)$. A $k$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ satisfies that every component of $\mathbf{w}, \mathbf{z}$ is a non-negative integer multiple of $\frac{1}{k}$, so it naturally follows that $\max(|\supp(\mathbf{w})|, |\supp(\mathbf{z})|) \le \kappa(\delta)$, i.e., both supports have size at most $\kappa(\delta)$. There are $O(n^{\kappa(\delta)})$ such strategies per player and hence $O(n^{2\kappa(\delta)})$ profiles. Since the lemma guarantees existence, it suffices to enumerate all profiles and check whether each one is a $(1/2+\delta)$-WSNE. When $\delta$ is a constant, the running time of the algorithm is polynomial in $n$.
 
 \begin{remark}
   In Lemma~\ref{lem:llm_thm}, the sampling size $k = O\left(\frac{\log n}{\varepsilon^2}\right)$ depends on $n$, while here $\kappa(\delta)$ depends only on constant $\delta$. This is (probably) because in this case we only need to constrain the sampled support, whereas the LMM lemma needs to constrain all $n$ pure strategies.

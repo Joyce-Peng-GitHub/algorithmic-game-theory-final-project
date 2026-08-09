@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \setlength{\emergencystretch}{3em}
+
 \input{macros}
 \renewcommand*{\theHtheorem}{\theHsection.\arabic{theorem}}
 \renewcommand*{\theHlemma}{\theHtheorem}
@@ -12,12 +13,18 @@
 \renewcommand*{\theHproblem}{\theHtheorem}
 \renewcommand*{\theHopen}{\theHtheorem}
 \renewcommand*{\theHremark}{\theHtheorem}
+\DeclareMathOperator{\supp}{supp}
+
 \addbibresource{refs.bib}
+
 \title{A Polynomial-Time Algorithm for $1/2$ Well-Supported Nash Equilibria in Bimatrix Games --- Reading Notes}
 \author{Names of members in your group}
+
 \begin{document}
 \maketitle
+
 \include{main-body}
 \include{appendices}
 \printbibliography
+
 \end{document}
