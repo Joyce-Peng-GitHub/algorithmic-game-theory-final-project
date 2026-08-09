@@ -1,3 +1,9 @@
+\section{Motivation and Significance}
+
+Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite[Sections~1 and~3]{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
+
+We selected this paper because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Its appearance in the lecture notes first drew our attention. Its relatively concise presentation made the central argument accessible, while the derivations left implicit offered an opportunity for careful reconstruction and verification. Finally, among the papers satisfying these criteria, our choice was partly random rather than based on a claim that this paper is uniquely representative of the area.
+
 \section{Preliminaries}
 
 For a bimatrix game whose payoffs are normalized to $[0,1]$, we use the standard definitions of $\varepsilon$-NE and $\varepsilon$-WSNE \cite[Section~2]{12WSNE}:
@@ -31,69 +37,7 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
   \end{align*}
 \end{lemma}
 
-In \cite{lmm03}, a probabilistic method was used to prove that there exists a sampling satisfying the above properties:
-
-Sample $k$ pure strategies from $\mathbf{x}$ independently and with replacement to form a multiset $A$ (note that the sampling is according to the distribution $\mathbf{x}$), and similarly sample $k$ pure strategies from $\mathbf{y}$ to form a multiset $B$. Assign probability $1/k$ to each pure strategy in $A$ and $B$ to obtain the mixed strategies $\mathbf{x}^*, \mathbf{y}^*$. Clearly, if a pure strategy appears $t$ times in $A$, its probability is $t / k$.
-
-Define the following events:
-\begin{align*}
-  \phi_1      & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
-  \phi_2      & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
-  \pi_{1, i}  & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
-  \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
-  \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
-\end{align*}
-The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, j}}$.
-
-Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
-\begin{align*}
-  \phi_{1, a} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
-  \phi_{1, b} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
-  \phi_{2, a} & = \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
-  \phi_{2, b} & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
-\end{align*}
-Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
-
-Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
-
-\begin{lemma}[Hoeffding's Inequality]
-  For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
-  \[
-    \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
-  \]
-\end{lemma}
-
-We get:
-\begin{align*}
-  \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8) \\
-  \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8)
-\end{align*}
-i.e., $\mathbb{P}(\overline{\phi_{1, a}}) \le 2\exp(-k\varepsilon^2 / 8)$; similarly $\mathbb{P}(\overline{\phi_{1, b}}) \le 2\exp(-k\varepsilon^2 / 8)$, and the same holds for $\phi_2$. Therefore,
-\begin{align*}
-  \mathbb{P}(\overline{\phi_1}) & \le 4\exp(-k\varepsilon^2 / 8) \\
-  \mathbb{P}(\overline{\phi_2}) & \le 4\exp(-k\varepsilon^2 / 8)
-\end{align*}
-
-Consider the $\pi$ events. Define the following events:
-\begin{align*}
-  \psi_{1, i} & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
-  \psi_{2, j} & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
-\end{align*}
-Earlier we set $\phi_1, \phi_2$ to tighter bounds, which can now be combined with the new events. For example, on $\phi_1 \cap \psi_{1, i}$:
-\begin{align*}
-  \mathcal{R}(e_i, \mathbf{y}^*) & < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
-                                 & \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
-\end{align*}
-This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $k$ pure strategies in the multiset $B$, viewing their payoffs against $e_i$ as random variables with expectation $\mathcal{R}(e_i, \mathbf{y})$ and range $[0, 1]$, Hoeffding's inequality gives:
-\[
-  \mathbb{P}(\mathcal{R}(e_i, \mathbf{y}^*) - \mathcal{R}(e_i, \mathbf{y}) \ge \varepsilon / 2) \le \exp(-k\varepsilon^2 / 2)
-\]
-and similarly for $\psi_{2, j}$. Combining all the above parts, we have
-\begin{align*}
-  \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, j}}) \\
-                                     & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
-\end{align*}
-With the displayed lower bound on $k$, the first term is at most $1/2$ and the second is strictly less than $1/2$. Hence $\mathbb{P}(\overline{\text{GOOD}}) < 1$, so $\mathbb{P}(\text{GOOD}) > 0$ and at least one sampling satisfies the desired properties.
+A complete concentration proof is given in Appendix~\ref{app:lmm-proof}.
 
 \section{Main Results}
 
@@ -105,9 +49,11 @@ Note that the exponent of the ``polynomial time'' depends on $\delta$; when $\de
 
 For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
 
-\begin{theorem}[{Query Version \cite[Theorem~2]{12WSNE}}]
-  For any constants $\varepsilon, \delta > 0$, with $O\left( \frac{n \log n}{\varepsilon^4} \right)$ payoff queries, one can find a $(1/2 + 3\varepsilon + \delta)$-WSNE in polynomial time and with success probability at least $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$.
+\begin{theorem}[{Corrected Query Version \cite[Theorem~2]{12WSNE}}]
+  For any constants $\varepsilon, \delta > 0$, with $O\left( \frac{n \log n}{\varepsilon^4} \right)$ payoff queries, one can find a $(1/2 + 3\varepsilon + \delta)$-WSNE in polynomial time. If the sampling failure is set to at most $1/n$, its success probability is at least $p_n^2(1-1/n)$.
 \end{theorem}
+
+The probability correction and its unchanged complexity consequences are derived in Section~\ref{sec:source-corrections}.
 
 In general, to compute a $(1/2 + \delta')$-WSNE, one can take $\varepsilon = \delta = \frac{\delta'}{4}$. Similarly, the polynomial time here also depends on $\varepsilon$ and $\delta$.
 
@@ -134,14 +80,7 @@ We then case-analyze the relationship between $\mathcal{R}(\mathbf{x}^*, \mathbf
 \subsection{The \texorpdfstring{$\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})$}{R(x*,y*) >= C(xh,yh)} branch}
 
 \paragraph{Case 1(a): $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$}
-In this case, we simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$. We show below that it is a $1/2$-WSNE:
-
-\begin{itemize}
-  \item Row player: since $(\mathbf{x}^*, \mathbf{y}^*)$ is a NE of $(R, -R)$, for every pure strategy $i$, $\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$. Hence the row player's best-response payoff is $\le 1/2$, so every row strategy is a $1/2$-best response to $\mathbf{y}^*$;
-  \item Column player: since $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ is a NE of $(-C, C)$ and the case condition gives $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, for every pure strategy $j$, $\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, so every column strategy is a $1/2$-best response to $\hat{\mathbf{x}}$.
-\end{itemize}
-
-Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
+In this case, we simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$. Its correctness proof is given in Appendix~\ref{app:case-one-low}.
 
 \paragraph{Case 1(b): ``one high, one low''}
 In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and the following linear feasibility system has a solution $\mathbf{x}'$:
@@ -155,12 +94,7 @@ In this case, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, and the following
 This linear program can be solved, or declared infeasible, in polynomial time.
 If it is feasible, we output $(\mathbf{x}', \mathbf{y}^*)$.
 
-We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
-
-\begin{itemize}
-  \item Row player: since $\operatorname{supp}(\mathbf{x}') \subseteq \operatorname{supp}(\mathbf{x}^*)$ and every strategy in $\operatorname{supp}(\mathbf{x}^*)$ is a best response to $\mathbf{y}^*$, when the row player uses $\mathbf{x}'$, every pure strategy in the support is an exact best response, with payoff equal to $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$. That is, the row player's strategy is a $0$-best response.
-  \item Column player: by construction, $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$ for all $j$, so the column player's best-response payoff is $\le 1/2$, and hence every column strategy is a $1/2$-best response to $\mathbf{x}'$.
-\end{itemize}
+Its correctness proof is given in Appendix~\ref{app:case-one-low-high}.
 
 \paragraph{Case 1(c): ``both high''}
 In this case, neither of the previous two conditions holds; that is, we cannot bound a single player's best response by $\le 1/2$.
@@ -171,25 +105,7 @@ One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(R_{\mat
 \[
   \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12
 \]
-The proof is by contradiction:
-
-\begin{itemize}
-  \item If the row player's payoff $\le 1/2$: since $\mathbf{x}^*$ is a maximin strategy, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, so he can switch to $\mathbf{x}^*$ to improve his payoff, a contradiction;
-
-  \item If the column player's payoff $\le 1/2$:
-
-        Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
-        \[
-          \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
-        \]
-        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
-
-        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
-        \[
-          \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
-        \]
-        Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
-\end{itemize}
+The contradiction argument is given in Appendix~\ref{app:case-one-both-high}.
 
 Hence $(\mathbf{x}, \mathbf{y})$ is a $1/2$-WSNE of the original game. So we only need to compute such an $(\mathbf{x}, \mathbf{y})$. However, we cannot in general do this in polynomial time using known methods, because computing a NE of a bimatrix game is \PPAD-complete \cite{DGP09}.
 
@@ -282,23 +198,16 @@ and its column-player analogue. Hoeffding's inequality and a union bound over th
 \begin{lemma}[{\cite[Lemma~2]{12WSNE}}]
   Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile \textbf{satisfying the condition of Lemma 1}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 
-  \textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
-  \begin{align*}
-    \mathcal{R}(e_i, \mathbf{y}_s)
-    &\ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon \\
-    &\ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon \\
-    &\ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
-  \end{align*}
-  The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
+  The proof is given in Appendix~\ref{app:sampled-wsne-proof}.
 \end{lemma}
 
-It is worth noting that the statement of Lemma 2 in the paper does not mention the Lemma 1 restriction on the uniform strategy, and the correctness analysis of the subsequent algorithm also does not account for the probability of a failed Lemma 1 sampling. The only interpretation is that the authors implicitly assume that the constant in the sample size $k$ is large enough, so that the failure probability of the Lemma 1 sampling is negligible.
+The randomized implementation and its failure probability are specified in Section~\ref{sec:source-corrections}.
 
 \subsection{Preprocessing}
 
 \begin{enumerate}
   \item With $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, obtain two $\varepsilon$-WSNEs $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$;
-  \item Sample $\mathbf{x}_s^*, \mathbf{y}_s^*$ satisfying the condition of Lemma 1, query all $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$, and construct the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$.
+  \item Draw $\mathbf{x}_s^*, \mathbf{y}_s^*$ with the sample size from Section~\ref{sec:source-corrections}, query all $(e_i, e_j)$ with $i \in \operatorname{supp}(\mathbf{x}_s^*)$, and construct the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$.
 \end{enumerate}
 
 Then, following Algorithm 1, we case-analyze, again taking $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})$ as an example:
@@ -308,6 +217,178 @@ Then, following Algorithm 1, we case-analyze, again taking $\mathcal{R}(\mathbf{
 \paragraph{Case 2(a): $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \le 1/2$}
 Simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$.
 
+Its correctness proof and precise guarantee are given in Appendix~\ref{app:case-two-low}.
+
+\paragraph{Case 2(b): ``one high, one low''}
+In this case, $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) > 1/2$, and there exists $\mathbf{x}'$ supported on $\operatorname{supp}(\mathbf{x}_s^*)$ with $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$; the output is $(\mathbf{x}', \mathbf{y}_s^*)$.
+
+Its correctness proof is given in Appendix~\ref{app:case-two-low-high}.
+
+\paragraph{Case 2(c): ``both high''}
+In this case, neither of the previous two conditions holds.
+
+Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$ satisfies:
+\[
+  \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon
+\]
+The contradiction argument is given in Appendix~\ref{app:case-two-both-high}.
+
+Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\varepsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
+
+\section{Corrections and Clarifications}
+\label{sec:source-corrections}
+
+Surprisingly, we found a few minor errors in the original paper that do not affect its main conclusions.
+
+The probability statement for Algorithm~2 requires additional accounting. Let
+\[
+  p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
+\]
+Corollary~5.5 of Fearnley and Savani guarantees success probability at least $p_n$ for one invocation of the zero-sum routine \cite[Corollary~5.5]{fearnleySavani16}, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$. Moreover, Lemma~1 is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
+\[
+  s=O\!\left(\frac{\log n+\log(1/\eta)}{\varepsilon^2}\right)
+\]
+samples suffice for failure probability at most $\eta$ \cite{hoeffding63}. Consequently, a complete success guarantee is $p_n^2(1-\eta)$; for example, taking $\eta=1/n$ gives
+\[
+  \left(1-n^{-1/8}\right)^2
+  \left(1-\frac{2}{n}\right)^4
+  \left(1-\frac1n\right).
+\]
+This correction does not change the approximation guarantee. The query count becomes
+\[
+  O\!\left(
+  \frac{n\log n}{\varepsilon^4}
+  +\frac{n(\log n+\log(1/\eta))}{\varepsilon^2}
+  \right),
+\]
+which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
+
+The source also contains minor local slips that do not affect its conclusions. In particular, the proof of Theorem~2 invokes Lemma~1 in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~2; the query-count paragraph repeats the same support where the symmetric support is intended; and the introduction gives an $\varepsilon^{-2}$ rather than $\varepsilon^{-4}$ dependence for the zero-sum WSNE routine.
+
+\section{Conclusion}
+
+The paper's main significance is both quantitative and structural: it makes the WSNE threshold $1/2+\delta$ attainable in polynomial time while replacing increasingly elaborate approximation schemes with a transparent combination of zero-sum optimization, linear feasibility, and constant-support enumeration. The query-efficient extension shows that this structure survives under partial payoff access. The probability-accounting corrections above leave both approximation guarantees and asymptotic complexities intact, while making explicit the randomized assumptions needed for Algorithm~2.
+
+\clearpage
+\appendix
+
+\section{Proof of the LMM Small-Support Lemma}
+\label{app:lmm-proof}
+
+In \cite{lmm03}, a probabilistic method was used to prove that there exists a sampling satisfying the above properties:
+
+Sample $k$ pure strategies from $\mathbf{x}$ independently and with replacement to form a multiset $A$ (note that the sampling is according to the distribution $\mathbf{x}$), and similarly sample $k$ pure strategies from $\mathbf{y}$ to form a multiset $B$. Assign probability $1/k$ to each pure strategy in $A$ and $B$ to obtain the mixed strategies $\mathbf{x}^*, \mathbf{y}^*$. Clearly, if a pure strategy appears $t$ times in $A$, its probability is $t / k$.
+
+Define the following events:
+\begin{align*}
+  \phi_1      & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+  \phi_2      & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/2 \}        \\
+  \pi_{1, i}  & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad i \in [n] \\
+  \pi_{2, j}  & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon \} \quad j \in [n] \\
+  \text{GOOD} & = \phi_1 \cap \phi_2 \bigcap_{i \in [n]} \pi_{1, i} \bigcap_{j \in [n]} \pi_{2, j}
+\end{align*}
+The goal is to prove $\mathbb{P}(\text{GOOD}) > 0$. Note that the deviation from the NE is shrunk to $\varepsilon / 2$ here, because we will later need it to bound $\overline{\pi_{1, i}}$ and $\overline{\pi_{2, j}}$.
+
+Consider the $\phi$ events. To bound $\overline{\phi_1}$ and $\overline{\phi_2}$, define the following events:
+\begin{align*}
+  \phi_{1, a} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+  \phi_{1, b} & = \{ |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}^*, \mathbf{y})| < \varepsilon/4 \} \\
+  \phi_{2, a} & = \{ |\mathcal{C}(\mathbf{x}, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| < \varepsilon/4 \}     \\
+  \phi_{2, b} & = \{ |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y}^*)| < \varepsilon/4 \}
+\end{align*}
+Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$.
+
+Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
+
+\begin{lemma}[Hoeffding's Inequality]
+  For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
+  \[
+    \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
+  \]
+\end{lemma}
+
+We get:
+\begin{align*}
+  \mathbb{P}(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \mathcal{R}(\mathbf{x}, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8) \\
+  \mathbb{P}(\mathcal{R}(\mathbf{x}, \mathbf{y}) - \mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \varepsilon / 4) & \le \exp(-k\varepsilon^2 / 8)
+\end{align*}
+i.e., $\mathbb{P}(\overline{\phi_{1, a}}) \le 2\exp(-k\varepsilon^2 / 8)$; similarly $\mathbb{P}(\overline{\phi_{1, b}}) \le 2\exp(-k\varepsilon^2 / 8)$, and the same holds for $\phi_2$. Therefore,
+\begin{align*}
+  \mathbb{P}(\overline{\phi_1}) & \le 4\exp(-k\varepsilon^2 / 8) \\
+  \mathbb{P}(\overline{\phi_2}) & \le 4\exp(-k\varepsilon^2 / 8)
+\end{align*}
+
+Consider the $\pi$ events. Define the following events:
+\begin{align*}
+  \psi_{1, i} & = \{ \mathcal{R}(e_i, \mathbf{y}^*) < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \} \quad i \in [n] \\
+  \psi_{2, j} & = \{ \mathcal{C}(\mathbf{x}^*, e_j) < \mathcal{C}(\mathbf{x}, e_j) + \varepsilon / 2 \} \quad j \in [n]
+\end{align*}
+Earlier we set $\phi_1, \phi_2$ to tighter bounds, which can now be combined with the new events. For example, on $\phi_1 \cap \psi_{1, i}$:
+\begin{align*}
+  \mathcal{R}(e_i, \mathbf{y}^*) & < \mathcal{R}(e_i, \mathbf{y}) + \varepsilon / 2 \le \mathcal{R}(\mathbf{x}, \mathbf{y}) + \varepsilon / 2 \tag{$(\mathbf{x}, \mathbf{y})$ is a NE} \\
+                                 & \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) + \varepsilon
+\end{align*}
+This gives $\pi_{1, i}$, and $\pi_{2, j}$ follows similarly. Likewise, for the $k$ pure strategies in the multiset $B$, viewing their payoffs against $e_i$ as random variables with expectation $\mathcal{R}(e_i, \mathbf{y})$ and range $[0, 1]$, Hoeffding's inequality gives:
+\[
+  \mathbb{P}(\mathcal{R}(e_i, \mathbf{y}^*) - \mathcal{R}(e_i, \mathbf{y}) \ge \varepsilon / 2) \le \exp(-k\varepsilon^2 / 2)
+\]
+and similarly for $\psi_{2, j}$. Combining all the above parts, we have
+\begin{align*}
+  \mathbb{P}(\overline{\text{GOOD}}) & \le \mathbb{P}(\overline{\phi_1}) + \mathbb{P}(\overline{\phi_2}) + \sum_{i \in [n]} \mathbb{P}(\overline{\pi_{1, i}}) + \sum_{j \in [n]} \mathbb{P}(\overline{\pi_{2, j}}) \\
+                                     & \le (8n + 8) \exp(-k\varepsilon^2 / 8) + 2n \exp(-k\varepsilon^2 / 2)
+\end{align*}
+With the displayed lower bound on $k$, the first term is at most $1/2$ and the second is strictly less than $1/2$. Hence $\mathbb{P}(\overline{\text{GOOD}}) < 1$, so $\mathbb{P}(\text{GOOD}) > 0$ and at least one sampling satisfies the desired properties.
+
+\section{Case-Analysis Details}
+
+\subsection{Algorithm~1, Case 1(a)}
+\label{app:case-one-low}
+
+We show below that it is a $1/2$-WSNE:
+
+\begin{itemize}
+  \item Row player: since $(\mathbf{x}^*, \mathbf{y}^*)$ is a NE of $(R, -R)$, for every pure strategy $i$, $\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$. Hence the row player's best-response payoff is $\le 1/2$, so every row strategy is a $1/2$-best response to $\mathbf{y}^*$;
+  \item Column player: since $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ is a NE of $(-C, C)$ and the case condition gives $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, for every pure strategy $j$, $\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, so every column strategy is a $1/2$-best response to $\hat{\mathbf{x}}$.
+\end{itemize}
+
+Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
+
+\subsection{Algorithm~1, Case 1(b)}
+\label{app:case-one-low-high}
+
+We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
+
+\begin{itemize}
+  \item Row player: since $\operatorname{supp}(\mathbf{x}') \subseteq \operatorname{supp}(\mathbf{x}^*)$ and every strategy in $\operatorname{supp}(\mathbf{x}^*)$ is a best response to $\mathbf{y}^*$, when the row player uses $\mathbf{x}'$, every pure strategy in the support is an exact best response, with payoff equal to $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$. That is, the row player's strategy is a $0$-best response.
+  \item Column player: by construction, $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$ for all $j$, so the column player's best-response payoff is $\le 1/2$, and hence every column strategy is a $1/2$-best response to $\mathbf{x}'$.
+\end{itemize}
+
+\subsection{Algorithm~1, Case 1(c)}
+\label{app:case-one-both-high}
+
+The proof is by contradiction:
+
+\begin{itemize}
+  \item If the row player's payoff $\le 1/2$: since $\mathbf{x}^*$ is a maximin strategy, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, so he can switch to $\mathbf{x}^*$ to improve his payoff, a contradiction;
+
+  \item If the column player's payoff $\le 1/2$:
+
+        Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
+        \[
+          \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
+        \]
+        Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
+
+        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
+        \[
+          \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
+        \]
+        Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
+\end{itemize}
+
+\subsection{Algorithm~2, Case 2(a)}
+\label{app:case-two-low}
+
 \begin{itemize}
   \item Row player: $1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon$, so every strategy is a $(1/2 + \varepsilon)$-best response;
   \item Column player: $1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon$ (by Observation 1), so every strategy is a $(1/2 + \varepsilon)$-best response.
@@ -315,8 +396,8 @@ Simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$.
 
 Hence $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $(1/2 + \varepsilon)$-WSNE, and in particular a $(1/2 + 3\varepsilon + \delta)$-WSNE.
 
-\paragraph{Case 2(b): ``one high, one low''}
-In this case, $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) > 1/2$, and there exists $\mathbf{x}'$ supported on $\operatorname{supp}(\mathbf{x}_s^*)$ with $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$; the output is $(\mathbf{x}', \mathbf{y}_s^*)$.
+\subsection{Algorithm~2, Case 2(b)}
+\label{app:case-two-low-high}
 
 We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE:
 
@@ -327,17 +408,21 @@ We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 
 
 Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
 
-\begin{remark}
-  The original paper mistakenly invokes Lemma~1 at this point; but actually, the needed conclusion is the $3\varepsilon$-WSNE guarantee of Lemma~2 \cite[proof of Theorem~2]{12WSNE}.
-\end{remark}
+\subsection{The Sampled-Profile Guarantee}
+\label{app:sampled-wsne-proof}
 
-\paragraph{Case 2(c): ``both high''}
-In this case, neither of the previous two conditions holds.
+\textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
+\begin{align*}
+  \mathcal{R}(e_i, \mathbf{y}_s)
+   & \ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon                  \\
+   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon    \\
+   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
+\end{align*}
+The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
 
-Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can show that every Nash equilibrium $(\mathbf{x}, \mathbf{y})$ of $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$ satisfies:
-\[
-  \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon
-\]
+\subsection{Algorithm~2, Case 2(c)}
+\label{app:case-two-both-high}
+
 The proof is again by contradiction:
 
 \begin{itemize}
@@ -356,9 +441,3 @@ The proof is again by contradiction:
         \]
         This is a profitable deviation, again a contradiction.
 \end{itemize}
-
-Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\varepsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
-
-\section{Conclusion}
-
-Overall, this is very impressive. Although the original paper has some jumps and ambiguities in the proofs, it is still very elegant: it simplifies the cases that need to be enumerated via a concise case analysis, and then uses the uniform sampling theorem to bound the enumeration time at the polynomial level. It would be even better if the proof of Algorithm 2 could be more detailed.
