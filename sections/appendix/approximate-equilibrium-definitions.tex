@@ -18,6 +18,4 @@ In an $m \times n$ bimatrix game $(\mathcal{R}, \mathcal{C})$, we define
         That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
 \end{itemize}
 
-It is easy to see that every $\varepsilon$-WSNE is an $\varepsilon$-NE (multiplying the inequalities for all pure strategies in the support by their probabilities and summing them up yields the two inequalities of an $\varepsilon$-NE). Intuitively, $\varepsilon$-WSNE avoids the situation where a player assigns small probabilities to some ``bad strategies'' to gain payoff, since these bad strategies may become the bottleneck in practice.
-
-
+It is easy to see that every $\varepsilon$-WSNE is an $\varepsilon$-NE (multiplying the inequalities for all pure strategies in the support by their probabilities and summing them up yields the two inequalities of an $\varepsilon$-NE) while the reverse is not necessarily true. Intuitively, in an $\varepsilon$-NE, a player may assign probabilities to some ``bad'' pure strategies and compensate for them with other ``good'' pure strategies. An $\varepsilon$-WSNE, on the other hand, requires that every pure strategy in the support is ``good''.

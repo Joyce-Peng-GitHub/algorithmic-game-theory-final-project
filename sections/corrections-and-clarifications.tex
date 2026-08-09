@@ -30,8 +30,8 @@ which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates 
 
 The source also contains a few insignificant typos:
 \begin{itemize}
-  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found with $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Theorem~\ref{thm:query-efficient-version}, $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries are needed.
+  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found within $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Theorem~\ref{thm:query-efficient-version}, the algorithm can perform up to $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries.
   \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-samling} \cite[Lemma~2]{12WSNE}.
-  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph $|\operatorname{supp}(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\operatorname{supp}(\mathbf{y}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
+  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states $|\operatorname{supp}(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\operatorname{supp}(\mathbf{y}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
 \end{itemize}
 

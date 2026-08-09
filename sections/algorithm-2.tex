@@ -7,7 +7,7 @@ In practice, the cost of providing the entire payoff matrix may be unacceptable;
 
 If we keep using Algorithm 1, we face two problems:
 \begin{enumerate}
-  \item The preprocessing requires exact Nash equilibria of zero-sum games, but without access to the full matrices $R, C$ we can only compute approximate equilibria;
+  \item The preprocessing requires exact Nash equilibria of zero-sum games, but without access to the full matrices $\mathcal{R}, \mathcal{C}$ we can only compute approximate equilibria;
   \item Cases 1(b) and 1(c) require the full information of the restricted game $(R_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, but the support of $\mathbf{x}^*$ may be large, making the number of queries unacceptable.
 \end{enumerate}
 
@@ -51,7 +51,7 @@ The paper gives two lemmas:
 
 \begin{lemma}[Small Support Approximation Lemma {\cite[Lemma~1]{12WSNE} (implied by the proof of Lemma \ref{lem:llm_thm} \cite[Theorem~1]{lmm03})}]
   \label{lem:small-supp-approx}
-  Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
+  Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(\textbf{x}_s, \textbf{y}_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
     |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
