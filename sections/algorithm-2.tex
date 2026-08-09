@@ -45,13 +45,13 @@ Thus we obtain four inequalities for the approximate-NE setting. In the followin
 
 For the places in Algorithm 1 that need supports, taking $\mathbf{x}^*$ as an example, we sample a strategy $\mathbf{x}_s^*$ from $\mathbf{x}^*$ to replace it. Since the support of $\mathbf{x}_s^*$ has size $O(\log n / \varepsilon^2)$, we can \textbf{query all} pairs $(e_i, e_j)$ with $i \in \supp(\mathbf{x}_s^*)$ and $j \in [n]$; the total number of such queries is $O(n \cdot \frac{\log n}{\varepsilon^2})$.
 
-Note that, to guarantee the correctness of the algorithm, the sampling cannot be arbitrary; it must satisfy the condition of Lemma 1 below.
+Note that, to guarantee the correctness of the algorithm, the sampling cannot be arbitrary; it must satisfy the condition of Lemma~\ref{lem:small-supp-approx} below.
 
 The paper gives two lemmas:
 
-\begin{lemma}[Small Support Approximation Lemma {\cite[Lemma~1]{12WSNE} (implied by the proof of Lemma \ref{lem:llm_thm} \cite[Theorem~1]{lmm03})}]
+\begin{lemma}[Small Support Approximation Lemma {\cite[Lemma~1]{12WSNE} (implied by the proof of Lemma \ref{lem:lmm_thm} \cite[Theorem~1]{lmm03})}]
   \label{lem:small-supp-approx}
-  Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(\textbf{x}_s, \textbf{y}_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
+  Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(\mathbf{x}_s, \mathbf{y}_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
     |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                        \\
@@ -67,7 +67,7 @@ Here ``sampled from $(\mathbf{x}, \mathbf{y})$'' means that pure strategies are 
 and its column-player analogue. Hoeffding's inequality and a union bound over the $2n+2$ conditions then give $k=O(\ln n/\varepsilon^2)$; choosing a larger hidden constant makes the failure probability arbitrarily small.
 
 \begin{lemma}[$3\varepsilon$-WSNE Sampling Lemma {\cite[Lemma~2]{12WSNE}}]
-  \label{lem:3_eps-wsne-samling}
+  \label{lem:3_eps-wsne-sampling}
   Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile satisfying the condition of Lemma~\ref{lem:small-supp-approx}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 \end{lemma}
 
