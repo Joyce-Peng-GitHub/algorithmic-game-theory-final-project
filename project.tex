@@ -2,7 +2,7 @@
 
 Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite[Sections~1 and~3]{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
 
-We selected this paper because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Its appearance in the lecture notes first drew our attention. Its relatively concise presentation made the central argument accessible, while the derivations left implicit offered an opportunity for careful reconstruction and verification. Finally, among the papers satisfying these criteria, our choice was partly random rather than based on a claim that this paper is uniquely representative of the area.
+We selected this paper because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Its appearance in the lecture notes first drew our attention. Its relatively concise presentation made the central argument accessible, while the derivations left implicit offered an opportunity for careful reconstruction and verification.
 
 \section{Preliminaries}
 
@@ -18,8 +18,8 @@ For a bimatrix game whose payoffs are normalized to $[0,1]$, we use the standard
 
   \item \textbf{$\varepsilon$-WSNE ($\varepsilon$-Well-Supported Nash Equilibrium)}: Formally, a mixed strategy profile $(\mathbf{x}, \mathbf{y})$ is called an $\varepsilon$-WSNE if and only if:
         \begin{align*}
-          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \text{for all } i \in \operatorname{supp}(\mathbf{x}) \\
-          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \text{for all } j \in \operatorname{supp}(\mathbf{y})
+          \mathcal{R}(e_i, \mathbf{y}) & \ge \max_{k \in [n]} \mathcal{R}(e_k, \mathbf{y}) - \varepsilon &  & \forall i \in \operatorname{supp}(\mathbf{x}) \\
+          \mathcal{C}(\mathbf{x}, e_j) & \ge \max_{k \in [n]} \mathcal{C}(\mathbf{x}, e_k) - \varepsilon &  & \forall j \in \operatorname{supp}(\mathbf{y})
         \end{align*}
         That is, every pure strategy in the support of the current strategy is an $\varepsilon$-best response, i.e., the gain from deviating from it is at most $\varepsilon$.
 \end{itemize}
@@ -30,7 +30,7 @@ The algorithms below will repeatedly use the LMM lemma and its corollaries for f
 
 \begin{lemma}[Lipton--Markakis--Mehta Small-Support Lemma \cite{lmm03}]
   \label{lem:llm_thm}
-  Let $(\mathbf{x}, \mathbf{y})$ be a NE of an $n \times n$ bimatrix game $(R, C)$. For any $\varepsilon > 0$ and $k \ge \dfrac{12 \ln n}{\varepsilon^2}$, there exists a $k$-uniform strategy profile $(\mathbf{x}^*, \mathbf{y}^*)$ such that $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-NE and
+  Let $(\mathbf{x}, \mathbf{y})$ be a NE of an $n \times n$ bimatrix game $(R, C)$. For any $\varepsilon > 0$ and $k \ge \frac{12 \ln n}{\varepsilon^2}$, there exists a $k$-uniform strategy profile $(\mathbf{x}^*, \mathbf{y}^*)$ such that $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-NE and
   \begin{align*}
     |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon \\
     |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon
@@ -42,6 +42,7 @@ A complete concentration proof is given in Appendix~\ref{app:lmm-proof}.
 \section{Main Results}
 
 \begin{theorem}[Main Conclusion]
+  \label{thm:finding-bimat-game-12_del-wsne-is-poly-time}
   For any constant $\delta > 0$, there is a polynomial-time algorithm that finds a $(1/2 + \delta)$-WSNE in any $n \times n$ normalized bimatrix game $(R, C)$ \cite[Theorem~1]{12WSNE}.
 \end{theorem}
 
@@ -49,7 +50,8 @@ Note that the exponent of the ``polynomial time'' depends on $\delta$; when $\de
 
 For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
 
-\begin{theorem}[{Corrected Query Version \cite[Theorem~2]{12WSNE}}]
+\begin{theorem}[{Corrected Query Efficient Version \cite[Theorem~2]{12WSNE}}]
+  \label{thm:query-efficient-version}
   For any constants $\varepsilon, \delta > 0$, with $O\left( \frac{n \log n}{\varepsilon^4} \right)$ payoff queries, one can find a $(1/2 + 3\varepsilon + \delta)$-WSNE in polynomial time. If the sampling failure is set to at most $1/n$, its success probability is at least $p_n^2(1-1/n)$.
 \end{theorem}
 
@@ -126,10 +128,10 @@ Here we use a different sampling theorem that preserves the equilibrium payoffs 
   and similarly for the column player. Therefore, $(\mathbf{w}, \mathbf{z})$ is a $(1/2+\delta)$-WSNE.
 \end{lemma}
 
-Here $\kappa(\delta) = \left\lceil \dfrac{2 \ln (1/\delta)}{\delta^2} \right\rceil$ is a constant for fixed $\delta \in (0,1)$. A $k$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ satisfies that every component of $\mathbf{w}, \mathbf{z}$ is a non-negative integer multiple of $\dfrac{1}{k}$, so it naturally follows that $\max(|\operatorname{supp}(\mathbf{w})|, |\operatorname{supp}(\mathbf{z})|) \le \kappa(\delta)$, i.e., both supports have size at most $\kappa(\delta)$. There are $O(n^{\kappa(\delta)})$ such strategies per player and hence $O(n^{2\kappa(\delta)})$ profiles. Since the lemma guarantees existence, it suffices to enumerate all profiles and check whether each one is a $(1/2+\delta)$-WSNE. When $\delta$ is a constant, the running time of the algorithm is polynomial in $n$.
+Here $\kappa(\delta) = \left\lceil \frac{2 \ln (1/\delta)}{\delta^2} \right\rceil$ is a constant for fixed $\delta \in (0,1)$. A $k$-uniform strategy profile $(\mathbf{w}, \mathbf{z})$ satisfies that every component of $\mathbf{w}, \mathbf{z}$ is a non-negative integer multiple of $\frac{1}{k}$, so it naturally follows that $\max(|\operatorname{supp}(\mathbf{w})|, |\operatorname{supp}(\mathbf{z})|) \le \kappa(\delta)$, i.e., both supports have size at most $\kappa(\delta)$. There are $O(n^{\kappa(\delta)})$ such strategies per player and hence $O(n^{2\kappa(\delta)})$ profiles. Since the lemma guarantees existence, it suffices to enumerate all profiles and check whether each one is a $(1/2+\delta)$-WSNE. When $\delta$ is a constant, the running time of the algorithm is polynomial in $n$.
 
 \begin{remark}
-  In Lemma~\ref{lem:llm_thm}, the sampling size $k = O\left(\dfrac{\log n}{\varepsilon^2}\right)$ depends on $n$, while here $\kappa(\delta)$ depends only on constant $\delta$. This is (probably) because in this case we only need to constrain the sampled support, whereas the LMM lemma needs to constrain all $n$ pure strategies.
+  In Lemma~\ref{lem:llm_thm}, the sampling size $k = O\left(\frac{\log n}{\varepsilon^2}\right)$ depends on $n$, while here $\kappa(\delta)$ depends only on constant $\delta$. This is (probably) because in this case we only need to constrain the sampled support, whereas the LMM lemma needs to constrain all $n$ pure strategies.
 \end{remark}
 
 \section{Algorithm 2: Query-Efficient \texorpdfstring{$(1/2+3\varepsilon+\delta)$}{1/2+3ε+δ}-WSNE}
@@ -151,23 +153,27 @@ If we keep using Algorithm 1, we face two problems:
 
 For $n \times n$ zero-sum bimatrix games, there is a randomized algorithm that, with $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries, outputs an $\varepsilon$-NE with success probability $1 - n^{-1/8}$ \cite[Theorem~1]{goldbergRoth14}.
 
-Fearnley and Savani extended this result to the $\varepsilon$-WSNE case: with $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, one can output an $\varepsilon$-WSNE with success probability at least $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$ \cite[Corollary~5.5]{fearnleySavani16}.
+Fearnley and Savani extended this result to the $\varepsilon$-WSNE case:
+\begin{lemma}[{Query-Efficient $\varepsilon$-WSNE in Zero-Sum Games \cite[Corollary~5.5]{fearnleySavani16}}]
+  \label{lem:query-efficient-eps-wsne-in-zero_sum-games}
+  With $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries, one can output an $\varepsilon$-WSNE with success probability at least $\left( 1 - n^{-\frac{1}{8}} \right)\left( 1 - \frac{2}{n} \right)^2$.
+\end{lemma}
 
 Now $(\mathbf{x}^*, \mathbf{y}^*)$ and $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ are no longer exact equilibria, and the relevant inequalities change accordingly.
 
 By the definition of $\varepsilon$-WSNE:
 \begin{align*}
-  \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)         & \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon     &  & \text{for all } i \in [n] \\
-  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) & \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon &  & \text{for all } j \in [n]
+  \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)         & \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon     &  & \forall i \in [n] \\
+  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) & \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon &  & \forall j \in [n]
 \end{align*}
 Also, consider the corresponding form of the second inequality in the first game:
 \begin{align*}
-  -\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)                   & \ge -\mathcal{R}(\mathbf{x}^*, e_j) - \varepsilon &  & \text{for all } j \in [n] \\
-  \iff \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon & \le \mathcal{R}(\mathbf{x}^*, e_j)                &  & \text{for all } j \in [n]
+  -\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)                   & \ge -\mathcal{R}(\mathbf{x}^*, e_j) - \varepsilon &  & \forall j \in [n] \\
+  \iff \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \varepsilon & \le \mathcal{R}(\mathbf{x}^*, e_j)                &  & \forall j \in [n]
 \end{align*}
 Similarly, we have:
 \[
-  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) - \varepsilon \le \mathcal{C}(e_i, \hat{\mathbf{y}}) \;\; \text{for all } i \in [n]
+  \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) - \varepsilon \le \mathcal{C}(e_i, \hat{\mathbf{y}}) \;\; \forall i \in [n]
 \]
 Thus we obtain four inequalities for the approximate-NE setting. In the following, we call these four inequalities Observation 1 (they are Observation~2 in the original paper \cite[Observation~2]{12WSNE}).
 
@@ -179,13 +185,14 @@ Note that, to guarantee the correctness of the algorithm, the sampling cannot be
 
 The paper gives two lemmas:
 
-\begin{lemma}[{\cite[Lemma~1]{12WSNE} (implied by the proof of Lemma \ref{lem:llm_thm} \cite[Theorem~1]{lmm03})}]
+\begin{lemma}[Small Support Approximation Lemma {\cite[Lemma~1]{12WSNE} (implied by the proof of Lemma \ref{lem:llm_thm} \cite[Theorem~1]{lmm03})}]
+  \label{lem:small-supp-approx}
   Let $(\mathbf{x}, \mathbf{y})$ be a strategy profile of an $n \times n$ bimatrix game. Then there exists an $O(\log n / \varepsilon^2)$-uniform strategy profile $(x_s, y_s)$ sampled from $(\mathbf{x}, \mathbf{y})$ such that
   \begin{align*}
     |\mathcal{R}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
     |\mathcal{C}(\mathbf{x}_s, \mathbf{y}_s) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon                                \\
-    |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})|                 & \le \varepsilon &  & \text{for all } i \in [n] \\
-    |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)|                 & \le \varepsilon &  & \text{for all } j \in [n]
+    |\mathcal{R}(e_i, \mathbf{y}_s) - \mathcal{R}(e_i, \mathbf{y})|                 & \le \varepsilon &  & \forall i \in [n] \\
+    |\mathcal{C}(\mathbf{x}_s, e_j) - \mathcal{C}(\mathbf{x}, e_j)|                 & \le \varepsilon &  & \forall j \in [n]
   \end{align*}
 \end{lemma}
 
@@ -195,13 +202,12 @@ Here ``sampled from $(\mathbf{x}, \mathbf{y})$'' means that pure strategies are 
 \]
 and its column-player analogue. Hoeffding's inequality and a union bound over the $2n+2$ conditions then give $k=O(\ln n/\varepsilon^2)$; choosing a larger hidden constant makes the failure probability arbitrarily small.
 
-\begin{lemma}[{\cite[Lemma~2]{12WSNE}}]
-  Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile \textbf{satisfying the condition of Lemma 1}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
-
-  The proof is given in Appendix~\ref{app:sampled-wsne-proof}.
+\begin{lemma}[$3\varepsilon$-WSNE Sampling Lemma {\cite[Lemma~2]{12WSNE}}]
+  \label{lem:3_eps-wsne-samling}
+  Let $(\mathbf{x}, \mathbf{y})$ be an $\varepsilon$-WSNE of an $n \times n$ bimatrix game, and let $(\mathbf{x}_s, \mathbf{y}_s)$ be an $O(\log n / \varepsilon^2)$-uniform strategy profile satisfying the condition of Lemma~\ref{lem:small-supp-approx}. Then $(\mathbf{x}_s, \mathbf{y}_s)$ is a $3\varepsilon$-WSNE of the game.
 \end{lemma}
 
-The randomized implementation and its failure probability are specified in Section~\ref{sec:source-corrections}.
+The proof is given in Appendix~\ref{app:sampled-wsne-proof}. The randomized implementation and its failure probability are specified in Section~\ref{sec:source-corrections}.
 
 \subsection{Preprocessing}
 
@@ -217,12 +223,8 @@ Then, following Algorithm 1, we case-analyze, again taking $\mathcal{R}(\mathbf{
 \paragraph{Case 2(a): $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \le 1/2$}
 Simply output $(\hat{\mathbf{x}}, \mathbf{y}^*)$.
 
-Its correctness proof and precise guarantee are given in Appendix~\ref{app:case-two-low}.
-
 \paragraph{Case 2(b): ``one high, one low''}
 In this case, $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) > 1/2$, and there exists $\mathbf{x}'$ supported on $\operatorname{supp}(\mathbf{x}_s^*)$ with $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$; the output is $(\mathbf{x}', \mathbf{y}_s^*)$.
-
-Its correctness proof is given in Appendix~\ref{app:case-two-low-high}.
 
 \paragraph{Case 2(c): ``both high''}
 In this case, neither of the previous two conditions holds.
@@ -231,20 +233,21 @@ Consider the restricted game $(R_{\mathbf{x}_s^*}, C_{\mathbf{x}_s^*})$. One can
 \[
   \mathcal{R}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon,\;\; \mathcal{C}(\mathbf{x}, \mathbf{y}) > \frac12 - 3\varepsilon
 \]
-The contradiction argument is given in Appendix~\ref{app:case-two-both-high}.
+
+Correctness proofs of the three cases are given in Appendix~\ref{app:case-two-low},~\ref{app:case-two-low-high}, and \ref{app:case-two-both-high}, respectively.
 
 Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\varepsilon+\delta)$-WSNE. The time complexity analysis is the same as in Algorithm 1.
 
 \section{Corrections and Clarifications}
 \label{sec:source-corrections}
 
-Surprisingly, we found a few minor errors in the original paper that do not affect its main conclusions.
+We found several minor errors in the original paper that do not affect its main conclusions.
 
 The probability statement for Algorithm~2 requires additional accounting. Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Corollary~5.5 of Fearnley and Savani guarantees success probability at least $p_n$ for one invocation of the zero-sum routine \cite[Corollary~5.5]{fearnleySavani16}, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$. Moreover, Lemma~1 is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero_sum-games} guarantees success probability at least $p_n$ for one invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$. Moreover, Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
 \[
   s=O\!\left(\frac{\log n+\log(1/\eta)}{\varepsilon^2}\right)
 \]
@@ -263,7 +266,12 @@ This correction does not change the approximation guarantee. The query count bec
 \]
 which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
 
-The source also contains minor local slips that do not affect its conclusions. In particular, the proof of Theorem~2 invokes Lemma~1 in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~2; the query-count paragraph repeats the same support where the symmetric support is intended; and the introduction gives an $\varepsilon^{-2}$ rather than $\varepsilon^{-4}$ dependence for the zero-sum WSNE routine.
+The source also contains a few insignificant typos:
+\begin{itemize}
+  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found with $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Theorem~\ref{thm:query-efficient-version}, $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries are needed.
+  \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-samling} \cite[Lemma~2]{12WSNE}.
+  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph $|\operatorname{supp}(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\operatorname{supp}(\mathbf{y}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
+\end{itemize}
 
 \section{Conclusion}
 
@@ -301,9 +309,9 @@ Then $\phi_{1, a} \cap \phi_{1, b} \subseteq \phi_1$, and similarly for $\phi_2$
 Since every pure strategy in $\operatorname{supp}(\mathbf{x}^*) \subseteq \operatorname{supp}(\mathbf{x})$ is a best response to $\mathbf{y}$, its expected payoff equals $\mathcal{R}(\mathbf{x}, \mathbf{y})$. Viewing the payoffs of the $k$ pure strategies in the multiset $A$ as random variables, each takes values in $[0, 1]$ with expectation $\mathcal{R}(\mathbf{x}, \mathbf{y})$. By Hoeffding's inequality \cite[Theorem~2]{hoeffding63}:
 
 \begin{lemma}[Hoeffding's Inequality]
-  For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \dfrac{\sum_{i} X_i}{n}$,
+  For $n$ independent random variables $X_i \in [l_i, r_i]$ with empirical mean $\overline{X} = \frac{\sum_{i} X_i}{n}$,
   \[
-    \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\dfrac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
+    \forall \varepsilon > 0,\ \mathbb{P}(\overline{X} - \mathbb{E}(\overline{X}) \ge \varepsilon) \le \exp\left( -\frac{2n^2\varepsilon^2}{\sum_{i} (r_i - l_i)^2} \right)
   \]
 \end{lemma}
 
@@ -375,7 +383,7 @@ The proof is by contradiction:
 
         Consider the zero-sum game $(-C_{\mathbf{x}^*}, C_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
         \[
-          \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \text{for all } j \in [n]
+          \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \forall j \in [n]
         \]
         Moreover, $\operatorname{supp}(\tilde{\mathbf{x}}) \subseteq \operatorname{supp}(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
 
