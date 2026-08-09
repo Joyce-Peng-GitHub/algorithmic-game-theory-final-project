@@ -42,7 +42,7 @@ The proof is by contradiction:
         \]
         Moreover, $\supp(\tilde{\mathbf{x}}) \subseteq \supp(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
 
-        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$,
+        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$ satisfying $\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}^*)$,
         \[
           \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
         \]
@@ -89,7 +89,7 @@ The proof is again by contradiction:
         \]
         and the row player can profitably deviate to $\mathbf{x}_s^*$, a contradiction.
 
-  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-\mathcal{C}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$,
+  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-\mathcal{C}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$ satisfying $\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}_s^*)$,
         \[
           \mathcal{C}(\mathbf{x},\tilde{\mathbf{y}})>\frac12>\frac12-3\varepsilon.
         \]
