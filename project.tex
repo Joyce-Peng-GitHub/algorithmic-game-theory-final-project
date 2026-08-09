@@ -1,8 +1,16 @@
-\section{Motivation and Significance}
+\section{Introduction}
+
+\subsection{Motivation and Significance}
 
 Computing an exact Nash equilibrium of a bimatrix game is \PPAD-complete \cite{DGP09}, making efficient approximation a central problem in algorithmic game theory. Deligkas, Fasoulakis, and Markakis advance the polynomial-time guarantee for the stronger notion of well-supported Nash equilibrium from $0.6528$ to $1/2+\delta$ for every fixed $\delta>0$ \cite{12WSNE}. Beyond the numerical improvement, the paper identifies a comparatively simple structural route to the result: zero-sum equilibria separate the instance into cases handled by linear feasibility or constant-support enumeration. Its payoff-query extension shows that essentially the same threshold remains attainable with near-linear query complexity for fixed approximation parameters \cite[Section~4]{12WSNE}.
 
 We selected this paper mainly because approximate Nash equilibria have both fundamental theoretical importance and practical relevance when exact equilibrium computation or complete payoff information is infeasible. Besides, its appearance in the lecture notes stimulated our interest. Another reason is that its relatively concise presentation made the central argument seemingly more accessible, probably due to some step-skipping, however.
+
+\subsection{Our Contribution}
+
+Our contribution is expository and corrective. For both Theorem~\ref{thm:finding-bimat-game-12_del-wsne-is-poly-time} and its query-efficient counterpart, Theorem~\ref{thm:query-efficient-version}, we reconstruct deductions that are partly omitted or compressed in the source. We display the algorithms in a more detailed manner, elaborating on each step. In particular, we make explicit how the zero-sum maximin guarantees, the linear feasibility systems, and the constant-support enumeration establish correctness in every branch. We also supply the detailed concentration and case-analysis arguments collected in Appendix~\ref{app:lmm-proof} and \ref{app:case-analysis-details}.
+
+We further audit the randomized implementation and identify \textbf{probability-accounting errors} in the source. The stated success probability covers only one invocation of the zero-sum routine, although Algorithm~2 invokes it twice and additionally samples a small-support profile. Besides, we take sampling failures into consideration. Incorporating a sampling failure budget $\eta$, we derive the corrected bound $p_n^2(1-\eta)$ and re-establish the sampling, query, and running-time bounds, with the paper's principal asymptotic conclusions unchanged but more rigorous. Section~\ref{sec:source-corrections} also records several minor errors.
 
 \section{Preliminaries}
 
@@ -225,13 +233,15 @@ Enumerating all $\kappa(\delta)$-uniform strategy profiles, we find a $(1/2+3\va
 \section{Corrections and Clarifications}
 \label{sec:source-corrections}
 
-Surprisingly, we found several errors in the original paper. They do not overturn the main conclusions, but should not be ignored.
+Surprisingly but excitingly, we found several errors in the original paper. They do not overturn the main conclusions, but should not be ignored.
 
 The probability statement for Algorithm~2 requires additional accounting. Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Lemma \ref{lem:query-efficient-eps-wsne-in-zero_sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$. Moreover, Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero_sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$.
+
+Moreover, The paper does not account for \textbf{sampling failures}. Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
 \[
   s=O\!\left(\frac{\log n+\log(1/\eta)}{\varepsilon^2}\right)
 \]
@@ -355,8 +365,12 @@ and similarly for $\psi_{2, j}$. Combining all the above parts, we have
 With the displayed lower bound on $k$, the first term is at most $1/2$ and the second is strictly less than $1/2$. Hence $\mathbb{P}(\overline{\text{GOOD}}) < 1$, so $\mathbb{P}(\text{GOOD}) > 0$ and at least one sampling satisfies the desired properties.
 
 \section{Case-Analysis Details}
+\label{app:case-analysis-details}
 
-\subsection{Algorithm~1, Case 1(a)}
+\subsection{Algorithm~1}
+\label{app:case-analysis-details-algo-1}
+
+\subsubsection{Algorithm~1, Case 1(a)}
 \label{app:case-one-low}
 
 We show below that it is a $1/2$-WSNE:
@@ -368,7 +382,7 @@ We show below that it is a $1/2$-WSNE:
 
 Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
 
-\subsection{Algorithm~1, Case 1(b)}
+\subsubsection{Algorithm~1, Case 1(b)}
 \label{app:case-one-low-high}
 
 We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
@@ -378,7 +392,7 @@ We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
   \item Column player: by construction, $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$ for all $j$, so the column player's best-response payoff is $\le 1/2$, and hence every column strategy is a $1/2$-best response to $\mathbf{x}'$.
 \end{itemize}
 
-\subsection{Algorithm~1, Case 1(c)}
+\subsubsection{Algorithm~1, Case 1(c)}
 \label{app:case-one-both-high}
 
 The proof is by contradiction:
@@ -401,7 +415,10 @@ The proof is by contradiction:
         Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
 \end{itemize}
 
-\subsection{Algorithm~2, Case 2(a)}
+\subsection{Algorithm~2}
+\label{app:case-analysis-details-algo-2}
+
+\subsubsection{Algorithm~2, Case 2(a)}
 \label{app:case-two-low}
 
 \begin{itemize}
@@ -411,7 +428,7 @@ The proof is by contradiction:
 
 Hence $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $(1/2 + \varepsilon)$-WSNE, and in particular a $(1/2 + 3\varepsilon + \delta)$-WSNE.
 
-\subsection{Algorithm~2, Case 2(b)}
+\subsubsection{Algorithm~2, Case 2(b)}
 \label{app:case-two-low-high}
 
 We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE:
@@ -423,19 +440,7 @@ We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 
 
 Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
 
-\subsection{The Sampled-Profile Guarantee}
-\label{app:sampled-wsne-proof}
-
-\textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
-\begin{align*}
-  \mathcal{R}(e_i, \mathbf{y}_s)
-   & \ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon                  \\
-   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon    \\
-   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
-\end{align*}
-The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
-
-\subsection{Algorithm~2, Case 2(c)}
+\subsubsection{Algorithm~2, Case 2(c)}
 \label{app:case-two-both-high}
 
 The proof is again by contradiction:
@@ -456,3 +461,15 @@ The proof is again by contradiction:
         \]
         This is a profitable deviation, again a contradiction.
 \end{itemize}
+
+\subsection{The Sampled-Profile Guarantee}
+\label{app:sampled-wsne-proof}
+
+\textbf{Proof:} For any $i \in \operatorname{supp}(\mathbf{x}_s) \subseteq \operatorname{supp}(\mathbf{x})$, Lemma 1 and the $\varepsilon$-WSNE property give
+\begin{align*}
+  \mathcal{R}(e_i, \mathbf{y}_s)
+   & \ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon                  \\
+   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon    \\
+   & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
+\end{align*}
+The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
