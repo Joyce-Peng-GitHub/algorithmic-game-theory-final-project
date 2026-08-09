@@ -1,6 +1,17 @@
 \documentclass[12pt]{article}
 \setlength{\emergencystretch}{3em}
 \input{macros}
+\renewcommand*{\theHtheorem}{\theHsection.\arabic{theorem}}
+\renewcommand*{\theHlemma}{\theHtheorem}
+\renewcommand*{\theHcorollary}{\theHtheorem}
+\renewcommand*{\theHconjecture}{\theHtheorem}
+\renewcommand*{\theHclaim}{\theHtheorem}
+\renewcommand*{\theHdefinition}{\theHtheorem}
+\renewcommand*{\theHexample}{\theHtheorem}
+\renewcommand*{\theHquestion}{\theHtheorem}
+\renewcommand*{\theHproblem}{\theHtheorem}
+\renewcommand*{\theHopen}{\theHtheorem}
+\renewcommand*{\theHremark}{\theHtheorem}
 \addbibresource{refs.bib}
 \title{A Polynomial-Time Algorithm for $1/2$ Well-Supported Nash Equilibria in Bimatrix Games --- Reading Notes}
 \author{Names of members in your group}
