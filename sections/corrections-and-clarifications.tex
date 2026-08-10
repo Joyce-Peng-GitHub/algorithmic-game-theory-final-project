@@ -3,13 +3,17 @@
 
 Surprisingly but excitingly, we found several errors in the original paper. They do not overturn the main conclusions, but should not be ignored.
 
-The probability statement for Algorithm~2 requires additional accounting. Let
+\subsection{...}
+
+Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. With independent random coins, both invocations therefore succeed with probability at least $p_n^2$.
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. The preprint stated only $p_n$ for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states $p_n^2$, obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
 
-Moreover, the paper does not account for \textbf{sampling failures}. Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
+\subsection{...}
+
+However, the published version still does not account for \textbf{sampling failures}. Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
 \[
   s=O\!\left(\frac{\log n+\log(1/\eta)}{\varepsilon^2}\right)
 \]
@@ -28,9 +32,11 @@ This correction does not change the approximation guarantee. The query count bec
 \]
 which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
 
+\subsection{Typos}
+
 The source also contains a few insignificant typos:
 \begin{itemize}
   \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found within $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, the algorithm can perform up to $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries.
   \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-sampling} \cite[Lemma~2]{12WSNE}.
-  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states $|\supp(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\supp(\mathbf{y}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
+  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states $|\supp(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\supp(\hat{\mathbf{y}}_s)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
 \end{itemize}
