@@ -32,6 +32,48 @@ This correction does not change the approximation guarantee. The query count bec
 \]
 which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
 
+\subsection{Unaccounted payoff queries in the branch conditions}
+
+Algorithm~2 is not, as written, a complete query-efficient implementation of Algorithm~1.After the two calls to Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, it chooses between its two symmetric branches by testing
+\[
+  \mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}}),
+\]
+and then compares the selected expected payoff with $1/2$ in Case~3(a) or
+Case~4(a) \cite[Algorithm~2]{12WSNE}.These are exact tests of bilinear forms, but Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games} only guarantees the output strategies; it does not state that their exact expected payoffs are returned \cite[Corollary~5.5]{fearnleySavani16}.
+
+This distinction is material in the payoff-query model. For example,
+\[
+  \mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)
+  =\sum_{i\in\supp(\mathbf{x}^*)}
+  \sum_{j\in\supp(\mathbf{y}^*)}
+  x_i^*y_j^*R_{ij}.
+\]
+If an entry $R_{ij}$ with $x_i^*y_j^*>0$ has not been queried, changing only that entry changes the displayed expectation without changing the query transcript. Since the algorithm assumes no separation either between the two expected payoffs or from the threshold $1/2$, such a change can reverse one of its branch decisions. Exact evaluation therefore requires, in the worst case, all entries in $\supp(\mathbf{x}^*)\times\supp(\mathbf{y}^*)$, and symmetrically for $\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})$.The source explicitly notes that the zero-sum routine may return fully mixed strategies \cite[pp.~1092--1093]{12WSNE}; hence these tests can require $\Theta(n^2)$ queries.
+
+The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the $\mathcal{R}$ branch, querying all entries in the rows $\supp(\mathbf{x}_s^*)$ permits exact evaluation of expressions involving $\mathbf{x}_s^*$, but not of $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)$ when $\mathbf{x}^*$ is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}.Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~2 as stated, although this does not affect the full-information result.
+
+The query upper bound appears repairable by replacing the exact tests with statistical estimates and adding explicit slack. Let
+\[
+  r=\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*),
+  \qquad
+  c=\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}}).
+\]
+Sampling pure profiles from $\mathbf{x}^*\times\mathbf{y}^*$ and $\hat{\mathbf{x}}\times\hat{\mathbf{y}}$ gives estimates $\widetilde r$ and $\widetilde c$ satisfying
+\[
+  |\widetilde r-r|\leq\gamma,
+  \qquad
+  |\widetilde c-c|\leq\gamma
+\]
+simultaneously, except with probability $\zeta$, using $O(\gamma^{-2}\log(1/\zeta))$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}.The algorithm can choose the orientation by comparing $\widetilde r$ and $\widetilde c$, and use the larger estimate for the low--high split. For example, if $\widetilde r\geq\widetilde c$ and $\widetilde r\leq 1/2$, Observation~1 gives
+\[
+  \max_i\mathcal{R}(e_i,\mathbf{y}^*)
+  \leq \frac12+\varepsilon+\gamma,
+  \qquad
+  \max_j\mathcal{C}(\hat{\mathbf{x}},e_j)
+  \leq \frac12+\varepsilon+\gamma.
+\]
+In the complementary case, $r>1/2-\gamma$, so the high-payoff analysis incurs an additional additive $O(\gamma)$ loss. Taking $\gamma=\Theta(\varepsilon)$ and allocating the desired approximation error among the internal parameters preserves the asymptotic query bound. A complete proof must state the modified thresholds and propagate this error through all three cases. Including both the small-support sampling failure $\eta$ and this estimation failure $\zeta$ gives, for example, the success lower bound $p_n^2(1-\eta-\zeta)$.
+
 \subsection{Typos}
 
 The source also contains a few insignificant typos:
