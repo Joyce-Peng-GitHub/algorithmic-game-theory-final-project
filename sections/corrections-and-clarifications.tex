@@ -64,7 +64,7 @@ Sampling pure profiles from $\mathbf{x}^*\times\mathbf{y}^*$ and $\hat{\mathbf{x
   \qquad
   |\widetilde c-c|\leq\gamma
 \]
-simultaneously, except with probability $\zeta$, using $O(\gamma^{-2}\log(1/\zeta))$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}.The algorithm can choose the orientation by comparing $\widetilde r$ and $\widetilde c$, and use the larger estimate for the low--high split. For example, if $\widetilde r\geq\widetilde c$ and $\widetilde r\leq 1/2$, Observation~1 gives
+simultaneously, except with probability $\zeta$, using $O(\gamma^{-2}\log(1/\zeta))$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}.The algorithm can choose the orientation by comparing $\widetilde r$ and $\widetilde c$, and use the larger estimate for the low--high split. This choice remains safe even if the estimation error reverses the true ordering of $r$ and $c$: the $\gamma$ error is absorbed by the explicit slack in the bounds below, since both players' best-response bounds are controlled directly by the estimates rather than by the exact comparison. For example, if $\widetilde r\geq\widetilde c$ and $\widetilde r\leq 1/2$, Observation~1 gives
 \[
   \max_i\mathcal{R}(e_i,\mathbf{y}^*)
   \leq \frac12+\varepsilon+\gamma,
