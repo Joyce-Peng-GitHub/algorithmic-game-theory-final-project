@@ -52,7 +52,7 @@ If an entry $R_{ij}$ with $x_i^*y_j^*>0$ has not been queried, changing only tha
 
 The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the $\mathcal{R}$ branch, querying all entries in the rows $\supp(\mathbf{x}_s^*)$ permits exact evaluation of expressions involving $\mathbf{x}_s^*$, but not of $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)$ when $\mathbf{x}^*$ is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}. Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~2 as stated, although this does not affect the full-information result.
 
-The query upper bound appears repairable by replacing the exact tests with statistical estimates and adding explicit slack. Let
+The query upper bound can be recovered by replacing the exact tests with statistical estimates and propagating their error. Let
 \[
   r=\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*),
   \qquad
@@ -64,15 +64,45 @@ Sampling pure profiles from $\mathbf{x}^*\times\mathbf{y}^*$ and $\hat{\mathbf{x
   \qquad
   |\widetilde c-c|\leq\gamma
 \]
-simultaneously, except with probability $\zeta$, using $O(\gamma^{-2}\log(1/\zeta))$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}.The algorithm can choose the orientation by comparing $\widetilde r$ and $\widetilde c$, and use the larger estimate for the low--high split. This choice remains safe even if the estimation error reverses the true ordering of $r$ and $c$: the $\gamma$ error is absorbed by the explicit slack in the bounds below, since both players' best-response bounds are controlled directly by the estimates rather than by the exact comparison. For example, if $\widetilde r\geq\widetilde c$ and $\widetilde r\leq 1/2$, Observation~1 gives
+simultaneously, except with probability $\zeta$, using $O\left(\frac{\log(1 / \zeta)}{\gamma^2}\right)$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}. Condition on this simultaneous accuracy event. The modified algorithm chooses its orientation by comparing $\widetilde r$ and $\widetilde c$, and uses the larger estimate for the low--high split. By symmetry, it suffices to analyze the case $\widetilde r\geq\widetilde c$.
+
+If $\widetilde r\leq 1/2$, Observation~1 gives
 \[
   \max_i\mathcal{R}(e_i,\mathbf{y}^*)
+  \leq r+\varepsilon
+  \leq \widetilde r+\gamma+\varepsilon
   \leq \frac12+\varepsilon+\gamma,
   \qquad
   \max_j\mathcal{C}(\hat{\mathbf{x}},e_j)
+  \leq c+\varepsilon
+  \leq \widetilde c+\gamma+\varepsilon
   \leq \frac12+\varepsilon+\gamma.
 \]
-In the complementary case, $r>1/2-\gamma$, so the high-payoff analysis incurs an additional additive $O(\gamma)$ loss. Taking $\gamma=\Theta(\varepsilon)$ and allocating the desired approximation error among the internal parameters preserves the asymptotic query bound. A complete proof must state the modified thresholds and propagate this error through all three cases. Including both the small-support sampling failure $\eta$ and this estimation failure $\zeta$ gives, for example, the success lower bound $p_n^2(1-\eta-\zeta)$.
+Since all payoffs are nonnegative, the profile $(\hat{\mathbf{x}},\mathbf{y}^*)$ is therefore a $(1/2+\varepsilon+\gamma)$-WSNE. Notice that this argument does not assume $r\geq c$: the estimated ordering may select the opposite branch from the exact ordering without invalidating the output.
+
+Suppose instead that $\widetilde r>1/2$. Then
+\[
+  r>\frac12-\gamma.
+\]
+Case~3(b) remains valid independently of the ordering of $r$ and $c$. Lemma~\ref{lem:3_eps-wsne-sampling} bounds the row player's well-supported regret by $3\varepsilon$, while the feasibility constraints bound the column player's best-response payoff by $1/2$. If Case~3(c) occurs, then Observation~1 and Lemma~\ref{lem:small-supp-approx} imply, for every mixed strategy $\mathbf{y}$,
+\[
+  \mathcal{R}(\mathbf{x}_s^*,\mathbf{y})
+  \geq \mathcal{R}(\mathbf{x}^*,\mathbf{y})-\varepsilon
+  \geq r-2\varepsilon
+  >\frac12-(2\varepsilon+\gamma).
+\]
+Thus every Nash equilibrium of the queried restricted game gives the row player payoff greater than $1/2-(2\varepsilon+\gamma)$. The infeasibility of Case~3(b), by the same maximin argument as in Appendix~\ref{app:case-two-both-high}, gives the column player payoff greater than $1/2$. The constant-support enumeration therefore returns a $(1/2+2\varepsilon+\gamma+\delta)$-WSNE. The $\mathcal{C}$ branch is symmetric.
+
+Consequently, on the simultaneous accuracy event, the algorithm remains correct even when the estimated comparison sends it to the branch opposite to the exact comparison. If the estimation event fails, however, no correctness guarantee remains; this is a Monte Carlo rather than a Las Vegas repair. Including both the small-support sampling failure $\eta$ and the estimation failure $\zeta$ gives the success lower bound $p_n^2(1 - \eta - \zeta)$. In order to retain the paper's claimed query efficiency, we need to keep the number of extra queries in the overall bound, i.e.
+$$
+  \frac{\log(1 / \zeta)}{\gamma^2} = O\left(\frac{n \log n}{\varepsilon^4}\right) \iff \gamma = \Omega\left(\varepsilon^2\sqrt{\frac{\log(1 / \zeta)}{n \log n}}\right)
+$$
+If we take, for example, $\zeta = \frac{1}{n}$, then $\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)$. On the other hand, we need $\gamma \leq \varepsilon$ to make the $(1 / 2 + 2\varepsilon + \gamma + \delta)$-WSNE a $(1 / 2 + 3\varepsilon + \delta)$-WSNE. In conclusion, we must let $\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)$ and $\gamma \leq \varepsilon$. If we take $\gamma = \varepsilon$ for example, this way, we repair the query complexity in Theorem~\ref{thm:query-efficient-version}, despite weakening the success probability to
+$$
+  p_n^2(1 - \zeta - \eta) =
+  \left(1 - n^{-1 / 8}\right)^2
+  \left(1 - \frac{2}{n}\right)^5.
+$$
 
 \subsection{Typos}
 
