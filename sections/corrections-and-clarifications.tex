@@ -3,7 +3,7 @@
 
 Surprisingly but excitingly, we found several errors in the original paper. They do not overturn the main conclusions, but should not be ignored.
 
-\subsection{...}
+\subsection{Accounting for Both Zero-Sum Invocations}
 
 Let
 \[
@@ -11,7 +11,7 @@ Let
 \]
 Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. The preprint stated only $p_n$ for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states $p_n^2$, obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
 
-\subsection{...}
+\subsection{Accounting for Small-Support Sampling Failures}
 
 However, the published version still does not account for \textbf{sampling failures}. Lemma \ref{lem:small-supp-approx} is existential, but a randomized implementation must draw the small-support profile and include the sampling event. Hoeffding bounds and a union bound over its constraints show that
 \[
@@ -32,7 +32,7 @@ This correction does not change the approximation guarantee. The query count bec
 \]
 which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
 
-\subsection{Unaccounted payoff queries in the branch conditions}
+\subsection{Unaccounted Payoff Queries in the Branch Conditions}
 
 Algorithm~2 is not, as written, a complete query-efficient implementation of Algorithm~1. After the two calls to Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, it chooses between its two symmetric branches by testing
 \[
