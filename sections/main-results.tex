@@ -1,29 +1,15 @@
 \section{Main Results}
 
+Due to limited space, we only present the pseudo-code of the algorithms here. We strongly recommend reading our full step-by-step explanation in Appendix~\ref{app:algo-details}.
+
+\subsection{The Full-Information Algorithm}
+
 \begin{theorem}[Main Conclusion]
   \label{thm:finding-bimat-game-12_del-wsne-is-poly-time}
   For any constant \(\delta > 0\), there is a polynomial-time algorithm that finds a \((1/2 + \delta)\)-WSNE in any \(n \times n\) normalized bimatrix game \((\mathcal{R}, \mathcal{C})\) \cite[Theorem~1]{12WSNE}.
 \end{theorem}
 
 Note that the exponent of the ``polynomial time'' depends on \(\delta\); when \(\delta\) is a constant, the running time is polynomial in \(n\).
-
-For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
-
-\begin{theorem}[{Query-Efficient Version \cite[Theorem~2]{12WSNE}}]
-  \label{thm:query-efficient-version}
-  For any constants \(\varepsilon, \delta > 0\), with \(O\left( \frac{n \log n}{\varepsilon^4} \right)\) payoff queries, one can find a \((1/2 + 3\varepsilon + \delta)\)-WSNE in polynomial time with probability at least \(p_n^2\), where
-  \[
-    p_n = \left(1 - n^{-1 / 8}\right)\left(1 - \frac{2}{n}\right)^2.
-  \]
-\end{theorem}
-
-The 2023 publication's factor \(p_n^2\) accounts for both calls to the zero-sum routine. When the subsequent small-support profile is obtained by random sampling with failure probability at most \(\eta\), a fully explicit implementation succeeds with probability at least \(p_n^2(1-\eta)\); for \(\eta=1/n\), this is \(p_n^2(1-1/n)\). This refinement and its unchanged complexity consequences are derived in Section~\ref{sec:source-corrections}.
-
-In general, to compute a \((1/2 + \delta')\)-WSNE, one can take \(\varepsilon = \delta = \frac{\delta'}{4}\). Similarly, the polynomial time here also depends on \(\varepsilon\) and \(\delta\).
-
-\subsection{The Full-Information Algorithm}
-
-Algorithm~\ref{alg:full-information} reproduces the main algorithm of Deligkas, Fasoulakis, and Markakis \cite[Algorithm~1]{12WSNE}. Its detailed derivation and correctness argument appear in Appendix~\ref{app:algorithm-one-explanation}.
 
 \begin{algorithm}[H]
   \caption{Main Algorithm for \((1/2+\delta)\)-WSNE}
@@ -57,7 +43,19 @@ Algorithm~\ref{alg:full-information} reproduces the main algorithm of Deligkas, 
 
 \subsection{The Query-Efficient Algorithm}
 
-Algorithm~\ref{alg:query-efficient} reproduces the payoff-query implementation in the source \cite[Algorithm~2]{12WSNE}. Its detailed derivation appears in Appendix~\ref{app:algorithm-two-explanation}; Section~\ref{sec:source-corrections} subsequently audits its probability and query accounting.
+For games in which the payoff matrix is not given but only a payoff-query oracle is available, the paper also gives a query version:
+
+\begin{theorem}[{Query-Efficient Version \cite[Theorem~2]{12WSNE}}]
+  \label{thm:query-efficient-version}
+  For any constants \(\varepsilon, \delta > 0\), with \(O\left( \frac{n \log n}{\varepsilon^4} \right)\) payoff queries, one can find a \((1/2 + 3\varepsilon + \delta)\)-WSNE in polynomial time with probability at least \(p_n^2\), where
+  \[
+    p_n = \left(1 - n^{-1 / 8}\right)\left(1 - \frac{2}{n}\right)^2.
+  \]
+\end{theorem}
+
+The 2023 publication's factor \(p_n^2\) accounts for both calls to the zero-sum routine. When the subsequent small-support profile is obtained by random sampling with failure probability at most \(\eta\), a fully explicit implementation succeeds with probability at least \(p_n^2(1-\eta)\); for \(\eta=1/n\), this is \(p_n^2(1-1/n)\). This refinement and its unchanged complexity consequences are derived in Section~\ref{sec:source-corrections}.
+
+In general, to compute a \((1/2 + \delta')\)-WSNE, one can take \(\varepsilon = \delta = \frac{\delta'}{4}\). Similarly, the polynomial time here also depends on \(\varepsilon\) and \(\delta\).
 
 \begin{algorithm}[H]
   \caption{Query-Efficient Implementation of Algorithm~\ref{alg:full-information}}
