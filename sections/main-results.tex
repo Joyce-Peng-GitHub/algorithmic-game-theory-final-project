@@ -68,9 +68,9 @@ In general, to compute a \((1/2 + \delta')\)-WSNE, one can take \(\varepsilon = 
   \((\mathcal{R},\mathcal{C})\) using
   \(O(n\log n/\varepsilon^4)\) payoff queries.
   \begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=0.18em,topsep=0.3em]
-    \item Use Lemma~8 of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\mathbf{x}^*,\mathbf{y}^*)\) for the zero-sum game \((\mathcal{R},-\mathcal{R})\).
-    \item Use Lemma~8 of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\hat{\mathbf{x}},\hat{\mathbf{y}})\) for the zero-sum game \((-\mathcal{C},\mathcal{C})\).
-    \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\), use Lemma~1 of \cite{12WSNE} to sample the strategy profile \((\mathbf{x}_s^*,\mathbf{y}_s^*)\). Query all strategy profiles \((e_i,e_j)\), with \(i\in\supp(\mathbf{x}_s^*)\), and create the subgame \((\mathcal{R}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\).
+    \item Use Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games} of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\mathbf{x}^*,\mathbf{y}^*)\) for the zero-sum game \((\mathcal{R},-\mathcal{R})\).
+    \item Use Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games} of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\hat{\mathbf{x}},\hat{\mathbf{y}})\) for the zero-sum game \((-\mathcal{C},\mathcal{C})\).
+    \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\), use Lemma~\ref{lem:small-supp-approx} of \cite{12WSNE} to sample the strategy profile \((\mathbf{x}_s^*,\mathbf{y}_s^*)\). Query all strategy profiles \((e_i,e_j)\), with \(i\in\supp(\mathbf{x}_s^*)\), and create the subgame \((\mathcal{R}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\).
       \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.1em,topsep=0.1em]
         \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
         \item Else if there exists a strategy \(\mathbf{x}'\) such that
@@ -78,7 +78,7 @@ In general, to compute a \((1/2 + \delta')\)-WSNE, one can take \(\varepsilon = 
         \(\mathcal{C}(\mathbf{x}',e_j)\leq 1/2\) for every \(j\in[n]\), then return \((\mathbf{x}',\mathbf{y}_s^*)\).
         \item Else, exhaustively search over \(\kappa(\delta)\)-uniform strategy profiles of \((\mathcal{R}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\) and find a \((1/2+3\varepsilon+\delta)\)-WSNE of \((\mathcal{R},\mathcal{C})\).
       \end{enumerate}
-    \item Else if \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})>\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\), use Lemma~1 of \cite{12WSNE} to sample the strategy profile \((\hat{\mathbf{x}}_s,\hat{\mathbf{y}}_s)\). Query all strategy profiles \((e_i,e_j)\), with \(j\in\supp(\hat{\mathbf{y}}_s)\), and create the subgame \((\mathcal{R}_{\hat{\mathbf{x}}_s},\mathcal{C}_{\hat{\mathbf{x}}_s})\).
+    \item Else if \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})>\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\), use Lemma~\ref{lem:small-supp-approx} of \cite{12WSNE} to sample the strategy profile \((\hat{\mathbf{x}}_s,\hat{\mathbf{y}}_s)\). Query all strategy profiles \((e_i,e_j)\), with \(j\in\supp(\hat{\mathbf{y}}_s)\), and create the subgame \((\mathcal{R}_{\hat{\mathbf{x}}_s},\mathcal{C}_{\hat{\mathbf{x}}_s})\).
       \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.1em,topsep=0.1em]
         \item If \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
         \item Else if there exists a strategy \(\mathbf{y}'\) such that
