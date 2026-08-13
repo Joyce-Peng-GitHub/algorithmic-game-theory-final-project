@@ -1,11 +1,12 @@
 \section{Algorithm Details}
+\label{app:algo-details}
 
 \subsection{Detailed Explanation of Algorithm~1}
-\label{app:algorithm-one-explanation}
+\label{app:algo-1-details}
 
 This section follows Algorithm~1 and its proof in \cite[Section~3]{12WSNE}.
 
-\subsection{Preprocessing}
+\subsubsection{Preprocessing}
 
 \begin{enumerate}
   \item Compute a Nash equilibrium \((\mathbf{x}^*, \mathbf{y}^*)\) of the zero-sum game \((\mathcal{R}, -\mathcal{R})\); this can be solved in polynomial time via linear programming.
@@ -21,7 +22,7 @@ This section follows Algorithm~1 and its proof in \cite[Section~3]{12WSNE}.
 
 We then case-analyze the relationship between \(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*)\) and \(\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\). By symmetry, we only analyze the case \textbf{\(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\)}:
 
-\subsection{The \texorpdfstring{\(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\)}{R(x*,y*) >= C(xh,yh)} branch}
+\subsubsection{The \texorpdfstring{\(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\)}{R(x*,y*) >= C(xh,yh)} branch}
 
 \paragraph{Case 1(a): \(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2\)}
 In this case, we simply output \((\hat{\mathbf{x}}, \mathbf{y}^*)\). Its correctness proof is given in Appendix~\ref{app:case-one-low}.
@@ -77,11 +78,11 @@ Here \(\kappa(\delta) = \left\lceil \frac{2 \ln (1/\delta)}{\delta^2} \right\rce
 \end{remark}
 
 \subsection{Detailed Explanation of Algorithm~2}
-\label{app:algorithm-two-explanation}
+\label{app:algo-2-details}
 
 This section follows the payoff-query variant in \cite[Section~4]{12WSNE}, with the probability-accounting correction noted above.
 
-\subsection{Motivation}
+\subsubsection{Motivation}
 In practice, the cost of providing the entire payoff matrix may be unacceptable; only the payoff of a pure strategy profile \((e_i, e_j)\) can be queried. In this setting, the goal of the algorithm is to output an approximate WSNE with as few queries as possible.
 
 If we keep using Algorithm 1, we face two problems:
@@ -90,9 +91,9 @@ If we keep using Algorithm 1, we face two problems:
   \item Cases 1(b) and 1(c) require the full information of the restricted game \((\mathcal{R}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})\), but the support of \(\mathbf{x}^*\) may be large, making the number of queries unacceptable.
 \end{enumerate}
 
-\subsection{Modifications}
+\subsubsection{Modifications}
 
-\subsubsection*{1. Approximate equilibria of zero-sum games}
+\paragraph{Approximate equilibria of zero-sum games}
 
 For \(n \times n\) zero-sum bimatrix games, there is a randomized algorithm that, with \(O\left(\frac{n \log n}{\varepsilon^2}\right)\) queries, outputs an \(\varepsilon\)-NE with success probability \(1 - n^{-1/8}\) \cite[Theorem~1]{goldbergRoth14}.
 
@@ -120,7 +121,7 @@ Similarly, we have:
 \]
 Thus we obtain four inequalities for the approximate-NE setting. In the following, we call these four inequalities Observation 1 (they are Observation~2 in the original paper \cite[Observation~2]{12WSNE}).
 
-\subsubsection*{2. Shrinking the support via the LMM lemma}
+\paragraph{Shrinking the support via the LMM lemma}
 
 For the places in Algorithm 1 that need supports, taking \(\mathbf{x}^*\) as an example, we sample a strategy \(\mathbf{x}_s^*\) from \(\mathbf{x}^*\) to replace it. Since the support of \(\mathbf{x}_s^*\) has size \(O(\log n / \varepsilon^2)\), we can \textbf{query all} pairs \((e_i, e_j)\) with \(i \in \supp(\mathbf{x}_s^*)\) and \(j \in [n]\); the total number of such queries is \(O(n \cdot \frac{\log n}{\varepsilon^2})\).
 
@@ -152,7 +153,7 @@ and its column-player analogue. Hoeffding's inequality and a union bound over th
 
 The proof is given in Appendix~\ref{app:sampled-wsne-proof}. The randomized implementation and its failure probability are specified in Section~\ref{sec:source-corrections}.
 
-\subsection{Preprocessing}
+\subsubsection{Preprocessing}
 
 \begin{enumerate}
   \item With \(O\left(\frac{n \log n}{\varepsilon^4}\right)\) queries, obtain two \(\varepsilon\)-WSNEs \((\mathbf{x}^*, \mathbf{y}^*)\) and \((\hat{\mathbf{x}}, \hat{\mathbf{y}})\);
@@ -161,7 +162,7 @@ The proof is given in Appendix~\ref{app:sampled-wsne-proof}. The randomized impl
 
 Then, following Algorithm 1, we case-analyze, again taking \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\) as an example:
 
-\subsection{The \texorpdfstring{\(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\)}{R(x*,y*) >= C(xh,yh)} branch}
+\subsubsection{The \texorpdfstring{\(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}})\)}{R(x*,y*) >= C(xh,yh)} branch}
 
 \paragraph{Case 2(a): \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \le 1/2\)}
 Simply output \((\hat{\mathbf{x}}, \mathbf{y}^*)\).

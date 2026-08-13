@@ -2,6 +2,7 @@
 \setlength{\emergencystretch}{3em}
 
 \input{macros}
+
 \renewcommand*{\theHtheorem}{\theHsection.\arabic{theorem}}
 \renewcommand*{\theHlemma}{\theHtheorem}
 \renewcommand*{\theHcorollary}{\theHtheorem}
@@ -13,6 +14,13 @@
 \renewcommand*{\theHproblem}{\theHtheorem}
 \renewcommand*{\theHopen}{\theHtheorem}
 \renewcommand*{\theHremark}{\theHtheorem}
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[hang]{\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
 \DeclareMathOperator{\supp}{supp}
 
 \addbibresource{refs.bib}
