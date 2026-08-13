@@ -9,7 +9,7 @@ Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least \(p_n\) for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. The preprint stated only \(p_n\) for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states \(p_n^2\), obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least \(p_n\) for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~\ref{alg:query-efficient} invokes it \textbf{twice}. The preprint stated only \(p_n\) for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states \(p_n^2\), obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
 
 \subsection{Accounting for Small-Support Sampling Failures}
 
@@ -30,11 +30,11 @@ This correction does not change the approximation guarantee. The query count bec
   +\frac{n(\log n+\log(1/\eta))}{\varepsilon^2}
   \right),
 \]
-which remains \(O(n\log n/\varepsilon^4)\) for \(\eta=1/n\). Algorithm~1 enumerates at most \(O(n^{2\kappa(\delta)})\) profiles, while Algorithm~2 enumerates at most \(O(s^{\kappa(\delta)}n^{\kappa(\delta)})\) profiles in its queried subgame; hence both running times remain polynomial in \(n\) for fixed \(\varepsilon\) and \(\delta\). Different allocations of the failure probabilities produce the same asymptotic bounds.
+which remains \(O(n\log n/\varepsilon^4)\) for \(\eta=1/n\). Algorithm~\ref{alg:full-information} enumerates at most \(O(n^{2\kappa(\delta)})\) profiles, while Algorithm~\ref{alg:query-efficient} enumerates at most \(O(s^{\kappa(\delta)}n^{\kappa(\delta)})\) profiles in its queried subgame; hence both running times remain polynomial in \(n\) for fixed \(\varepsilon\) and \(\delta\). Different allocations of the failure probabilities produce the same asymptotic bounds.
 
 \subsection{Unaccounted Payoff Queries in the Branch Conditions}
 
-Algorithm~2 is not, as written, a complete query-efficient implementation of Algorithm~1. After the two calls to Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, it chooses between its two symmetric branches by testing
+Algorithm~\ref{alg:query-efficient} is not, as written, a complete query-efficient implementation of Algorithm~\ref{alg:full-information}. After the two calls to Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, it chooses between its two symmetric branches by testing
 \[
   \mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}}),
 \]
@@ -50,7 +50,7 @@ This distinction is material in the payoff-query model. For example,
 \]
 If an entry \(R_{ij}\) with \(x_i^*y_j^*>0\) has not been queried, changing only that entry changes the displayed expectation without changing the query transcript. Since the algorithm assumes no separation either between the two expected payoffs or from the threshold \(1/2\), such a change can reverse one of its branch decisions. Exact evaluation therefore requires, in the worst case, all entries in \(\supp(\mathbf{x}^*)\times\supp(\mathbf{y}^*)\), and symmetrically for \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\). The source explicitly notes that the zero-sum routine may return fully mixed strategies \cite[pp.~1092--1093]{12WSNE}; hence these tests can require \(\Theta(n^2)\) queries.
 
-The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the \(\mathcal{R}\) branch, querying all entries in the rows \(\supp(\mathbf{x}_s^*)\) permits exact evaluation of expressions involving \(\mathbf{x}_s^*\), but not of \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\) when \(\mathbf{x}^*\) is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}. Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~2 as stated, although this does not affect the full-information result.
+The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the \(\mathcal{R}\) branch, querying all entries in the rows \(\supp(\mathbf{x}_s^*)\) permits exact evaluation of expressions involving \(\mathbf{x}_s^*\), but not of \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\) when \(\mathbf{x}^*\) is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}. Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~\ref{alg:query-efficient} as stated, although this does not affect the full-information result.
 
 The query upper bound can be recovered by replacing the exact tests with statistical estimates and propagating their error. Let
 \[
