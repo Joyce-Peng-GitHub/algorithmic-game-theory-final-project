@@ -20,3 +20,73 @@ For games in which the payoff matrix is not given but only a payoff-query oracle
 The 2023 publication's factor \(p_n^2\) accounts for both calls to the zero-sum routine. When the subsequent small-support profile is obtained by random sampling with failure probability at most \(\eta\), a fully explicit implementation succeeds with probability at least \(p_n^2(1-\eta)\); for \(\eta=1/n\), this is \(p_n^2(1-1/n)\). This refinement and its unchanged complexity consequences are derived in Section~\ref{sec:source-corrections}.
 
 In general, to compute a \((1/2 + \delta')\)-WSNE, one can take \(\varepsilon = \delta = \frac{\delta'}{4}\). Similarly, the polynomial time here also depends on \(\varepsilon\) and \(\delta\).
+
+\subsection{The Full-Information Algorithm}
+
+Algorithm~\ref{alg:full-information} reproduces the main algorithm of Deligkas, Fasoulakis, and Markakis \cite[Algorithm~1]{12WSNE}. Its detailed derivation and correctness argument appear in Appendix~\ref{app:algorithm-one-explanation}.
+
+\begin{algorithm}[H]
+  \caption{Main Algorithm for \((1/2+\delta)\)-WSNE}
+  \label{alg:full-information}
+  \small
+  \textbf{Input:} A bimatrix game \((\mathcal{R},\mathcal{C})\), constants
+  \(\delta\in(0,1]\), and
+  \(\kappa(\delta)=\left\lceil 2\ln(1/\delta)/\delta^2\right\rceil\).\par
+  \textbf{Output:} A \((1/2+\delta)\)-WSNE for \((\mathcal{R},\mathcal{C})\).
+  \begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=0.25em,topsep=0.4em]
+    \item Compute a Nash equilibrium \((\mathbf{x}^*,\mathbf{y}^*)\) for the zero-sum game \((\mathcal{R},-\mathcal{R})\).
+    \item Compute a Nash equilibrium \((\hat{\mathbf{x}},\hat{\mathbf{y}})\) for the zero-sum game \((-\mathcal{C},\mathcal{C})\).
+    \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\):
+      \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.15em,topsep=0.1em]
+        \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
+        \item Else, if there exists a strategy \(\mathbf{x}'\) such that
+        \(\supp(\mathbf{x}')\subseteq\supp(\mathbf{x}^*)\) and
+        \(\mathcal{C}(\mathbf{x}',e_j)\leq 1/2\) for every \(j\in[n]\), then return \((\mathbf{x}',\mathbf{y}^*)\).
+        \item Else, exhaustively search over all \(\kappa(\delta)\)-uniform strategy profiles and find a \((1/2+\delta)\)-WSNE.
+      \end{enumerate}
+    \item Else if \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})>\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\) (symmetric to Step~3, with the players' roles reversed):
+      \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.15em,topsep=0.1em]
+        \item If \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
+        \item Else if there exists a strategy \(\mathbf{y}'\) such that
+        \(\supp(\mathbf{y}')\subseteq\supp(\hat{\mathbf{y}})\) and
+        \(\mathcal{R}(e_i,\mathbf{y}')\leq 1/2\) for every \(i\in[n]\), then return \((\hat{\mathbf{x}},\mathbf{y}')\).
+        \item Else, exhaustively search over all \(\kappa(\delta)\)-uniform strategy profiles and find a \((1/2+\delta)\)-WSNE.
+      \end{enumerate}
+  \end{enumerate}
+\end{algorithm}
+
+\subsection{The Query-Efficient Algorithm}
+
+Algorithm~\ref{alg:query-efficient} reproduces the payoff-query implementation in the source \cite[Algorithm~2]{12WSNE}. Its detailed derivation appears in Appendix~\ref{app:algorithm-two-explanation}; Section~\ref{sec:source-corrections} subsequently audits its probability and query accounting.
+
+\begin{algorithm}[H]
+  \caption{Query-Efficient Implementation of Algorithm~\ref{alg:full-information}}
+  \label{alg:query-efficient}
+  \footnotesize
+  \textbf{Input:} A bimatrix game \((\mathcal{R},\mathcal{C})\), constants
+  \(\varepsilon,\delta\in(0,1]\), and
+  \(\kappa(\delta)=\left\lceil 2\ln(1/\delta)/\delta^2\right\rceil\).\par
+  \textbf{Output:} A \((1/2+3\varepsilon+\delta)\)-WSNE for
+  \((\mathcal{R},\mathcal{C})\) using
+  \(O(n\log n/\varepsilon^4)\) payoff queries.
+  \begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=0.18em,topsep=0.3em]
+    \item Use Lemma~8 of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\mathbf{x}^*,\mathbf{y}^*)\) for the zero-sum game \((\mathcal{R},-\mathcal{R})\).
+    \item Use Lemma~8 of \cite{12WSNE} to compute an \(\varepsilon\)-WSNE \((\hat{\mathbf{x}},\hat{\mathbf{y}})\) for the zero-sum game \((-\mathcal{C},\mathcal{C})\).
+    \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\), use Lemma~1 of \cite{12WSNE} to sample the strategy profile \((\mathbf{x}_s^*,\mathbf{y}_s^*)\). Query all strategy profiles \((e_i,e_j)\), with \(i\in\supp(\mathbf{x}_s^*)\), and create the subgame \((\mathcal{R}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\).
+      \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.1em,topsep=0.1em]
+        \item If \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
+        \item Else if there exists a strategy \(\mathbf{x}'\) such that
+        \(\supp(\mathbf{x}')\subseteq\supp(\mathbf{x}_s^*)\) and
+        \(\mathcal{C}(\mathbf{x}',e_j)\leq 1/2\) for every \(j\in[n]\), then return \((\mathbf{x}',\mathbf{y}_s^*)\).
+        \item Else, exhaustively search over \(\kappa(\delta)\)-uniform strategy profiles of \((\mathcal{R}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\) and find a \((1/2+3\varepsilon+\delta)\)-WSNE of \((\mathcal{R},\mathcal{C})\).
+      \end{enumerate}
+    \item Else if \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})>\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\), use Lemma~1 of \cite{12WSNE} to sample the strategy profile \((\hat{\mathbf{x}}_s,\hat{\mathbf{y}}_s)\). Query all strategy profiles \((e_i,e_j)\), with \(j\in\supp(\hat{\mathbf{y}}_s)\), and create the subgame \((\mathcal{R}_{\hat{\mathbf{x}}_s},\mathcal{C}_{\hat{\mathbf{x}}_s})\).
+      \begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0.1em,topsep=0.1em]
+        \item If \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\leq 1/2\), then return \((\hat{\mathbf{x}},\mathbf{y}^*)\).
+        \item Else if there exists a strategy \(\mathbf{y}'\) such that
+        \(\supp(\mathbf{y}')\subseteq\supp(\hat{\mathbf{y}}_s)\) and
+        \(\mathcal{R}(e_i,\mathbf{y}')\leq 1/2\) for every \(i\in[n]\), then return \((\hat{\mathbf{x}}_s,\mathbf{y}')\).
+        \item Else, exhaustively search over \(\kappa(\delta)\)-uniform strategy profiles of \((\mathcal{R}_{\hat{\mathbf{x}}_s},\mathcal{C}_{\hat{\mathbf{x}}_s})\) and find a \((1/2+3\varepsilon+\delta)\)-WSNE for \((\mathcal{R},\mathcal{C})\).
+      \end{enumerate}
+  \end{enumerate}
+\end{algorithm}
