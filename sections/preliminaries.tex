@@ -1,14 +1,14 @@
 \section{Preliminaries}
 
-We use the standard definitions of $\varepsilon$-NE and $\varepsilon$-WSNE \cite[Section~2]{12WSNE}, as introduced in class. Readers unfamiliar with these notions may consult Appendix~\ref{app:equilibrium-definitions}.
+We use the standard definitions of \(\varepsilon\)-NE and \(\varepsilon\)-WSNE \cite[Section~2]{12WSNE}, as introduced in class. Readers unfamiliar with these notions may consult Appendix~\ref{app:equilibrium-definitions}.
 
-Henceforth, we assume $\mathcal{R},\mathcal{C} \in [0, 1]^{n \times n}$, representing the \textbf{normalized} payoff matrices of a bimatrix game.
+Henceforth, we assume \(\mathcal{R},\mathcal{C} \in [0, 1]^{n \times n}\), representing the \textbf{normalized} payoff matrices of a bimatrix game.
 
 The algorithms below will repeatedly use the LMM lemma and its corollaries for finding approximate equilibria in general bimatrix games:
 
 \begin{lemma}[Lipton--Markakis--Mehta Small-Support Lemma \cite{lmm03}]
   \label{lem:lmm_thm}
-  Let $(\mathbf{x}, \mathbf{y})$ be a NE of an $n \times n$ bimatrix game $(\mathcal{R}, \mathcal{C})$. For any $\varepsilon > 0$ and $k \ge \frac{12 \ln n}{\varepsilon^2}$, there exists a $k$-uniform strategy profile $(\mathbf{x}^*, \mathbf{y}^*)$ such that $(\mathbf{x}^*, \mathbf{y}^*)$ is an $\varepsilon$-NE and
+  Let \((\mathbf{x}, \mathbf{y})\) be a NE of an \(n \times n\) bimatrix game \((\mathcal{R}, \mathcal{C})\). For any \(\varepsilon > 0\) and \(k \ge \frac{12 \ln n}{\varepsilon^2}\), there exists a \(k\)-uniform strategy profile \((\mathbf{x}^*, \mathbf{y}^*)\) such that \((\mathbf{x}^*, \mathbf{y}^*)\) is an \(\varepsilon\)-NE and
   \begin{align*}
     |\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{R}(\mathbf{x}, \mathbf{y})| & \le \varepsilon \\
     |\mathcal{C}(\mathbf{x}^*, \mathbf{y}^*) - \mathcal{C}(\mathbf{x}, \mathbf{y})| & \le \varepsilon

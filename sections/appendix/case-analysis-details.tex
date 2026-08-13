@@ -7,23 +7,23 @@
 \subsubsection{Algorithm~1, Case 1(a)}
 \label{app:case-one-low}
 
-We show below that it is a $1/2$-WSNE:
+We show below that it is a \(1/2\)-WSNE:
 
 \begin{itemize}
-  \item Row player: since $(\mathbf{x}^*, \mathbf{y}^*)$ is a NE of $(\mathcal{R}, -\mathcal{R})$, for every pure strategy $i$, $\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$. Hence the row player's best-response payoff is $\le 1/2$, so every row strategy is a $1/2$-best response to $\mathbf{y}^*$;
-  \item Column player: since $(\hat{\mathbf{x}}, \hat{\mathbf{y}})$ is a NE of $(-\mathcal{C}, \mathcal{C})$ and the case condition gives $\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, for every pure strategy $j$, $\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2$, so every column strategy is a $1/2$-best response to $\hat{\mathbf{x}}$.
+  \item Row player: since \((\mathbf{x}^*, \mathbf{y}^*)\) is a NE of \((\mathcal{R}, -\mathcal{R})\), for every pure strategy \(i\), \(\mathcal{R}(e_i, \mathbf{y}^*) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2\). Hence the row player's best-response payoff is \(\le 1/2\), so every row strategy is a \(1/2\)-best response to \(\mathbf{y}^*\);
+  \item Column player: since \((\hat{\mathbf{x}}, \hat{\mathbf{y}})\) is a NE of \((-\mathcal{C}, \mathcal{C})\) and the case condition gives \(\mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2\), for every pure strategy \(j\), \(\mathcal{C}(\hat{\mathbf{x}}, e_j) \le \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \le \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \le 1/2\), so every column strategy is a \(1/2\)-best response to \(\hat{\mathbf{x}}\).
 \end{itemize}
 
-Therefore, the strategy profile $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $1/2$-WSNE.
+Therefore, the strategy profile \((\hat{\mathbf{x}}, \mathbf{y}^*)\) is a \(1/2\)-WSNE.
 
 \subsubsection{Algorithm~1, Case 1(b)}
 \label{app:case-one-low-high}
 
-We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
+We now show that \((\mathbf{x}', \mathbf{y}^*)\) is a \(1/2\)-WSNE:
 
 \begin{itemize}
-  \item Row player: since $\supp(\mathbf{x}') \subseteq \supp(\mathbf{x}^*)$ and every strategy in $\supp(\mathbf{x}^*)$ is a best response to $\mathbf{y}^*$, when the row player uses $\mathbf{x}'$, every pure strategy in the support is an exact best response, with payoff equal to $\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$. That is, the row player's strategy is a $0$-best response.
-  \item Column player: by construction, $\mathcal{C}(\mathbf{x}', e_j) \le 1/2$ for all $j$, so the column player's best-response payoff is $\le 1/2$, and hence every column strategy is a $1/2$-best response to $\mathbf{x}'$.
+  \item Row player: since \(\supp(\mathbf{x}') \subseteq \supp(\mathbf{x}^*)\) and every strategy in \(\supp(\mathbf{x}^*)\) is a best response to \(\mathbf{y}^*\), when the row player uses \(\mathbf{x}'\), every pure strategy in the support is an exact best response, with payoff equal to \(\mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2\). That is, the row player's strategy is a \(0\)-best response.
+  \item Column player: by construction, \(\mathcal{C}(\mathbf{x}', e_j) \le 1/2\) for all \(j\), so the column player's best-response payoff is \(\le 1/2\), and hence every column strategy is a \(1/2\)-best response to \(\mathbf{x}'\).
 \end{itemize}
 
 \subsubsection{Algorithm~1, Case 1(c)}
@@ -32,21 +32,21 @@ We now show that $(\mathbf{x}', \mathbf{y}^*)$ is a $1/2$-WSNE:
 The proof is by contradiction:
 
 \begin{itemize}
-  \item If the row player's payoff $\le 1/2$: since $\mathbf{x}^*$ is a maximin strategy, $\mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2$, so he can switch to $\mathbf{x}^*$ to improve his payoff, a contradiction;
+  \item If the row player's payoff \(\le 1/2\): since \(\mathbf{x}^*\) is a maximin strategy, \(\mathcal{R}(\mathbf{x}^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) > 1/2\), so he can switch to \(\mathbf{x}^*\) to improve his payoff, a contradiction;
 
-  \item If the column player's payoff $\le 1/2$:
+  \item If the column player's payoff \(\le 1/2\):
 
-        Consider the zero-sum game $(-\mathcal{C}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})$, and let $(\tilde{\mathbf{x}}, \tilde{\mathbf{y}})$ be a NE of it. Suppose $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2$; then
+        Consider the zero-sum game \((-\mathcal{C}_{\mathbf{x}^*}, \mathcal{C}_{\mathbf{x}^*})\), and let \((\tilde{\mathbf{x}}, \tilde{\mathbf{y}})\) be a NE of it. Suppose \(\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2\); then
         \[
           \mathcal{C}(\tilde{\mathbf{x}}, e_j) \le \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) \le 1/2 \;\; \forall j \in [n]
         \]
-        Moreover, $\supp(\tilde{\mathbf{x}}) \subseteq \supp(\mathbf{x}^*)$. Thus $\tilde{\mathbf{x}}$ satisfies the feasibility system in Case 1(b), a contradiction. Hence $\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2$.
+        Moreover, \(\supp(\tilde{\mathbf{x}}) \subseteq \supp(\mathbf{x}^*)\). Thus \(\tilde{\mathbf{x}}\) satisfies the feasibility system in Case 1(b), a contradiction. Hence \(\mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > 1/2\).
 
-        Since $\tilde{\mathbf{y}}$ is the column player's maximin strategy in the zero-sum game, for every $\mathbf{x}$ satisfying $\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}^*)$,
+        Since \(\tilde{\mathbf{y}}\) is the column player's maximin strategy in the zero-sum game, for every \(\mathbf{x}\) satisfying \(\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}^*)\),
         \[
           \mathcal{C}(\mathbf{x}, \tilde{\mathbf{y}}) \ge \mathcal{C}(\tilde{\mathbf{x}}, \tilde{\mathbf{y}}) > \frac{1}{2}
         \]
-        Then the column player can improve his payoff by switching to $\tilde{\mathbf{y}}$, contradicting that $(\mathbf{x}, \mathbf{y})$ is a NE.
+        Then the column player can improve his payoff by switching to \(\tilde{\mathbf{y}}\), contradicting that \((\mathbf{x}, \mathbf{y})\) is a NE.
 \end{itemize}
 
 \subsection{Algorithm~2}
@@ -56,23 +56,23 @@ The proof is by contradiction:
 \label{app:case-two-low}
 
 \begin{itemize}
-  \item Row player: $1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon$, so every strategy is a $(1/2 + \varepsilon)$-best response;
-  \item Column player: $1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon$ (by Observation 1), so every strategy is a $(1/2 + \varepsilon)$-best response.
+  \item Row player: \(1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{R}(e_i, \mathbf{y}^*) - \varepsilon\), so every strategy is a \((1/2 + \varepsilon)\)-best response;
+  \item Column player: \(1/2 \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) \ge \mathcal{C}(\hat{\mathbf{x}}, \hat{\mathbf{y}}) \ge \mathcal{C}(\hat{\mathbf{x}}, e_j) - \varepsilon\) (by Observation 1), so every strategy is a \((1/2 + \varepsilon)\)-best response.
 \end{itemize}
 
-Hence $(\hat{\mathbf{x}}, \mathbf{y}^*)$ is a $(1/2 + \varepsilon)$-WSNE, and in particular a $(1/2 + 3\varepsilon + \delta)$-WSNE.
+Hence \((\hat{\mathbf{x}}, \mathbf{y}^*)\) is a \((1/2 + \varepsilon)\)-WSNE, and in particular a \((1/2 + 3\varepsilon + \delta)\)-WSNE.
 
 \subsubsection{Algorithm~2, Case 2(b)}
 \label{app:case-two-low-high}
 
-We use the two lemmas to show that $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE:
+We use the two lemmas to show that \((\mathbf{x}', \mathbf{y}_s^*)\) is a \((1/2 + 3\varepsilon)\)-WSNE:
 
 \begin{itemize}
-  \item Row player: by Lemma~\ref{lem:3_eps-wsne-sampling}, $(\mathbf{x}_s^*, \mathbf{y}_s^*)$ is a $3\varepsilon$-WSNE, and $\mathbf{x}'$ is supported on $\supp(\mathbf{x}_s^*)$, which means that every pure strategy in the support of $\mathbf{x}'$ is a $3\varepsilon$-best response;
-  \item Column player: by construction, the column player's maximum payoff is at most $1/2$.
+  \item Row player: by Lemma~\ref{lem:3_eps-wsne-sampling}, \((\mathbf{x}_s^*, \mathbf{y}_s^*)\) is a \(3\varepsilon\)-WSNE, and \(\mathbf{x}'\) is supported on \(\supp(\mathbf{x}_s^*)\), which means that every pure strategy in the support of \(\mathbf{x}'\) is a \(3\varepsilon\)-best response;
+  \item Column player: by construction, the column player's maximum payoff is at most \(1/2\).
 \end{itemize}
 
-Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
+Hence \((\mathbf{x}', \mathbf{y}_s^*)\) is a \((1/2 + 3\varepsilon)\)-WSNE.
 
 \subsubsection{Algorithm~2, Case 2(c)}
 \label{app:case-two-both-high}
@@ -80,16 +80,16 @@ Hence $(\mathbf{x}', \mathbf{y}_s^*)$ is a $(1/2 + 3\varepsilon)$-WSNE.
 The proof is again by contradiction:
 
 \begin{itemize}
-  \item Suppose the row player's payoff is at most $1/2-3\varepsilon$. Applied to the column payoff $-\mathcal{R}$ in the zero-sum game, Lemma~\ref{lem:small-supp-approx} gives
-        $|\mathcal{R}(\mathbf{x}^*,\mathbf{y})-\mathcal{R}(\mathbf{x}_s^*,\mathbf{y})|\le\varepsilon$ for every mixed strategy $\mathbf{y}$. Observation 1 also gives
-        $\mathcal{R}(\mathbf{x}^*,\mathbf{y})\ge\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)-\varepsilon$.
+  \item Suppose the row player's payoff is at most \(1/2-3\varepsilon\). Applied to the column payoff \(-\mathcal{R}\) in the zero-sum game, Lemma~\ref{lem:small-supp-approx} gives
+        \(|\mathcal{R}(\mathbf{x}^*,\mathbf{y})-\mathcal{R}(\mathbf{x}_s^*,\mathbf{y})|\le\varepsilon\) for every mixed strategy \(\mathbf{y}\). Observation 1 also gives
+        \(\mathcal{R}(\mathbf{x}^*,\mathbf{y})\ge\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)-\varepsilon\).
         Consequently,
         \[
           \mathcal{R}(\mathbf{x}_s^*, \mathbf{y}) \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}) - \varepsilon \ge \mathcal{R}(\mathbf{x}^*, \mathbf{y}^*) - 2\varepsilon > \frac{1}{2} - 2\varepsilon
         \]
-        and the row player can profitably deviate to $\mathbf{x}_s^*$, a contradiction.
+        and the row player can profitably deviate to \(\mathbf{x}_s^*\), a contradiction.
 
-  \item Suppose the column player's payoff is at most $1/2-3\varepsilon$. The maximin argument from Case 1(c) applies to the restricted game $(-\mathcal{C}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})$. Indeed, if its equilibrium value were at most $1/2$, its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy $\tilde{\mathbf{y}}$ satisfies, for every row strategy $\mathbf{x}$ satisfying $\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}_s^*)$,
+  \item Suppose the column player's payoff is at most \(1/2-3\varepsilon\). The maximin argument from Case 1(c) applies to the restricted game \((-\mathcal{C}_{\mathbf{x}_s^*},\mathcal{C}_{\mathbf{x}_s^*})\). Indeed, if its equilibrium value were at most \(1/2\), its row strategy would satisfy the feasibility condition of Case 2(b), contrary to the premise of this case. Thus its column maximin strategy \(\tilde{\mathbf{y}}\) satisfies, for every row strategy \(\mathbf{x}\) satisfying \(\supp(\mathbf{x}) \subseteq \supp(\mathbf{x}_s^*)\),
         \[
           \mathcal{C}(\mathbf{x},\tilde{\mathbf{y}})>\frac12>\frac12-3\varepsilon.
         \]
@@ -99,11 +99,11 @@ The proof is again by contradiction:
 \subsection{The Sampled-Profile Guarantee}
 \label{app:sampled-wsne-proof}
 
-\textbf{Proof:} For any $i \in \supp(\mathbf{x}_s) \subseteq \supp(\mathbf{x})$, Lemma~\ref{lem:small-supp-approx} and the $\varepsilon$-WSNE property give
+\textbf{Proof:} For any \(i \in \supp(\mathbf{x}_s) \subseteq \supp(\mathbf{x})\), Lemma~\ref{lem:small-supp-approx} and the \(\varepsilon\)-WSNE property give
 \begin{align*}
   \mathcal{R}(e_i, \mathbf{y}_s)
    & \ge \mathcal{R}(e_i, \mathbf{y})-\varepsilon                  \\
    & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y})-2\varepsilon    \\
    & \ge \max_{k\in[n]}\mathcal{R}(e_k,\mathbf{y}_s)-3\varepsilon.
 \end{align*}
-The column-player inequality is symmetric, so $(\mathbf{x}_s,\mathbf{y}_s)$ is a $3\varepsilon$-WSNE.
+The column-player inequality is symmetric, so \((\mathbf{x}_s,\mathbf{y}_s)\) is a \(3\varepsilon\)-WSNE.

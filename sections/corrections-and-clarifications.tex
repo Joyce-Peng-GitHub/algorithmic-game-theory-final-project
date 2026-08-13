@@ -9,7 +9,7 @@ Let
 \[
   p_n=\left(1-n^{-1/8}\right)\left(1-\frac{2}{n}\right)^2.
 \]
-Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least $p_n$ for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. The preprint stated only $p_n$ for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states $p_n^2$, obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
+Lemma \ref{lem:query-efficient-eps-wsne-in-zero-sum-games} guarantees success probability at least \(p_n\) for \textbf{one} invocation of the zero-sum routine, whereas Algorithm~2 invokes it \textbf{twice}. The preprint stated only \(p_n\) for the whole algorithm \cite[Theorem~2]{12WSNEv1}; the 2023 publication correctly states \(p_n^2\), obtained by using independent random coins for the two invocations \cite[Theorem~2]{12WSNE}.
 
 \subsection{Accounting for Small-Support Sampling Failures}
 
@@ -17,7 +17,7 @@ However, the published version still does not account for \textbf{sampling failu
 \[
   s=O\!\left(\frac{\log n+\log(1/\eta)}{\varepsilon^2}\right)
 \]
-samples suffice for failure probability at most $\eta$ \cite{hoeffding63}. Consequently, a complete success guarantee is $p_n^2(1-\eta)$; for example, taking $\eta=1/n$ gives
+samples suffice for failure probability at most \(\eta\) \cite{hoeffding63}. Consequently, a complete success guarantee is \(p_n^2(1-\eta)\); for example, taking \(\eta=1/n\) gives
 \[
   \left(1-n^{-1/8}\right)^2
   \left(1-\frac{2}{n}\right)^4
@@ -30,7 +30,7 @@ This correction does not change the approximation guarantee. The query count bec
   +\frac{n(\log n+\log(1/\eta))}{\varepsilon^2}
   \right),
 \]
-which remains $O(n\log n/\varepsilon^4)$ for $\eta=1/n$. Algorithm~1 enumerates at most $O(n^{2\kappa(\delta)})$ profiles, while Algorithm~2 enumerates at most $O(s^{\kappa(\delta)}n^{\kappa(\delta)})$ profiles in its queried subgame; hence both running times remain polynomial in $n$ for fixed $\varepsilon$ and $\delta$. Different allocations of the failure probabilities produce the same asymptotic bounds.
+which remains \(O(n\log n/\varepsilon^4)\) for \(\eta=1/n\). Algorithm~1 enumerates at most \(O(n^{2\kappa(\delta)})\) profiles, while Algorithm~2 enumerates at most \(O(s^{\kappa(\delta)}n^{\kappa(\delta)})\) profiles in its queried subgame; hence both running times remain polynomial in \(n\) for fixed \(\varepsilon\) and \(\delta\). Different allocations of the failure probabilities produce the same asymptotic bounds.
 
 \subsection{Unaccounted Payoff Queries in the Branch Conditions}
 
@@ -38,7 +38,7 @@ Algorithm~2 is not, as written, a complete query-efficient implementation of Alg
 \[
   \mathcal{R}(\mathbf{x}^*,\mathbf{y}^*) \geq \mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}}),
 \]
-and then compares the selected expected payoff with $1/2$ in Case~3(a) or
+and then compares the selected expected payoff with \(1/2\) in Case~3(a) or
 Case~4(a) \cite[Algorithm~2]{12WSNE}. These are exact tests of bilinear forms, but Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games} only guarantees the output strategies; it does not state that their exact expected payoffs are returned \cite[Corollary~5.5]{fearnleySavani16}.
 
 This distinction is material in the payoff-query model. For example,
@@ -48,9 +48,9 @@ This distinction is material in the payoff-query model. For example,
   \sum_{j\in\supp(\mathbf{y}^*)}
   x_i^*y_j^*R_{ij}.
 \]
-If an entry $R_{ij}$ with $x_i^*y_j^*>0$ has not been queried, changing only that entry changes the displayed expectation without changing the query transcript. Since the algorithm assumes no separation either between the two expected payoffs or from the threshold $1/2$, such a change can reverse one of its branch decisions. Exact evaluation therefore requires, in the worst case, all entries in $\supp(\mathbf{x}^*)\times\supp(\mathbf{y}^*)$, and symmetrically for $\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})$. The source explicitly notes that the zero-sum routine may return fully mixed strategies \cite[pp.~1092--1093]{12WSNE}; hence these tests can require $\Theta(n^2)$ queries.
+If an entry \(R_{ij}\) with \(x_i^*y_j^*>0\) has not been queried, changing only that entry changes the displayed expectation without changing the query transcript. Since the algorithm assumes no separation either between the two expected payoffs or from the threshold \(1/2\), such a change can reverse one of its branch decisions. Exact evaluation therefore requires, in the worst case, all entries in \(\supp(\mathbf{x}^*)\times\supp(\mathbf{y}^*)\), and symmetrically for \(\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}})\). The source explicitly notes that the zero-sum routine may return fully mixed strategies \cite[pp.~1092--1093]{12WSNE}; hence these tests can require \(\Theta(n^2)\) queries.
 
-The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the $\mathcal{R}$ branch, querying all entries in the rows $\supp(\mathbf{x}_s^*)$ permits exact evaluation of expressions involving $\mathbf{x}_s^*$, but not of $\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)$ when $\mathbf{x}^*$ is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}. Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~2 as stated, although this does not affect the full-information result.
+The later restricted-game queries do not remove this problem. They are made only after the initial comparison has selected a branch. Moreover, in the \(\mathcal{R}\) branch, querying all entries in the rows \(\supp(\mathbf{x}_s^*)\) permits exact evaluation of expressions involving \(\mathbf{x}_s^*\), but not of \(\mathcal{R}(\mathbf{x}^*,\mathbf{y}^*)\) when \(\mathbf{x}^*\) is dense. The proof of Theorem~\ref{thm:query-efficient-version} counts the two zero-sum calls and the restricted-game queries, but assigns no queries to these exact tests \cite[proof of Theorem~2]{12WSNE}. Consequently, the published proof does not establish Theorem~\ref{thm:query-efficient-version} for Algorithm~2 as stated, although this does not affect the full-information result.
 
 The query upper bound can be recovered by replacing the exact tests with statistical estimates and propagating their error. Let
 \[
@@ -58,15 +58,15 @@ The query upper bound can be recovered by replacing the exact tests with statist
   \qquad
   c=\mathcal{C}(\hat{\mathbf{x}},\hat{\mathbf{y}}).
 \]
-Sampling pure profiles from $\mathbf{x}^*\times\mathbf{y}^*$ and $\hat{\mathbf{x}}\times\hat{\mathbf{y}}$ gives estimates $\widetilde r$ and $\widetilde c$ satisfying
+Sampling pure profiles from \(\mathbf{x}^*\times\mathbf{y}^*\) and \(\hat{\mathbf{x}}\times\hat{\mathbf{y}}\) gives estimates \(\widetilde r\) and \(\widetilde c\) satisfying
 \[
   |\widetilde r-r|\leq\gamma,
   \qquad
   |\widetilde c-c|\leq\gamma
 \]
-simultaneously, except with probability $\zeta$, using $O\left(\frac{\log(1 / \zeta)}{\gamma^2}\right)$ additional payoff queries by Hoeffding's inequality \cite{hoeffding63}. Condition on this simultaneous accuracy event. The modified algorithm chooses its orientation by comparing $\widetilde r$ and $\widetilde c$, and uses the larger estimate for the low--high split. By symmetry, it suffices to analyze the case $\widetilde r\geq\widetilde c$.
+simultaneously, except with probability \(\zeta\), using \(O\left(\frac{\log(1 / \zeta)}{\gamma^2}\right)\) additional payoff queries by Hoeffding's inequality \cite{hoeffding63}. Condition on this simultaneous accuracy event. The modified algorithm chooses its orientation by comparing \(\widetilde r\) and \(\widetilde c\), and uses the larger estimate for the low--high split. By symmetry, it suffices to analyze the case \(\widetilde r\geq\widetilde c\).
 
-If $\widetilde r\leq 1/2$, Observation~1 gives
+If \(\widetilde r\leq 1/2\), Observation~1 gives
 \[
   \max_i\mathcal{R}(e_i,\mathbf{y}^*)
   \leq r+\varepsilon
@@ -78,39 +78,39 @@ If $\widetilde r\leq 1/2$, Observation~1 gives
   \leq \widetilde c+\gamma+\varepsilon
   \leq \frac12+\varepsilon+\gamma.
 \]
-Since all payoffs are nonnegative, the profile $(\hat{\mathbf{x}},\mathbf{y}^*)$ is therefore a $(1/2+\varepsilon+\gamma)$-WSNE. Notice that this argument does not assume $r\geq c$: the estimated ordering may select the opposite branch from the exact ordering without invalidating the output.
+Since all payoffs are nonnegative, the profile \((\hat{\mathbf{x}},\mathbf{y}^*)\) is therefore a \((1/2+\varepsilon+\gamma)\)-WSNE. Notice that this argument does not assume \(r\geq c\): the estimated ordering may select the opposite branch from the exact ordering without invalidating the output.
 
-Suppose instead that $\widetilde r>1/2$. Then
+Suppose instead that \(\widetilde r>1/2\). Then
 \[
   r>\frac12-\gamma.
 \]
-Case~3(b) remains valid independently of the ordering of $r$ and $c$. Lemma~\ref{lem:3_eps-wsne-sampling} bounds the row player's well-supported regret by $3\varepsilon$, while the feasibility constraints bound the column player's best-response payoff by $1/2$. If Case~3(c) occurs, then Observation~1 and Lemma~\ref{lem:small-supp-approx} imply, for every mixed strategy $\mathbf{y}$,
+Case~3(b) remains valid independently of the ordering of \(r\) and \(c\). Lemma~\ref{lem:3_eps-wsne-sampling} bounds the row player's well-supported regret by \(3\varepsilon\), while the feasibility constraints bound the column player's best-response payoff by \(1/2\). If Case~3(c) occurs, then Observation~1 and Lemma~\ref{lem:small-supp-approx} imply, for every mixed strategy \(\mathbf{y}\),
 \[
   \mathcal{R}(\mathbf{x}_s^*,\mathbf{y})
   \geq \mathcal{R}(\mathbf{x}^*,\mathbf{y})-\varepsilon
   \geq r-2\varepsilon
   >\frac12-(2\varepsilon+\gamma).
 \]
-Thus every Nash equilibrium of the queried restricted game gives the row player payoff greater than $1/2-(2\varepsilon+\gamma)$. The infeasibility of Case~3(b), by the same maximin argument as in Appendix~\ref{app:case-two-both-high}, gives the column player payoff greater than $1/2$. The constant-support enumeration therefore returns a $(1/2+2\varepsilon+\gamma+\delta)$-WSNE. The $\mathcal{C}$ branch is symmetric.
+Thus every Nash equilibrium of the queried restricted game gives the row player payoff greater than \(1/2-(2\varepsilon+\gamma)\). The infeasibility of Case~3(b), by the same maximin argument as in Appendix~\ref{app:case-two-both-high}, gives the column player payoff greater than \(1/2\). The constant-support enumeration therefore returns a \((1/2+2\varepsilon+\gamma+\delta)\)-WSNE. The \(\mathcal{C}\) branch is symmetric.
 
-Consequently, on the simultaneous accuracy event, the algorithm remains correct even when the estimated comparison sends it to the branch opposite to the exact comparison. If the estimation event fails, however, no correctness guarantee remains; this is a Monte Carlo rather than a Las Vegas repair. Including both the small-support sampling failure $\eta$ and the estimation failure $\zeta$ gives the success lower bound $p_n^2(1 - \eta - \zeta)$. In order to retain the paper's claimed query efficiency, we need to keep the number of extra queries in the overall bound, i.e.
-$$
+Consequently, on the simultaneous accuracy event, the algorithm remains correct even when the estimated comparison sends it to the branch opposite to the exact comparison. If the estimation event fails, however, no correctness guarantee remains; this is a Monte Carlo rather than a Las Vegas repair. Including both the small-support sampling failure \(\eta\) and the estimation failure \(\zeta\) gives the success lower bound \(p_n^2(1 - \eta - \zeta)\). In order to retain the paper's claimed query efficiency, we need to keep the number of extra queries in the overall bound, i.e.
+\[
   \frac{\log(1 / \zeta)}{\gamma^2} = O\left(\frac{n \log n}{\varepsilon^4}\right) \iff \gamma = \Omega\left(\varepsilon^2\sqrt{\frac{\log(1 / \zeta)}{n \log n}}\right)
-$$
-If we take, for example, $\zeta = \frac{1}{n}$, then $\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)$. On the other hand, we need $\gamma \leq \varepsilon$ to make the $(1 / 2 + 2\varepsilon + \gamma + \delta)$-WSNE a $(1 / 2 + 3\varepsilon + \delta)$-WSNE. In conclusion, we must let $\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)$ and $\gamma \leq \varepsilon$. If we take $\gamma = \varepsilon$ for example, this way, we repair the query complexity in Theorem~\ref{thm:query-efficient-version}, despite weakening the success probability to
-$$
+\]
+If we take, for example, \(\zeta = \frac{1}{n}\), then \(\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)\). On the other hand, we need \(\gamma \leq \varepsilon\) to make the \((1 / 2 + 2\varepsilon + \gamma + \delta)\)-WSNE a \((1 / 2 + 3\varepsilon + \delta)\)-WSNE. In conclusion, we must let \(\gamma = \Omega\left(\frac{\varepsilon^2}{\sqrt{n}}\right)\) and \(\gamma \leq \varepsilon\). If we take \(\gamma = \varepsilon\) for example, this way, we repair the query complexity in Theorem~\ref{thm:query-efficient-version}, despite weakening the success probability to
+\[
   p_n^2(1 - \zeta - \eta) =
   \left(1 - n^{-1 / 8}\right)^2
   \left(1 - \frac{2}{n}\right)^5.
-$$
+\]
 
-Our group found and repaired this gap independently, assisted by Codex equipped with GPT-5.6-Sol, which did not access the internet, nor did it read any paper other than \cite{12WSNE} and its references. After completing our repair, we became aware that, recently, on August 1, 2026, our respected professor, Zhengyang Liu, had already posted a preprint \cite{liu2026supportcontractionwellsupportednash}, which not only repairs the same gap in a similar way, but also introduces a structural method called \textit{support-contraction} and significantly reduces the query count from $O\left(\frac{n \log n}{\varepsilon^4}\right)$ to $O\left(\frac{n \log n}{\varepsilon^2}\right)$.
+Our group found and repaired this gap independently, assisted by Codex equipped with GPT-5.6-Sol, which did not access the internet, nor did it read any paper other than \cite{12WSNE} and its references. After completing our repair, we became aware that, recently, on August 1, 2026, our respected professor, Zhengyang Liu, had already posted a preprint \cite{liu2026supportcontractionwellsupportednash}, which not only repairs the same gap in a similar way, but also introduces a structural method called \textit{support-contraction} and significantly reduces the query count from \(O\left(\frac{n \log n}{\varepsilon^4}\right)\) to \(O\left(\frac{n \log n}{\varepsilon^2}\right)\).
 
 \subsection{Typos}
 
 The source also contains a few insignificant typos:
 \begin{itemize}
-  \item The introduction claims that $\varepsilon$-WSNEs in zero-sum bimatrix games can be found within $O\left(\frac{n \log n}{\varepsilon^2}\right)$ queries. But by Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, the algorithm can perform up to $O\left(\frac{n \log n}{\varepsilon^4}\right)$ queries.
-  \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required $3\varepsilon$-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-sampling} \cite[Lemma~2]{12WSNE}.
-  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states $|\supp(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)$ twice. The second occurrence should be $|\supp(\hat{\mathbf{y}}_s)| = O\left(\frac{\log n}{\varepsilon^2}\right)$.
+  \item The introduction claims that \(\varepsilon\)-WSNEs in zero-sum bimatrix games can be found within \(O\left(\frac{n \log n}{\varepsilon^2}\right)\) queries. But by Lemma~\ref{lem:query-efficient-eps-wsne-in-zero-sum-games}, the algorithm can perform up to \(O\left(\frac{n \log n}{\varepsilon^4}\right)\) queries.
+  \item The proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE} invokes Lemma~\ref{lem:small-supp-approx} \cite[Lemma~1]{12WSNE} in Case~3(b), although the required \(3\varepsilon\)-WSNE conclusion is supplied by Lemma~\ref{lem:3_eps-wsne-sampling} \cite[Lemma~2]{12WSNE}.
+  \item In the proof of Theorem~\ref{thm:query-efficient-version} \cite[proof of Theorem~2]{12WSNE}, the first paragraph states \(|\supp(\mathbf{x}_s^*)| = O\left(\frac{\log n}{\varepsilon^2}\right)\) twice. The second occurrence should be \(|\supp(\hat{\mathbf{y}}_s)| = O\left(\frac{\log n}{\varepsilon^2}\right)\).
 \end{itemize}
